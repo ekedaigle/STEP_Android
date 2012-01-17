@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Capstone, F*** Yea!</string>
+    <string name="app_name">BlankTest</string>
+    <string name="button1">Show system bar</string>
+    <string name="button2">Hide system bar</string>
+
+</resources>
