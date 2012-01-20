@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, LauncherActivity!</string>
+    <string name="app_name">STEP_Launcher</string>
+    <string name="music_button">Music</string>
+    <string name="newspaper_button">Newspaper</string>
+    <string name="store_button">Store</string>
+    <string name="email_button">Email</string>
+
+</resources>
