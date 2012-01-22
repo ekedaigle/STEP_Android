@@ -14,6 +14,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int button1=0x7f050007;
         public static final int email_button=0x7f050006;
         public static final int fragment_layout=0x7f050001;
         public static final int linearLayout1=0x7f050002;
