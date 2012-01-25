@@ -7,17 +7,27 @@ import com.step.launcher.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 
 public class LauncherActivity extends Activity
 {	
-	private MusicFragment music_fragment;
-	private EmailFragment email_fragment;
-	private NewspaperFragment newspaper_fragment;
-	private StoreFragment store_fragment;
+	private final int NUM_BUTTONS = 4;
+	private final int MUSIC = 0;
+	private final int NEWSPAPER = 1;
+	private final int STORE = 2;
+	private final int EMAIL = 3;
+
+	private Fragment fragments[];
 	private Fragment current_fragment = null;
+	
+	private Button buttons[];
+	private Drawable button_icons_normal[];
+	private Drawable button_icons_selected[];
 	
     /** Called when the activity is first created. */
     @Override
@@ -27,48 +37,65 @@ public class LauncherActivity extends Activity
         setContentView(R.layout.main);
         hideBar();
         
-        music_fragment = new MusicFragment();
-        email_fragment = new EmailFragment();
-        newspaper_fragment = new NewspaperFragment();
-        store_fragment = new StoreFragment();
+        buttons = new Button[NUM_BUTTONS];
+        buttons[MUSIC] = (Button)findViewById(R.id.music_button);
+        buttons[NEWSPAPER] = (Button)findViewById(R.id.newspaper_button);
+        buttons[STORE] = (Button)findViewById(R.id.store_button);
+        buttons[EMAIL] = (Button)findViewById(R.id.email_button);
+        
+        button_icons_normal = new Drawable[NUM_BUTTONS];
+        Resources res = getResources();
+        button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button);
+        button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button);
+        button_icons_normal[STORE] = res.getDrawable(R.drawable.store_button);
+        button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button);
+        
+        button_icons_selected = new Drawable[NUM_BUTTONS];
+        button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed);
+        button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed);
+        button_icons_selected[STORE] = res.getDrawable(R.drawable.store_button_pressed);
+        button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed);
+        
+        fragments = new Fragment[NUM_BUTTONS];
+        fragments[MUSIC] = new MusicFragment();
+        fragments[EMAIL] = new EmailFragment();
+        fragments[NEWSPAPER] = new NewspaperFragment();
+        fragments[STORE] = new StoreFragment();
         
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.fragment_layout, music_fragment);
+        ft.add(R.id.fragment_layout, fragments[MUSIC]);
         ft.commit();
         
-        current_fragment = music_fragment;
+        current_fragment = fragments[MUSIC];
     }
     
-    public void onClick(View v)
-    {		
-    	Fragment next_fragment = null;
-
-    	if (v == findViewById(R.id.music_button))
-    	{
-    		next_fragment = music_fragment;
-    	}
-    	else if (v == findViewById(R.id.newspaper_button))
-    	{
-    		next_fragment = newspaper_fragment;
-    	}
-    	else if (v == findViewById(R.id.store_button))
-    	{
-    		next_fragment = store_fragment;
-    	}
-    	else if (v == findViewById(R.id.email_button))
-    	{
-    		next_fragment = email_fragment;
-    	}
-    	
-    	if (next_fragment != current_fragment)
+    private void changeToFragmentNum(int n)
+    {
+    	if (fragments[n] != current_fragment)
     	{
     		FragmentTransaction ft = getFragmentManager().beginTransaction();
     		ft.remove(current_fragment);
-    		ft.add(R.id.fragment_layout, next_fragment);
+    		ft.add(R.id.fragment_layout, fragments[n]);
     		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     		ft.commit();
 
-    		current_fragment = next_fragment;
+    		current_fragment = fragments[n];
+    		
+    		// reset all the buttons
+    		for (int i = 0; i < NUM_BUTTONS; i++)
+    			buttons[i].setBackgroundDrawable(button_icons_normal[i]);
+    		
+    		// set the one button to selected
+    		buttons[n].setBackgroundDrawable(button_icons_selected[n]);
+    	}
+    }
+    
+    public void onClick(View v)
+    {    	
+    	for (int i = 0; i < NUM_BUTTONS; i++)
+    	{
+    		if (v == buttons[i])
+    			changeToFragmentNum(i);
     	}
     }
     
