@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import com.step.launcher.R;
+import com.tmm.android.rssreader.reader.NewspaperFragment;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
