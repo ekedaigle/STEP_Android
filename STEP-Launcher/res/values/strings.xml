@@ -3,8 +3,8 @@
 
     <string name="hello">Hello World, LauncherActivity!</string>
     <string name="app_name">STEP_Launcher</string>
-    <string name="music_button">Music</string>
-    <string name="newspaper_button">News</string>
+    <string name="music_button"> </string>
+    <string name="newspaper_button"> </string>
     <string name="store_button">Store</string>
     <string name="email_button">Email</string>
 
