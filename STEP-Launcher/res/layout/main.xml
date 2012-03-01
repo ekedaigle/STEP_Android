@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <!-- This is a place-holder for the fragments. They are added later programmatically. -->
+
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_layout"
@@ -14,11 +15,10 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0" >
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/music_button"
@@ -31,7 +31,67 @@
             android:onClick="onClick"
             android:text="@string/music_button"
             android:textSize="@dimen/button_text_size"
-     		android:background="@drawable/music_button"/>
+     		android:background="@drawable/music_button" />
+
+        <Button
+            android:id="@+id/newspaper_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="0.25"
+            android:layout_marginLeft="@dimen/button_spacing"
+            android:layout_marginRight="@dimen/button_spacing"
+            android:layout_marginBottom="@dimen/button_spacing"
+            android:onClick="onClick"
+            android:text="@string/newspaper_button"
+            android:textSize="@dimen/button_text_size"
+            android:background="@drawable/newspaper_button" />
+        
+        <Button
+            android:id="@+id/store_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="0.25"
+            android:layout_marginLeft="@dimen/button_spacing"
+            android:layout_marginRight="@dimen/button_spacing"
+            android:layout_marginBottom="@dimen/button_spacing"
+            android:onClick="onClick"
+            android:text="@string/store_button"
+            android:textSize="@dimen/button_text_size"
+            android:background="@drawable/store_button" />
+
+        <Button
+            android:id="@+id/email_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="0.25"
+            android:layout_marginLeft="@dimen/button_spacing"
+            android:layout_marginBottom="@dimen/button_spacing"
+            android:layout_marginRight="10dp"
+            android:onClick="onClick"
+            android:text="@string/email_button"
+            android:textSize="@dimen/button_text_size"
+            android:background="@drawable/email_button" />
+        
+    </RadioGroup>
+
+    <!--
+       <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0" >
+       <Button
+            android:id="@+id/music_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="0.25"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/button_spacing"
+            android:layout_marginBottom="@dimen/button_spacing"
+            android:onClick="onClick"
+            android:text="@string/music_button"
+            android:textSize="@dimen/button_text_size"
+     		android:background="@drawable/music_button_selector"/>
 
         <Button
             android:id="@+id/newspaper_button"
@@ -57,7 +117,7 @@
             android:onClick="onClick"
             android:text="@string/store_button"
             android:textSize="@dimen/button_text_size"
-            android:background="@drawable/store_button"/>
+            android:background="@drawable/store_button" />
 
         <Button
             android:id="@+id/email_button"
@@ -71,6 +131,8 @@
             android:text="@string/email_button"
             android:textSize="@dimen/button_text_size"
             android:background="@drawable/email_button"/>
+            
     </LinearLayout>
+    -->
 
 </LinearLayout>
