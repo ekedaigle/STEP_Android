@@ -3,6 +3,8 @@ package step;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import step.email.EmailFragment;
+
 import com.step.launcher.R;
 import android.app.Activity;
 import android.app.Fragment;
