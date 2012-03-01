@@ -26,7 +26,6 @@ public class LauncherActivity extends Activity
 
 	private Fragment fragments[];
 	private Fragment current_fragment = null;
-	
 	private Button buttons[];
 	private Drawable button_icons_normal[];
 	private Drawable button_icons_selected[];

@@ -31,6 +31,7 @@ public final class R {
         public static final int email_button=0x7f060007;
         public static final int feed_image=0x7f060001;
         public static final int fragment_layout=0x7f060003;
+        public static final int items=0x7f060008;
         public static final int job_text=0x7f060002;
         public static final int music_button=0x7f060004;
         public static final int newspaper_button=0x7f060005;
