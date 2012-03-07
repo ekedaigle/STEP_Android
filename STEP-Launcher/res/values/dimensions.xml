@@ -4,7 +4,6 @@
     <dimen name="button_height">101dp</dimen>
     <dimen name="button_spacing">5dp</dimen>
     <dimen name="button_text_size">60dp</dimen>
-    
     <dimen name="music_top_bar_height">100dp</dimen>
 
 </resources>

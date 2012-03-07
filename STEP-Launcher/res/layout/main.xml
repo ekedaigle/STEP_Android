@@ -13,7 +13,6 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:orientation="vertical" >
-
     </LinearLayout>
 
     <RadioGroup
@@ -30,7 +29,7 @@
             android:layout_marginRight="@dimen/button_spacing"
             android:layout_weight="0.25"
             android:background="@drawable/music_button"
-            android:onClick="onClick"  />
+            android:onClick="onClick" />
 
         <Button
             android:id="@+id/newspaper_button"

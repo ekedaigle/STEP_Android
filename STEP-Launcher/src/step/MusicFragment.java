@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class MusicFragment extends Fragment {
 	
-	private final String baseStationAddr = "129.10.248.191";
+	private final String baseStationAddr = "10.0.50.1";
 	private final int baseStationRecvPort = 13337;
 	private final int baseStationSendPort = 13338;
 	
@@ -29,18 +29,6 @@ public class MusicFragment extends Fragment {
         View v = inflater.inflate(R.layout.music_fragment, container, false);
         title = (TextView)v.findViewById(R.id.music_title);
         title.setText("HELLOOOO");
-        
-        try {
-			sendSocket = new Socket(baseStationAddr, baseStationRecvPort);
-			recvSocket = new Socket(baseStationAddr, baseStationSendPort);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
         
         return v;
 	}
