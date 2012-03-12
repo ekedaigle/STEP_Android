@@ -1,5 +1,6 @@
 package step.email;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.*;
@@ -29,6 +30,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.ParseException;
 
+
 public class Mail{
 	
 	private Session session = null;
@@ -37,6 +39,7 @@ public class Mail{
     private Folder folder;
     private TableModel tm;
     public Message[] msgs;
+    boolean pop3 = false;
     
     Mail(TableModel t1){
     	this.tm = t1;
@@ -47,56 +50,66 @@ public class Mail{
         this.password = password;
     }
     
-    public void connect() {
-        try{
-	    	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-	        
-	        Properties pop3Props = new Properties();
-	        
-	        pop3Props.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
-	        pop3Props.setProperty("mail.pop3.socketFactory.fallback", "false");
-	        pop3Props.setProperty("mail.pop3.port",  "995");
-	        pop3Props.setProperty("mail.pop3.socketFactory.port", "995");
-	        
-	        URLName url = new URLName("pop3", "pop.gmail.com", 995, "",
-	                username, password);
-	        
-	        session = Session.getInstance(pop3Props, null);
-	        store = new POP3SSLStore(session, url);
-	        store.connect();
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
+    public void connect() throws Exception{
+    	if(this.pop3){
+    		connect_pop();
+    	}
+    	else
+    	{
+    		connect_imap();
+    	}
+    }
+    public void connect_imap() throws Exception{
+		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		Properties imapProps = new Properties();
+		imapProps.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
+		imapProps.setProperty("mail.imap.socketFactory.fallback", "false");
+        imapProps.setProperty("mail.imap.port",  "993");
+        imapProps.setProperty("mail.imap.socketFactory.port", "993");
+        
+        URLName url = new URLName("pop3", "imap.gmail.com", 993, "", username, password);
+        this.session = Session.getInstance(imapProps, null);
+        this.store = this.session.getStore(url);
+        this.store.connect();
+    }
+    public void connect_pop() throws Exception{
+    	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        
+        Properties pop3Props = new Properties();
+        
+        pop3Props.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
+        pop3Props.setProperty("mail.pop3.socketFactory.fallback", "false");
+        pop3Props.setProperty("mail.pop3.port",  "995");
+        pop3Props.setProperty("mail.pop3.socketFactory.port", "995");
+        
+        URLName url = new URLName("pop3", "pop.gmail.com", 995, "",
+                username, password);
+        
+        session = Session.getInstance(pop3Props, null);
+        store = new POP3SSLStore(session, url);
+        store.connect();
         
         //Download message headers from server
-        try{
-            // Open the Folder
-            folder = store.getDefaultFolder();
+        // Open the Folder
+        folder = store.getDefaultFolder();
+        
+        folder = folder.getFolder("INBOX");
+        
+        if (folder == null) {
+            throw new Exception("Invalid folder");
+        }
+        
+        // try to open read/write and if that fails try read-only
+        try {
             
-            folder = folder.getFolder("INBOX");
+            folder.open(Folder.READ_WRITE);
             
-            if (folder == null) {
-                throw new Exception("Invalid folder");
-            }
+        } catch (MessagingException ex) {
             
-            // try to open read/write and if that fails try read-only
-            try {
-                
-                folder.open(Folder.READ_WRITE);
-                
-            } catch (MessagingException ex) {
-                
-                folder.open(Folder.READ_ONLY);
-                
-            }
-            
-           // this.getMessages();
+            folder.open(Folder.READ_ONLY);
             
         }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
+
         
     }
     

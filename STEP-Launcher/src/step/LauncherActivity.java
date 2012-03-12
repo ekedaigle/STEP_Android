@@ -62,7 +62,7 @@ public class LauncherActivity extends Activity
         fragments[MUSIC] = new MusicFragment();
         fragments[EMAIL] = new EmailFragment();
         fragments[NEWSPAPER] = new NewspaperFragment();
-        fragments[ADDRESS] = new AddressFragment();
+        //fragments[ADDRESS] = new AddressFragment();
         
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_layout, fragments[MUSIC]);
