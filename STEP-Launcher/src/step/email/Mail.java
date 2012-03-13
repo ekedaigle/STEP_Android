@@ -129,7 +129,7 @@ public class Mail{
     }
     
     public void readEmail(int idx, View v) throws Exception{
-    	ReadEmailMessage task = new ReadEmailMessage(this, idx, v);
+    	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx, v);
     	task.execute();
     }
     

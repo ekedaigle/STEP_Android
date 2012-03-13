@@ -9,11 +9,11 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
-public class ReadEmailMessage extends AsyncTask<String, Void, String>{
+public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	Mail m;
 	int idx;
 	View v;
-	ReadEmailMessage(Mail m1, int idx, View v){
+	ReadEmailMessageTask(Mail m1, int idx, View v){
 		this.m = m1;
 		this.idx = idx;
 		this.v = v;
