@@ -21,6 +21,8 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	@Override
 	protected String doInBackground(String...strings)
 	{
+		String content = null;
+		String fullBody = null;
 		try
 		{
            Multipart mp = (Multipart)this.m.msgs[this.idx].getContent();
@@ -34,12 +36,29 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
     			   // Check if plain
     			   MimeBodyPart mbp = (MimeBodyPart)part;
     			   if (mbp.isMimeType("text/plain")) {
-    				   return mbp.getContent().toString();
+    				   content = mbp.getContent().toString();
+    				   break;
     			   } else {
     			     // Special non-attachment cases here of 
     			     // image/gif, text/html, ...
     			   }
         	   }
+           }
+           if(content != null){
+				Address[] to = this.m.msgs[this.idx].getAllRecipients();
+				Address[] from = this.m.msgs[this.idx].getFrom();
+				String subj = this.m.msgs[this.idx].getSubject();
+				
+				fullBody = new String();
+				fullBody = "TO: ";
+				fullBody = fullBody.concat(to[0].toString());
+				fullBody = fullBody.concat("\nFROM: ");
+				fullBody = fullBody.concat(from[0].toString());
+				fullBody = fullBody.concat("\nSUBJ: ");
+				fullBody = fullBody.concat(subj);
+				fullBody = fullBody.concat("\n\n");
+				fullBody = fullBody.concat(content);
+				return fullBody;
            }
 		}
 		catch(Exception e)
@@ -51,27 +70,8 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	}
 	protected void onPostExecute(String result)
 	{
-		try
-		{
-	    	Address[] to = this.m.msgs[this.idx].getAllRecipients();
-	    	Address[] from = this.m.msgs[this.idx].getFrom();
-	    	String subj = this.m.msgs[this.idx].getSubject();
-	    	
-	    	String fullBody = new String();
-	    	fullBody = "TO: ";
-	    	fullBody = fullBody.concat(to[0].toString());
-	    	fullBody = fullBody.concat("\nFROM: ");
-	    	fullBody = fullBody.concat(from[0].toString());
-	    	fullBody = fullBody.concat("\nSUBJ: ");
-	    	fullBody = fullBody.concat(subj);
-	    	fullBody = fullBody.concat("\n\n");
-	    	fullBody = fullBody.concat(result);
-	    	TextView t = (TextView) this.v;
-	    	t.setText(fullBody);
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
+    	TextView t = (TextView) this.v;
+    	t.setText(result);
 	}
 	
 }
