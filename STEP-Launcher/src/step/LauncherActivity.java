@@ -3,6 +3,8 @@ package step;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import step.email.EmailFragment;
+
 import com.step.launcher.R;
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,7 +21,7 @@ public class LauncherActivity extends Activity
 	private final int NUM_BUTTONS = 4;
 	private final int MUSIC = 0;
 	private final int NEWSPAPER = 1;
-	private final int STORE = 2;
+	private final int ADDRESS = 2;
 	private final int EMAIL = 3;
 
 	private Fragment fragments[];
@@ -40,31 +42,33 @@ public class LauncherActivity extends Activity
         buttons = new Button[NUM_BUTTONS];
         buttons[MUSIC] = (Button)findViewById(R.id.music_button);
         buttons[NEWSPAPER] = (Button)findViewById(R.id.newspaper_button);
-        buttons[STORE] = (Button)findViewById(R.id.store_button);
+        buttons[ADDRESS] = (Button)findViewById(R.id.address_button);
         buttons[EMAIL] = (Button)findViewById(R.id.email_button);
         
         button_icons_normal = new Drawable[NUM_BUTTONS];
         Resources res = getResources();
         button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button);
         button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button);
-        button_icons_normal[STORE] = res.getDrawable(R.drawable.store_button);
+        button_icons_normal[ADDRESS] = res.getDrawable(R.drawable.address_button);
         button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button);
         
         button_icons_selected = new Drawable[NUM_BUTTONS];
         button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed);
         button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed);
-        button_icons_selected[STORE] = res.getDrawable(R.drawable.store_button_pressed);
+        button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed);
         button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed);
         
         fragments = new Fragment[NUM_BUTTONS];
         fragments[MUSIC] = new MusicFragment();
         fragments[EMAIL] = new EmailFragment();
         fragments[NEWSPAPER] = new NewspaperFragment();
-        fragments[STORE] = new StoreFragment();
+        //fragments[ADDRESS] = new AddressFragment();
         
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_layout, fragments[MUSIC]);
         ft.commit();
+        
+        buttons[MUSIC].setBackgroundDrawable(button_icons_selected[MUSIC]);
         
         current_fragment = fragments[MUSIC];
     }
