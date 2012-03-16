@@ -2,7 +2,7 @@ package step;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
+import com.tmm.android.rssreader.reader.NewspaperFragment;
 import step.email.EmailFragment;
 
 import com.step.launcher.R;
