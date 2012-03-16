@@ -2,6 +2,8 @@ package com.tmm.android.rssreader.util;
 
 import java.net.URL;
 
+import android.util.Log;
+
 /**
  * @author rob
  * 
@@ -42,6 +44,7 @@ public class Article {
 	 * @param feedId the feedId to set
 	 */
 	public void setFeedId(long feedId) {
+		Log.e("feedid","feedid is" + feedId);
 		this.feedId = feedId;
 	}
 	/**
@@ -54,6 +57,7 @@ public class Article {
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
+		Log.e("title","title is" + title);
 		this.title = title;
 	}
 	/**
@@ -72,6 +76,7 @@ public class Article {
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
+		Log.e("description","description is" + description);
 		this.description = description;
 		
 		//parse description for any image or video links
@@ -112,6 +117,7 @@ public class Article {
 	 * @param encodedContent the encodedContent to set
 	 */
 	public void setEncodedContent(String encodedContent) {
+		Log.e("encodedContent","encodedContent is" + encodedContent);
 		this.encodedContent = encodedContent;
 	}
 	/**

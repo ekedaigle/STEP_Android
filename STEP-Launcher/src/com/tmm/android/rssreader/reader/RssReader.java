@@ -37,15 +37,16 @@ public class RssReader {
 	 */
 	public static List<JSONObject> getLatestRssFeed(){
 		//String feed = "http://globoesporte.globo.com/dynamo/futebol/times/vasco/rss2.xml";
-		String feed ="http://news.google.com/news?ned=us&topic=h&output=rss";
+		//String feed = "http://news.yahoo.com/rss/personal-finance";
+		String feed ="http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
+		//http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss
 		//String feed ="http://finance.yahoo.com/rss/retirement";
-		Log.v("Nimit","I am here!!!");
+		
 		
 		RSSHandler rh = new RSSHandler();
-		Log.v("Nimit","I am here2!!!");
+		
 		List<Article> articles =  rh.getLatestArticles(feed);
-		Log.v("Nimit","I am here3!!!");
-		Log.e("RSS ERROR", "Number of articles " + articles.size());
+		
 		return fillData(articles);
 	}
 	
