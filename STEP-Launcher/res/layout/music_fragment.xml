@@ -18,29 +18,15 @@
             android:text="Music view" />
     </LinearLayout>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/music_play_button"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginBottom="@dimen/button_spacing"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="@dimen/button_spacing"
-                android:layout_weight="0.25"
-                android:background="@drawable/music_button"
-                android:onClick="onClick" />
-        </LinearLayout>
-    </LinearLayout>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android" 
+    	android:id="@+id/gridview"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="fill_parent"
+    	android:numColumns="auto_fit"
+    	android:verticalSpacing="10dp"
+    	android:horizontalSpacing="10dp"
+    	android:columnWidth="276dp"
+    	android:stretchMode="columnWidth"
+    	android:gravity="center" />
 
 </LinearLayout>

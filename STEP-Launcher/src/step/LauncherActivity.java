@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import step.email.EmailFragment;
+import step.music.MusicFragment;
 
 import com.step.launcher.R;
 import android.app.Activity;
@@ -62,14 +63,13 @@ public class LauncherActivity extends Activity
         fragments[MUSIC] = new MusicFragment();
         fragments[EMAIL] = new EmailFragment();
         fragments[NEWSPAPER] = new NewspaperFragment();
-        //fragments[ADDRESS] = new AddressFragment();
+        fragments[ADDRESS] = new AddressFragment();
         
+        // have the music button selected by default
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_layout, fragments[MUSIC]);
         ft.commit();
-        
         buttons[MUSIC].setBackgroundDrawable(button_icons_selected[MUSIC]);
-        
         current_fragment = fragments[MUSIC];
     }
     
@@ -108,11 +108,12 @@ public class LauncherActivity extends Activity
     	execCommandLine("service call activity 79 s16 com.android.systemui");
     }
     
-    private void showBar()
-    {
-    	execCommandLine("am startservice -n com.android.systemui/.SystemUIService");
-    }
+//    private void showBar()
+//    {
+//    	execCommandLine("am startservice -n com.android.systemui/.SystemUIService");
+//    }
     
+    // run the string as a command
     private void execCommandLine(String command)
     {
         Runtime runtime = Runtime.getRuntime();
