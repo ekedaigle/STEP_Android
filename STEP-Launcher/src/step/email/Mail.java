@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Address;
@@ -60,7 +61,7 @@ public class Mail{
     	}
     }
     public void connect_imap() throws Exception{
-		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		/*String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		Properties imapProps = new Properties();
 		imapProps.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
 		imapProps.setProperty("mail.imap.socketFactory.fallback", "false");
@@ -70,7 +71,35 @@ public class Mail{
         URLName url = new URLName("pop3", "imap.gmail.com", 993, "", username, password);
         this.session = Session.getInstance(imapProps, null);
         this.store = this.session.getStore(url);
-        this.store.connect();
+        this.store.connect();*/
+    	
+    	Properties imapProps = new Properties();
+    	imapProps.setProperty("mail.store.protocol", "imaps");
+		this.session = Session.getDefaultInstance(imapProps, null);
+		this.store = session.getStore("imaps");
+		this.store.connect("imap.gmail.com", this.username, this.password);
+
+        //Download message headers from server
+        // Open the Folder
+        this.folder = this.store.getDefaultFolder();
+        
+        this.folder = this.folder.getFolder("INBOX");
+        
+        if (this.folder == null) {
+            throw new Exception("Invalid folder");
+        }
+        
+        // try to open read/write and if that fails try read-only
+        try {
+            
+            folder.open(Folder.READ_WRITE);
+            
+        } catch (MessagingException ex) {
+            
+            folder.open(Folder.READ_ONLY);
+            
+        }
+    	
     }
     public void connect_pop() throws Exception{
     	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -129,7 +158,7 @@ public class Mail{
     }
     
     public void readEmail(int idx, View v) throws Exception{
-    	ReadEmailMessage task = new ReadEmailMessage(this, idx, v);
+    	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx, v);
     	task.execute();
     }
     
