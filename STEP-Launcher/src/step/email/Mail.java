@@ -19,22 +19,26 @@ import java.util.Date;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.FetchProfile;
-import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.Transport;
 import javax.mail.URLName;
 import javax.mail.internet.ContentType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.ParseException;
 
 
 public class Mail{
+	
 	
 	private Session session = null;
     private Store store = null;
@@ -74,7 +78,6 @@ public class Mail{
 		this.session = Session.getDefaultInstance(imapProps, null);
 		this.store = this.session.getStore("imaps");
 		this.store.connect("imap.gmail.com", this.username, this.password);
-
         //Download message headers from server
         // Open the Folder
         this.inbox = this.store.getDefaultFolder();
@@ -136,6 +139,7 @@ public class Mail{
     }
     
     public void getMessages() throws Exception{
+       this.emailList.clearMessages();
 	   //Get folder's list of messages
 	   this.msgs = this.inbox.getMessages();
 	   //Retrieve message headers 
@@ -154,6 +158,57 @@ public class Mail{
     public void readEmail(int idx, View v) throws Exception{
     	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx, v);
     	task.execute();
+    }
+    
+    public void sendEmail() throws Exception{
+    	Properties props = System.getProperties();
+    	 
+        props.put("mail.smtp.user", this.username);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.debug", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", 
+              "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+ 
+        // Required to avoid security exception.
+        MyAuthenticator authentication = 
+              new MyAuthenticator(this.username, this.password);
+        Session smtpSession = 
+              Session.getInstance(props,authentication);
+        smtpSession.setDebug(true);
+    	
+    	
+    	MimeMessage message = new MimeMessage(smtpSession);
+    	EditText body = (EditText) this.activity.findViewById(R.id.compose_message_content);
+    	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
+    	EditText to   = (EditText) this.activity.findViewById(R.id.compose_to);
+    	
+    	message.setText(body.getText().toString());
+    	message.setSubject(subj.getText().toString());
+    	message.setFrom(new InternetAddress(this.username));
+    	message.addRecipient(RecipientType.TO, new InternetAddress(to.getText().toString()));
+
+    	SendEmailTask task = new SendEmailTask(this.activity, smtpSession.getTransport("smtps"), this.username, this.password, message);
+    	task.execute();
+    	
+    }
+    
+    private class MyAuthenticator extends javax.mail.Authenticator {
+        String User;
+        String Password;
+        public MyAuthenticator (String user, String password) {
+            User = user;
+            Password = password;
+        }
+         
+        @Override
+        public PasswordAuthentication getPasswordAuthentication() {
+            return new javax.mail.PasswordAuthentication(User, Password);
+        }
     }
     
     public void closeFolder() throws Exception {

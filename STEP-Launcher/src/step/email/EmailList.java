@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.Folder;
 
 public class EmailList {
 	private ArrayList<EmailListItem> emails;
@@ -17,6 +18,10 @@ public class EmailList {
 		return this.emails;
 	}
 	
+	public void clearMessages(){
+		this.emails.clear();
+	}
+	
 	public void addMessages(Message[] msgs) throws Exception {
 		EmailListItem item; 
 		for(int i=0; i<msgs.length; i++)
@@ -24,6 +29,7 @@ public class EmailList {
 			item = new EmailListItem();
 			item.fromMsg(msgs[i]);
 			this.emails.add(item);
+			//Folder.getUID(msgs[i]);
 		}
 	}
 	
