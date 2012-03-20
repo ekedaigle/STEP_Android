@@ -1,6 +1,8 @@
 package step.music;
 
+import java.util.ArrayList;
+
 public interface MusicAsyncTaskCallback
 {
-	public void taskGotData(String data);
+	void taskGotGenres(ArrayList<ArrayList<String>> categories);
 }

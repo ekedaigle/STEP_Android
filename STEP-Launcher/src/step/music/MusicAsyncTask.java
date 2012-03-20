@@ -1,35 +1,55 @@
 package step.music;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-public class MusicAsyncTask extends AsyncTask<Integer, String, Object>
+public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<String>>, Object>
 {
-	private Socket sendSocket;
-	private Socket recvSocket;
+	private Socket sock;
 	private DataOutputStream sendStream;
 	private DataInputStream recvStream;
 	private MusicAsyncTaskCallback callback;
+	private MusicContentHandler handler;
 
+	public void setCallback(MusicAsyncTaskCallback callback)
+	{
+		this.callback = callback;
+	}
+	
 	@Override
 	protected Object doInBackground(Integer... arg0)
 	{
-		int recvPort = arg0[0];
-		int sendPort = arg0[1];
+		int port = arg0[0];
+		handler = new MusicContentHandler();
 		
 		while (true)
 		{
 			try {
-				sendSocket = new Socket("10.0.50.1",  recvPort);
-				sendStream = new DataOutputStream(sendSocket.getOutputStream());
-				recvSocket = new Socket("10.0.50.1", sendPort);
-				recvStream = new DataInputStream(sendSocket.getInputStream());
+				sock = new Socket("192.168.1.4",  port);
+				sendStream = new DataOutputStream(sock.getOutputStream());
+				recvStream = new DataInputStream(sock.getInputStream());
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,24 +70,50 @@ public class MusicAsyncTask extends AsyncTask<Integer, String, Object>
 			break;
 		}
 		
-		while (true)
-		{
+		try {
+			sendStream.writeBytes("GENRES");
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			
+			StringBuilder sb = new StringBuilder();
+			while (true)
+			{
+				String data = recvStream.readLine().trim();
+				sb.append(data);
+				
+				if (data.compareTo("</categories>") == 0)
+					break;
+			}
+			
 			try {
-				sendStream.writeBytes("g\n");
-				String data = recvStream.readLine();
-				publishProgress(data);
-			} catch (IOException e) {
+				SAXParser parser = factory.newSAXParser();
+				XMLReader reader = parser.getXMLReader();
+				reader.setContentHandler(handler);
+				InputSource is = new InputSource();
+				is.setByteStream(new ByteArrayInputStream(sb.toString().getBytes()));
+				reader.parse(is);
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			publishProgress(handler.getCategories());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		return null;
 	}
 	
 	@Override
-	protected void onProgressUpdate(String... data)
+	protected void onProgressUpdate(ArrayList<ArrayList<String>>... data)
 	{
 		if (data.length > 0)
-			callback.taskGotData(data[0]);
+			callback.taskGotGenres(data[0]);
     }
 
 }

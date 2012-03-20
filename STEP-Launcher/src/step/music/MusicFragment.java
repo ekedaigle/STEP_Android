@@ -3,6 +3,12 @@ package step.music;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.step.launcher.R;
 
@@ -18,13 +24,9 @@ import step.music.MusicAsyncTask;
 
 public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	
-	private final String baseStationAddr = "10.0.50.1";
-	private final int baseStationRecvPort = 13338;
-	private final int baseStationSendPort = 13339;
+	private final int baseStationPort = 13331;
 	
 	private TextView title;
-	private Socket sendSocket;
-	private Socket recvSocket;
 	
 	private MusicAsyncTask asyncTask;
 	private MusicAdapter adapter;
@@ -37,7 +39,8 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
         title.setText("HELLOOOO");
         
         asyncTask = new MusicAsyncTask();
-        asyncTask.execute(baseStationRecvPort, baseStationSendPort);
+        asyncTask.setCallback(this);
+        asyncTask.execute(baseStationPort);
         
         GridView gridview = (GridView)v.findViewById(R.id.gridview);
         adapter = new MusicAdapter(getActivity());
@@ -50,8 +53,15 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	}
 
 	@Override
-	public void taskGotData(String data)
+	public void taskGotGenres(ArrayList<ArrayList<String>> categories)
 	{
-		title.setText(data);
+		String[] titles_array = new String[categories.size()];
+		
+		for (int i = 0; i < titles_array.length; i++)
+		{
+			titles_array[i] = categories.get(i).get(0);
+		}
+		
+		adapter.setTitles(titles_array);
 	}
 }
