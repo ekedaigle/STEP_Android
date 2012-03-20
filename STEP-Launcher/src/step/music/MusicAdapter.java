@@ -19,6 +19,7 @@ public class MusicAdapter extends BaseAdapter {
 	public void setTitles(String[] t)
 	{
 		titles = t;
+		notifyDataSetChanged();
 	}
 	
 	@Override
@@ -43,18 +44,16 @@ public class MusicAdapter extends BaseAdapter {
 		Button button;
 		
 		if (convertView == null)
-		{
 			button = new Button(context);
-			
-			if (position < titles.length)
-				button.setText(titles[position]);
-			
-			button.setHeight(130);
-		}
 		else
-		{
 			button = (Button)convertView;
-		}
+		
+		if (position < titles.length)
+			button.setText(titles[position]);
+		else
+			button.setText("");
+		
+		button.setHeight(130);
 		
 		return button;
 	}
