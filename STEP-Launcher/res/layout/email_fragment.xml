@@ -13,7 +13,7 @@
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="146dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical" >
 
             <Button
@@ -23,7 +23,7 @@
                 android:layout_margin="2dip"
                 android:background="#cdc9c9"
                 android:clickable="true"
-                android:text="INBOX"
+                android:text="@string/inbox"
                 android:textColor="#000"
                 android:textSize="12pt"
                 android:textStyle="bold" >
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dip"
                 android:background="#cdc9c9"
-                android:text="COMPOSE"
+                android:text="@string/compose"
                 android:textColor="#000"
                 android:textSize="12pt"
                 android:textStyle="bold" >
@@ -47,443 +47,45 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dip"
                 android:background="#cdc9c9"
-                android:text="SENT MAIL"
+                android:text="@string/sentMail"
                 android:textColor="#000"
                 android:textSize="12pt"
                 android:textStyle="bold" >
             </Button>
-
-            <Button
-                android:id="@+id/btnUpdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:clickable="true"
-                android:text="GET MAIL"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txtReadEmail"
-            android:layout_width="685dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.91"
-            android:background="#FFF"
-            android:text=""
-            android:textColor="#000"
-            android:textSize="10pt"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:visibility="gone" >
-        </TextView>
-
-        <TableLayout
-            android:id="@+id/tabelLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.91"
-            android:background="#000"
-            android:shrinkColumns="*"
-            android:stretchColumns="*"
-            android:visibility="visible" >
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:layout_span="6"
-                    android:gravity="center"
-                    android:text="Email"
-                    android:textColor="#000"
-                    android:textSize="18pt"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF" >
-
-                <TextView
-                    android:id="@+id/TextViewSender"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text="Sender"
-                    android:textColor="#000"
-                    android:textSize="14pt"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/TextViewSubject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text="Subject"
-                    android:textColor="#000"
-                    android:textSize="14pt"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/TextViewDate"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text="Date"
-                    android:textColor="#000"
-                    android:textSize="14pt"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg1Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg1Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg1Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum1"
-                    android:text="0"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg2Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg2Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg2Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum2"
-                    android:text="1"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg3Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg3Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg3Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum3"
-                    android:text="2"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow5"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg4Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg4Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg4Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum4"
-                    android:text="3"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow6"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg5Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg5Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg5Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum5"
-                    android:text="4"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow7"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="2dip"
-                android:layout_weight="1"
-                android:background="#FFFFFFFF"
-                android:clickable="true"
-                android:gravity="center_horizontal" >
-
-                <TextView
-                    android:id="@+id/Msg6Sender"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg6Subject"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/Msg6Date"
-                    android:layout_margin="2dip"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:typeface="serif" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/txtRowNum6"
-                    android:text="5"
-                    android:visibility="gone" >
-                </TextView>
-            </TableRow>
-        </TableLayout>
-
-        <LinearLayout
-            android:id="@+id/LinearLayout2"
-            android:layout_width="64dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/btnLess"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:background="#cdc9c9"
-                android:gravity="center_horizontal"
-                android:text="^"
-                android:textColor="#000"
-                android:textSize="20pt"
-                android:textStyle="bold" >
-            </Button>
-
+            
             <TextView
-                android:id="@+id/viewText11"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.01" >
-            </TextView>
-
-            <Button
-                android:id="@+id/btnMore"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:background="#cdc9c9"
-                android:gravity="center|bottom"
-                android:text="v"
-                android:textColor="#000"
-                android:textSize="20pt" >
-            </Button>
+		        android:id="@+id/txtConn"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="right"
+		        android:text="" >
+		    </TextView>
         </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtConn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="" >
-    </TextView>
-
+		<ListView 
+		    android:id="@+id/emailFrag_listview"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
+        	android:visibility="visible"
+        	android:scrollbars="vertical" />
+		<ScrollView
+		    android:id="@+id/scrlReadEmail"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:visibility="gone" >
+	        <TextView
+	            android:id="@+id/txtReadEmail"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:background="#FFF"
+	            android:text=""
+	            android:textColor="#000"
+	            android:textSize="10pt"
+	            android:textStyle="bold"
+	            android:typeface="serif"
+	            android:visibility="gone" >
+	        </TextView>
+		</ScrollView>
+	</LinearLayout>
 </LinearLayout>
+	        

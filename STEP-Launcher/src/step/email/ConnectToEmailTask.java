@@ -38,7 +38,7 @@ public class ConnectToEmailTask extends AsyncTask<String, Void, String> {
 	{
 		TextView con = (TextView) v;
 		con.setText(result);
-    	UpdateInboxManually task = new UpdateInboxManually(this.m);
+    	UpdateInboxTask task = new UpdateInboxTask(this.m);
     	task.execute();
 		//textView.setText(result);
 	}

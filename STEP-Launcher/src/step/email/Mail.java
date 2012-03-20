@@ -1,10 +1,12 @@
 package step.email;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.*;
 
+import com.step.launcher.R;
 import com.sun.mail.pop3.POP3SSLStore;
 
 import java.io.ByteArrayOutputStream;
@@ -37,14 +39,19 @@ public class Mail{
 	private Session session = null;
     private Store store = null;
     private String username, password;
-    private Folder folder;
-    private TableModel tm;
+    private Folder inbox;
+    private Activity activity;
+    //private TableModel tm;
     public Message[] msgs;
+    private EmailList emailList;
+    private ListView email_listView;
     boolean pop3 = false;
     
-    Mail(TableModel t1){
-    	this.tm = t1;
-    }
+    Mail(Activity a, ListView email_listView){
+    	this.activity = a;
+    	this.emailList = new EmailList();
+    	this.email_listView = email_listView;
+    };
 	
     public void setUserPass(String username, String password) {
         this.username = username;
@@ -61,81 +68,67 @@ public class Mail{
     	}
     }
     public void connect_imap() throws Exception{
-		/*String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		Properties imapProps = new Properties();
-		imapProps.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
-		imapProps.setProperty("mail.imap.socketFactory.fallback", "false");
-        imapProps.setProperty("mail.imap.port",  "993");
-        imapProps.setProperty("mail.imap.socketFactory.port", "993");
-        
-        URLName url = new URLName("pop3", "imap.gmail.com", 993, "", username, password);
-        this.session = Session.getInstance(imapProps, null);
-        this.store = this.session.getStore(url);
-        this.store.connect();*/
     	
     	Properties imapProps = new Properties();
     	imapProps.setProperty("mail.store.protocol", "imaps");
 		this.session = Session.getDefaultInstance(imapProps, null);
-		this.store = session.getStore("imaps");
+		this.store = this.session.getStore("imaps");
 		this.store.connect("imap.gmail.com", this.username, this.password);
 
         //Download message headers from server
         // Open the Folder
-        this.folder = this.store.getDefaultFolder();
+        this.inbox = this.store.getDefaultFolder();
+        this.inbox = this.inbox.getFolder("INBOX");
         
-        this.folder = this.folder.getFolder("INBOX");
-        
-        if (this.folder == null) {
+        if (this.inbox == null) {
             throw new Exception("Invalid folder");
         }
         
         // try to open read/write and if that fails try read-only
         try {
             
-            folder.open(Folder.READ_WRITE);
+            this.inbox.open(Folder.READ_WRITE);
             
         } catch (MessagingException ex) {
             
-            folder.open(Folder.READ_ONLY);
+            this.inbox.open(Folder.READ_ONLY);
             
         }
     	
     }
     public void connect_pop() throws Exception{
+    	
     	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        
         Properties pop3Props = new Properties();
-        
         pop3Props.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
         pop3Props.setProperty("mail.pop3.socketFactory.fallback", "false");
         pop3Props.setProperty("mail.pop3.port",  "995");
         pop3Props.setProperty("mail.pop3.socketFactory.port", "995");
         
         URLName url = new URLName("pop3", "pop.gmail.com", 995, "",
-                username, password);
+        		this.username, this.password);
         
-        session = Session.getInstance(pop3Props, null);
-        store = new POP3SSLStore(session, url);
-        store.connect();
+        this.session = Session.getInstance(pop3Props, null);
+        this.store = new POP3SSLStore(this.session, url);
+        this.store.connect();
         
         //Download message headers from server
         // Open the Folder
-        folder = store.getDefaultFolder();
+        this.inbox = this.store.getDefaultFolder();
+        this.inbox = this.inbox.getFolder("INBOX");
         
-        folder = folder.getFolder("INBOX");
-        
-        if (folder == null) {
+        if (this.inbox == null) {
             throw new Exception("Invalid folder");
         }
         
         // try to open read/write and if that fails try read-only
         try {
             
-            folder.open(Folder.READ_WRITE);
+        	this.inbox.open(Folder.READ_WRITE);
             
         } catch (MessagingException ex) {
             
-            folder.open(Folder.READ_ONLY);
+        	this.inbox.open(Folder.READ_ONLY);
             
         }
 
@@ -144,17 +137,18 @@ public class Mail{
     
     public void getMessages() throws Exception{
 	   //Get folder's list of messages
-	   this.msgs = folder.getMessages();
+	   this.msgs = this.inbox.getMessages();
 	   //Retrieve message headers 
 	   FetchProfile profile = new FetchProfile();
 	   profile.add(FetchProfile.Item.ENVELOPE);
-	   folder.fetch(this.msgs, profile);
-
+	   this.inbox.fetch(this.msgs, profile);
+	   this.emailList.addMessages(this.msgs);
     }
     
     public void displayMessages() throws Exception{
-
-        tm.setMessages(this.msgs);
+		//setup the data adaptor
+		EmailListAdapter adapter = new EmailListAdapter(this.activity, R.layout.message_list_element, this.emailList.getEmailList());
+		this.email_listView.setAdapter(adapter);
     }
     
     public void readEmail(int idx, View v) throws Exception{
@@ -163,6 +157,6 @@ public class Mail{
     }
     
     public void closeFolder() throws Exception {
-        folder.close(false);
+    	this.inbox.close(false);
     }
 }

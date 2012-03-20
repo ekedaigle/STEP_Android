@@ -23,9 +23,11 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	{
 		String content = null;
 		String fullBody = null;
+		
 		try
 		{
            Multipart mp = (Multipart)this.m.msgs[this.idx].getContent();
+           String contentType = this.m.msgs[this.idx].getContentType();
            for (int i=0, n=mp.getCount(); i<n; i++) {
         	   Part part = mp.getBodyPart(i);
 
