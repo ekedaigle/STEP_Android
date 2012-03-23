@@ -25,24 +25,24 @@ public class MusicAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 	
-	@Override
+	//@Override
 	public int getCount() {
 		return 12;
 	}
 
-	@Override
+	//@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	//@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	//@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Button button;
 		
@@ -51,7 +51,7 @@ public class MusicAdapter extends BaseAdapter {
 			button = new Button(context);
 			button.setHeight(130);
 			button.setOnClickListener(new View.OnClickListener() {
-				@Override
+		//		@Override
 				public void onClick(View v) {
 					fragment.onClick(v);
 				}
