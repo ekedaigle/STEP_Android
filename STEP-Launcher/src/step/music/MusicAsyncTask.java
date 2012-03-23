@@ -8,6 +8,8 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,10 +34,16 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 	private DataInputStream recvStream;
 	private MusicAsyncTaskCallback callback;
 	private MusicContentHandler handler;
+	private BlockingQueue<String> queue;
 
 	public void setCallback(MusicAsyncTaskCallback callback)
 	{
 		this.callback = callback;
+	}
+	
+	public void sendMessage(String msg)
+	{
+		queue.add(msg);
 	}
 	
 	@Override
@@ -43,11 +51,12 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 	{
 		int port = arg0[0];
 		handler = new MusicContentHandler();
+		queue = new LinkedBlockingQueue<String>();
 		
 		while (true)
 		{
 			try {
-				sock = new Socket("192.168.1.4",  port);
+				sock = new Socket("10.0.50.1",  port);
 				sendStream = new DataOutputStream(sock.getOutputStream());
 				recvStream = new DataInputStream(sock.getInputStream());
 			} catch (UnknownHostException e) {
@@ -106,7 +115,19 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 			e.printStackTrace();
 		}
 		
-		return null;
+		while (true)
+		{
+			try {
+				String msg = queue.take();
+				sendStream.writeBytes(msg);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override

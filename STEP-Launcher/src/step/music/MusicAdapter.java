@@ -10,10 +10,13 @@ public class MusicAdapter extends BaseAdapter {
 
 	private String titles[];
 	private Context context;
+	private MusicFragment fragment;
 	
-	public MusicAdapter(Context c)
+	public MusicAdapter(MusicFragment m)
 	{
-		context = c;
+		fragment = m;
+		context = m.getActivity();
+		titles = new String[0];
 	}
 	
 	public void setTitles(String[] t)
@@ -44,7 +47,16 @@ public class MusicAdapter extends BaseAdapter {
 		Button button;
 		
 		if (convertView == null)
+		{
 			button = new Button(context);
+			button.setHeight(130);
+			button.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					fragment.onClick(v);
+				}
+			});
+		}
 		else
 			button = (Button)convertView;
 		
@@ -52,8 +64,6 @@ public class MusicAdapter extends BaseAdapter {
 			button.setText(titles[position]);
 		else
 			button.setText("");
-		
-		button.setHeight(130);
 		
 		return button;
 	}
