@@ -3,24 +3,28 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-<ListView 
+    
+	<ListView 
 		    android:id="@+id/newsFrag_listview"
         	android:layout_width="fill_parent"
         	android:layout_height="fill_parent"
         	android:visibility="visible"
         	android:scrollbars="vertical" />
-    <ScrollView android:id="@+id/rulesscroll"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+	
+<!--     <ScrollView  -->
+<!--         android:id="@+id/rulesscroll" -->
+<!--     	android:layout_width="fill_parent"  -->
+<!--     	android:layout_height="fill_parent"> -->
    
     
-	<TextView android:id="@+id/job_text" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:textColor="#ffcc00"
-		android:paddingTop="5dip"
-		android:paddingBottom="38dip" 
-		android:paddingLeft="8dip"
-		android:paddingRight="8dip" />
- </ScrollView>
+<!-- 	<TextView android:id="@+id/job_text"  -->
+<!-- 		android:layout_width="wrap_content" -->
+<!-- 		android:layout_height="wrap_content"  -->
+<!-- 		android:textColor="#ffcc00" -->
+<!-- 		android:paddingTop="5dip" -->
+<!-- 		android:paddingBottom="38dip"  -->
+<!-- 		android:paddingLeft="8dip" -->
+<!-- 		android:paddingRight="8dip" /> -->
+<!--  	</ScrollView> -->
 
 </LinearLayout>
