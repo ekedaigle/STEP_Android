@@ -2,11 +2,9 @@ package step;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import com.tmm.android.rssreader.reader.NewspaperFragment;
+
 import step.email.EmailFragment;
 import step.music.MusicFragment;
-
-import com.step.launcher.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -14,8 +12,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.View;
 import android.widget.Button;
+
+import com.step.launcher.R;
+import com.tmm.android.rssreader.NewspaperFragment;
 
 public class LauncherActivity extends Activity
 {	

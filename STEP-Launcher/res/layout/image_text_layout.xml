@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 
-
-	<ImageView android:id="@+id/feed_image"
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:paddingTop="5dip"
-		android:paddingRight="3dip" />
-
+    <ScrollView android:id="@+id/rulesscroll"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+   
+    
 	<TextView android:id="@+id/job_text" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
 		android:textColor="#ffcc00"
 		android:paddingTop="5dip"
-		android:paddingBottom="28dip" 
+		android:paddingBottom="38dip" 
 		android:paddingLeft="8dip"
 		android:paddingRight="8dip" />
-
+ </ScrollView>
 </LinearLayout>
