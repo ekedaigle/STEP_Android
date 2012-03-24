@@ -1,7 +1,10 @@
 package com.tmm.android.rssreader;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,17 +91,29 @@ public class RssReader {
 	private void buildJsonObject(Article article, JSONObject current) throws JSONException {
 		String title = article.getTitle();
 		String description = article.getDescription();
-		String date = article.getPubDate();
+		String date_of_article = article.getPubDate();
 		String imgLink = article.getImgLink();
+		String delims = "[-]";
+		String[] dates = date_of_article.split(delims);
 		
-		StringBuffer sb = new StringBuffer();
-		sb.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
-		sb.append(BREAK);
-		sb.append(description);
-		sb.append(BREAK);
-		sb.append(SMALL_OPEN).append(ITALIC_OPEN).append(date).append(ITALIC_CLOSE).append(SMALL_CLOSE);
 		
-		current.put("text", Html.fromHtml(sb.toString()));
+		StringBuffer header = new StringBuffer();
+		header.append(title);
+		header.append(" ");
+		header.append(dates[0]);
+		
+		
+		
+		StringBuffer body = new StringBuffer();
+		body.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
+		body.append(BREAK);
+		body.append(description);
+		body.append(BREAK);
+		body.append(SMALL_OPEN).append(ITALIC_OPEN).append(dates[0]).append(ITALIC_CLOSE).append(SMALL_CLOSE);
+		
+		
+		current.put("header", Html.fromHtml(header.toString()));
+		current.put("text", Html.fromHtml(body.toString()));
 		//Log.e("Nimit see html","the html is" + Html.fromHtml(sb.toString()));
 		current.put("imageLink", imgLink);
 	}

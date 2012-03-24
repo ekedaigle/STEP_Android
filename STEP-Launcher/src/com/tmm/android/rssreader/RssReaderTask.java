@@ -33,16 +33,16 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected String doInBackground(String...strings){
 
-		Log.e("we are in background", "we are in background1");
+		
 		String feed = "http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
 
 		RSSHandler rh = new RSSHandler();
-		Log.e("we are in background", "we are in background2");
+		
 		List<Article> articles =  rh.getLatestArticles(feed);
-		Log.e("we are in background", "we are in background3");
-		Log.e("RSSREader", "The size of the articles is" + articles.size());
+		
+		
 		r.fillData(articles);
-		Log.e("we are in background", "we are in background5");
+		
 		
 		return "";
 		

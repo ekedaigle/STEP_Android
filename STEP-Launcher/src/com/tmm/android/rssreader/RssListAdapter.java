@@ -56,7 +56,13 @@ private ArrayList<JSONObject> data;
 		  view = convertView;
 	  }
 	  
-	  return this.bindData(view, position);
+	  try {
+		return this.bindData(view, position);
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return view;
 
     //Activity activity = (Activity) getContext();
     //LayoutInflater inflater = activity.getLayoutInflater();
@@ -187,8 +193,9 @@ public long getItemId(int position) {
 /**
  * Bind the provided data to the view
  * This is the only method not required by base adapter.		
+ * @throws JSONException 
  */
-public View bindData(View view, int position){
+public View bindData(View view, int position) throws JSONException{
 	// make sure it's worth drawing the view
 	if (this.data.get(position) == null){
 		return view;
@@ -196,11 +203,14 @@ public View bindData(View view, int position){
 	
 	// pull out the object
 	JSONObject item = this.data.get(position);
-	
+	Spanned text = (Spanned) item.get("header");
+//  Spanned text = (Spanned) jsonImageText.get("text");
+//  //Log.e("RSSListAdapter", "the text is" + text);
+//  textView.setText(text);
 	View viewElement = view.findViewById(R.id.newsList_text);
 	TextView tv = (TextView) viewElement;
 	
-	tv.setText(item.toString());
+	tv.setText(text);
 	
 	// Extract the view object
 	//View viewElement = view.findViewById(R.id.job_text);
