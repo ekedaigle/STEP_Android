@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.tmm.android.rssreader;
 
 import java.util.ArrayList;
@@ -9,15 +6,14 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
+import com.step.launcher.R;
+
+import android.app.Activity;
 import android.text.Html;
 import android.util.Log;
+import android.widget.ListView;
 
-/**
- * @author rob
- *
- */
-public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
+public class RssReader {
 	
 	private final static String BOLD_OPEN = "<B>";
 	private final static String BOLD_CLOSE = "</B>";
@@ -26,21 +22,30 @@ public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
 	private final static String ITALIC_CLOSE = "</I>";
 	private final static String SMALL_OPEN = "<SMALL>";
 	private final static String SMALL_CLOSE = "</SMALL>";
-
-	/**
-	 * This method defines a feed URL and then calles our SAX Handler to read the article list
-	 * from the stream
-	 * 
-	 * @return List<JSONObject> - suitable for the List View activity
-	 */
-	public static List<JSONObject> getLatestRssFeed(){
+	
+	private ArrayList<JSONObject> jobs;
+	private Activity activity; 
+	private ListView newspaper_listView;
+	
+	public ArrayList<JSONObject> getJobs(){
+		return this.jobs;
+	}
+	
+	RssReader(Activity a, ListView lv){
+		this.jobs = new ArrayList<JSONObject>();
+		this.activity = a;
+		this.newspaper_listView = lv;
+	}
+	
+	public ArrayList<JSONObject> getLatestRssFeed(){
 		//String feed = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
 		String feed = "http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
 		
 		RSSHandler rh = new RSSHandler();
 		List<Article> articles =  rh.getLatestArticles(feed);
-		Log.e("RSS ERROR", "Number of articles " + articles.size());
-		return fillData(articles);
+		
+		fillData(articles);
+		return this.getJobs();
 	}
 	
 	
@@ -51,9 +56,8 @@ public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
 	 * @param articles - list<Article>
 	 * @return List<JSONObject> - suitable for the List View activity
 	 */
-	private static List<JSONObject> fillData(List<Article> articles) {
+	public void fillData(List<Article> articles) {
 
-        List<JSONObject> items = new ArrayList<JSONObject>();
         for (Article article : articles) {
             JSONObject current = new JSONObject();
             try {
@@ -61,10 +65,15 @@ public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
 			} catch (JSONException e) {
 				Log.e("RSS ERROR", "Error creating JSON Object from RSS feed");
 			}
-			items.add(current);
+			this.jobs.add(current);
         }
-        
-        return items;
+
+	}
+	
+	public void displayArticles(){
+		RssListAdapter adapter = new RssListAdapter(this.activity, R.layout.news_list_element, this.jobs);
+		 
+		this.newspaper_listView.setAdapter(adapter);
 	}
 
 
@@ -76,7 +85,7 @@ public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
 	 * @param current
 	 * @throws JSONException
 	 */
-	private static void buildJsonObject(Article article, JSONObject current) throws JSONException {
+	private void buildJsonObject(Article article, JSONObject current) throws JSONException {
 		String title = article.getTitle();
 		String description = article.getDescription();
 		String date = article.getPubDate();
@@ -92,27 +101,5 @@ public class RssReader extends AsyncTask<List<JSONObject>, Void, String> {
 		current.put("text", Html.fromHtml(sb.toString()));
 		//Log.e("Nimit see html","the html is" + Html.fromHtml(sb.toString()));
 		current.put("imageLink", imgLink);
-	}
-
-
-	
-
-
-	@Override
-	protected String doInBackground(List<JSONObject>... params) {
-
-		Log.e("we are in background", "we are in background1");
-String feed = "http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
-
-		RSSHandler rh = new RSSHandler();
-		Log.e("we are in background", "we are in background2");
-		List<Article> articles =  rh.getLatestArticles(feed);
-		Log.e("we are in background", "we are in background3");
-		Log.e("we are in background", "we are in background4");
-		params[0] = fillData(articles);
-		Log.e("we are in background", "we are in background5");
-		
-		return null;
-		
 	}
 }

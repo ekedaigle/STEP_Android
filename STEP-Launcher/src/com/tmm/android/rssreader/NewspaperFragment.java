@@ -12,15 +12,7 @@ import step.music.MusicAsyncTask;
 
 import android.util.Log;
 
-
-
-/**
- * @author rob
- *
- */
-
 import com.step.launcher.R;
-import com.tmm.android.rssreader.RssActivity;
 import com.tmm.android.rssreader.RssListAdapter;
 
 import android.app.Fragment;
@@ -33,10 +25,11 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class NewspaperFragment extends Fragment {
-	RssActivity rssActivity;
+	//RssActivity rssActivity;
 	private RssListAdapter adapter;
+	RssReaderTask rssReaderTask;
 	RssReader rssReader;
-	List<JSONObject> rssreader = new ArrayList<JSONObject>();
+	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
 
 	
 	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
@@ -46,7 +39,7 @@ public class NewspaperFragment extends Fragment {
     		
     		try
         	{
-        		RssReader.getLatestRssFeed();
+        		NewspaperFragment.this.rssReader.getLatestRssFeed();
         	}
         	catch(Exception e)
         	{
@@ -67,36 +60,30 @@ public class NewspaperFragment extends Fragment {
 		final ListView list = (ListView) V.findViewById(R.id.newsFrag_listview);
 		list.setTextFilterEnabled(true);
 		list.setOnItemClickListener(listItemSelectListener);
-		
-		
-		
-
-
-				  
-					try {
-						Log.e("test 1","we are testing");
-						List<JSONObject> jobs = new ArrayList<JSONObject>();
-						rssReader = new RssReader();
-				        
-				        rssReader.execute(jobs);
-
-						
-						
-						//rssReader.doInBackground(jobs);
-
-						//RssReader.getLatestRssFeed();
-						Log.e("test 1","we are testing2");
-						
-						 adapter = new RssListAdapter(getActivity(), 0,(ArrayList<JSONObject>) jobs);
-						 Log.e("test 1","we are testing3");
-						 adapter.getView(0, V, list);
-						 Log.e("test 1","we are testing4");
-						
-						 
-
-					} catch (Exception e) {
-						Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
-					}
+	    this.rssReader = new RssReader(getActivity(), list);
+		try {
+			Log.e("test 1","we are testing");
+			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
+			rssReaderTask = new RssReaderTask(this.rssReader, V.findViewById(R.layout.newspaper_fragment));
+			rssReaderTask.execute();
+			
+			
+			
+			//rssReader.doInBackground(jobs);
+			
+			//RssReader.getLatestRssFeed();
+			Log.e("test 1","we are testing2");
+			
+			 
+			 
+			 //adapter.getView(0, V, list);
+			 Log.e("test 1","we are testing4");
+			
+			 
+	
+		} catch (Exception e) {
+			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
+		}
 				  
 					
 					
