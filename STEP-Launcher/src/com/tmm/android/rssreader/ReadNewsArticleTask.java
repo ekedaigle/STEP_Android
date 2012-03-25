@@ -1,16 +1,10 @@
 package com.tmm.android.rssreader;
 
-import java.util.ArrayList;
-
-import javax.mail.Address;
-import javax.mail.Multipart;
-import javax.mail.Part;
-import javax.mail.internet.MimeBodyPart;
-
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
-import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,28 +20,27 @@ public class ReadNewsArticleTask extends AsyncTask<String, Void, String>{
 	@Override
 	protected String doInBackground(String... arg0) {
 		String fullBody = null;
-		try
-		{
-			ArrayList<JSONObject> article_items;
-			JSONObject item;
-			article_items = this.r.getJobs();
-			item = article_items.get(this.idx);
-			fullBody = (String) item.get("text").toString();
-			//Spanned text = (Spanned) item.get("header");
-			return fullBody;
-           }
-		
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			
-		}
-		return "Failed";
+		return fullBody;
 	}
 	protected void onPostExecute(String result)
 	{
+		String images = null;
+		
+		
+		try {
+			JSONObject item;
+			
+			item = this.r.getJobs().get(this.idx);
+			images = (String) item.get("imageLink");
+			result = (String) item.get("text").toString();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	TextView t = (TextView) this.v;
+    	Log.e("the image links are "," the images links are " + images);
     	t.setText(result);
+    	
 	}
 	
 	

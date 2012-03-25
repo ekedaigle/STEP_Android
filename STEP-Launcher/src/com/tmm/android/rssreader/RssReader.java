@@ -1,15 +1,9 @@
 package com.tmm.android.rssreader;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import step.email.ReadEmailMessageTask;
 
 import com.step.launcher.R;
 
@@ -50,7 +44,10 @@ public class RssReader {
 	
 	public ArrayList<JSONObject> getLatestRssFeed(){
 		//String feed = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
-		String feed = "http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
+		//finance = "http://fulltextrssfeed.com/finance.yahoo.com/";
+		//government = "http://fulltextrssfeed.com/dir.yahoo.com/rss/dir/getrss.php?gov"
+		String feed = "http://fulltextrssfeed.com/finance.yahoo.com/";
+		//String feed = "http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
 		
 		RSSHandler rh = new RSSHandler();
 		List<Article> articles =  rh.getLatestArticles(feed);

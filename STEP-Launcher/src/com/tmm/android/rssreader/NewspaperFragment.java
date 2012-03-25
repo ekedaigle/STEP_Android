@@ -8,9 +8,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import step.email.EmailFragment;
-import step.music.MusicAsyncTask;
-
 import android.util.Log;
 
 import com.step.launcher.R;
@@ -67,7 +64,7 @@ public class NewspaperFragment extends Fragment {
 		list.setOnItemClickListener(listItemSelectListener);
 	    this.rssReader = new RssReader(getActivity(), list);
 		try {
-			Log.e("test 1","we are testing");
+			
 			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
 			rssReaderTask = new RssReaderTask(this.rssReader, V.findViewById(R.layout.newspaper_fragment));
 			rssReaderTask.execute();

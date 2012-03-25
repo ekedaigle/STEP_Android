@@ -64,7 +64,7 @@ public class RSSHandler extends DefaultHandler {
 	 */
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
-		Log.e("the localname is","the localname is "+ localName.toString());
+		
 		if (localName.equalsIgnoreCase("title"))
 		{
 			Log.d("LOGGING RSS XML", "Setting article title: " + chars.toString());
@@ -96,7 +96,6 @@ public class RSSHandler extends DefaultHandler {
 				Log.d("LOGGING RSS XML", "Setting article link url: " + chars.toString());
 				currentArticle.setUrl(new URL(chars.toString()));
 			} catch (MalformedURLException e) {
-				Log.e("The characters are","The characters are" + chars.toString());
 				Log.e("RSA Error", e.getMessage() + chars.toString());
 			}
 
@@ -175,9 +174,7 @@ public class RSSHandler extends DefaultHandler {
 		} catch (ParserConfigurationException e) {
 			Log.e("RSS Handler Parser Config", e.toString());
 		}
-		for(int i=0; i<articleList.size();i++){
-          Log.e("Nimit crap","article info is " + articleList.get(i));
-      }
+		
 		return articleList;
 	}
 

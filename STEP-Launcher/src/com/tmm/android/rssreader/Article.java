@@ -78,7 +78,9 @@ public class Article {
 		this.description = description;
 		
 		//parse description for any image or video links
+		
 		if (description.contains("<img ")){
+			
 			String img  = description.substring(description.indexOf("<img "));
 			String cleanUp = img.substring(0, img.indexOf(">")+1);
 			img = img.substring(img.indexOf("src=") + 5);
@@ -89,9 +91,11 @@ public class Article {
 			img = img.substring(0, indexOf);
 			
 			setImgLink(img);
+			Log.e("there is an image","there is an image " + img);
 			
 			this.description = this.description.replace(cleanUp, "");
 		}
+		
 	}
 	/**
 	 * @return the description
