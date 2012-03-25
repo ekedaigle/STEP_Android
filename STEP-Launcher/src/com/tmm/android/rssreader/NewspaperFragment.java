@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import step.email.EmailFragment;
 import step.music.MusicAsyncTask;
 
 import android.util.Log;
@@ -35,11 +36,15 @@ public class NewspaperFragment extends Fragment {
 	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     	{
-    		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+    		
     		
     		try
         	{
-        		NewspaperFragment.this.rssReader.getLatestRssFeed();
+    			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+    			NewspaperFragment.this.rssReader.readArticle(position, getActivity().findViewById(R.id.txtReadArticle));
+        		
         	}
         	catch(Exception e)
         	{

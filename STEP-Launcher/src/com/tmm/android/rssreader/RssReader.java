@@ -9,11 +9,14 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import step.email.ReadEmailMessageTask;
+
 import com.step.launcher.R;
 
 import android.app.Activity;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 public class RssReader {
@@ -39,6 +42,11 @@ public class RssReader {
 		this.activity = a;
 		this.newspaper_listView = lv;
 	}
+	
+	public void readArticle(int idx, View v) throws Exception{
+    	ReadNewsArticleTask task = new ReadNewsArticleTask(this, v, idx);
+    	task.execute();
+    }
 	
 	public ArrayList<JSONObject> getLatestRssFeed(){
 		//String feed = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";

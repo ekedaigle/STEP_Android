@@ -152,20 +152,20 @@ public class RSSHandler extends DefaultHandler {
 		URL url = null;
 		try {
 
-Log.e("RSSHandler","pinpoint 1");
+
 			SAXParserFactory spf = SAXParserFactory.newInstance();
-			Log.e("RSSHandler","pinpoint 2");
+
 			SAXParser sp = spf.newSAXParser();
-			Log.e("RSSHandler","pinpoint 3");
+
 			XMLReader xr = sp.getXMLReader();
-			Log.e("RSSHandler","pinpoint 4");
+			
 
 			url = new URL(feedUrl);
-			Log.e("RSSHandler","pinpoint 5");
+			
 			xr.setContentHandler(this);
-			Log.e("RSSHandler","pinpoint 6" + url.toString());
+			
 			xr.parse(new InputSource(url.openStream()));
-			Log.e("RSSHandler","pinpoint 7");
+			
 
 
 		} catch (IOException e) {
