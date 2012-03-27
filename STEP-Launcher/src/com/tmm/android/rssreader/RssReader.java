@@ -97,7 +97,7 @@ public class RssReader {
 		String title = article.getTitle();
 		String description = article.getDescription();
 		String date_of_article = article.getPubDate();
-		String imgLink = article.getImgLink();
+		//String imgLink = article.getImgLink();
 		String delims = "[-]";
 		String[] dates = date_of_article.split(delims);
 		
@@ -120,6 +120,6 @@ public class RssReader {
 		current.put("header", Html.fromHtml(header.toString()));
 		current.put("text", Html.fromHtml(body.toString()));
 		//Log.e("Nimit see html","the html is" + Html.fromHtml(sb.toString()));
-		current.put("imageLink", imgLink);
+		//current.put("imageLink", imgLink);
 	}
 }

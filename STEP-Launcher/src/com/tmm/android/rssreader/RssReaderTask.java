@@ -30,7 +30,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		// government = "http://fulltextrssfeed.com/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln"
 		
 		//health = "http://fulltextrssfeed.com/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln"
-		String feed = "http://fulltextrssfeed.com/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln";
+		String feed = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
 		// String feed ="http://fulltextrssfeed.com/rss.cnn.com/rss/cnn_topstories.rss";
 
 		RSSHandler rh = new RSSHandler();
