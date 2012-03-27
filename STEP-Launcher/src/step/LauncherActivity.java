@@ -3,6 +3,7 @@ package step;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import step.address.AddressFragment;
 import step.email.EmailFragment;
 import step.music.MusicFragment;
 import android.app.Activity;
