@@ -64,7 +64,7 @@ public class RSSHandler extends DefaultHandler {
 	 */
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
-		Log.e("the localname is","the localname is "+ localName.toString());
+		
 		if (localName.equalsIgnoreCase("title"))
 		{
 			Log.d("LOGGING RSS XML", "Setting article title: " + chars.toString());
@@ -96,7 +96,6 @@ public class RSSHandler extends DefaultHandler {
 				Log.d("LOGGING RSS XML", "Setting article link url: " + chars.toString());
 				currentArticle.setUrl(new URL(chars.toString()));
 			} catch (MalformedURLException e) {
-				Log.e("The characters are","The characters are" + chars.toString());
 				Log.e("RSA Error", e.getMessage() + chars.toString());
 			}
 
@@ -152,20 +151,20 @@ public class RSSHandler extends DefaultHandler {
 		URL url = null;
 		try {
 
-Log.e("RSSHandler","pinpoint 1");
+
 			SAXParserFactory spf = SAXParserFactory.newInstance();
-			Log.e("RSSHandler","pinpoint 2");
+
 			SAXParser sp = spf.newSAXParser();
-			Log.e("RSSHandler","pinpoint 3");
+
 			XMLReader xr = sp.getXMLReader();
-			Log.e("RSSHandler","pinpoint 4");
+			
 
 			url = new URL(feedUrl);
-			Log.e("RSSHandler","pinpoint 5");
+			
 			xr.setContentHandler(this);
-			Log.e("RSSHandler","pinpoint 6" + url.toString());
+			
 			xr.parse(new InputSource(url.openStream()));
-			Log.e("RSSHandler","pinpoint 7");
+			
 
 
 		} catch (IOException e) {
@@ -175,9 +174,7 @@ Log.e("RSSHandler","pinpoint 1");
 		} catch (ParserConfigurationException e) {
 			Log.e("RSS Handler Parser Config", e.toString());
 		}
-		for(int i=0; i<articleList.size();i++){
-          Log.e("Nimit crap","article info is " + articleList.get(i));
-      }
+		
 		return articleList;
 	}
 

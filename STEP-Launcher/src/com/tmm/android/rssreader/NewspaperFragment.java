@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import step.music.MusicAsyncTask;
-
 import android.util.Log;
 
 import com.step.launcher.R;
@@ -35,11 +33,15 @@ public class NewspaperFragment extends Fragment {
 	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     	{
-    		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+    		
     		
     		try
         	{
-        		NewspaperFragment.this.rssReader.getLatestRssFeed();
+    			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+    			NewspaperFragment.this.rssReader.readArticle(position, getActivity().findViewById(R.id.txtReadArticle));
+        		
         	}
         	catch(Exception e)
         	{
@@ -62,7 +64,7 @@ public class NewspaperFragment extends Fragment {
 		list.setOnItemClickListener(listItemSelectListener);
 	    this.rssReader = new RssReader(getActivity(), list);
 		try {
-			Log.e("test 1","we are testing");
+			
 			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
 			rssReaderTask = new RssReaderTask(this.rssReader, V.findViewById(R.layout.newspaper_fragment));
 			rssReaderTask.execute();

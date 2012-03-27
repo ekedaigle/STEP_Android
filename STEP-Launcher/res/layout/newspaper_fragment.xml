@@ -10,6 +10,25 @@
         	android:layout_height="fill_parent"
         	android:visibility="visible"
         	android:scrollbars="vertical" />
+	<ScrollView
+		    android:id="@+id/scrlReadArticle"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:visibility="gone" >
+	        <TextView
+	            android:id="@+id/txtReadArticle"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:background="#FFF"
+	            android:text=""
+	            android:textColor="#000"
+	            android:textSize="10pt"
+	            android:textStyle="bold"
+	            android:typeface="serif">
+	        </TextView>
+		</ScrollView>
+	
+	
 	
 <!--     <ScrollView  -->
 <!--         android:id="@+id/rulesscroll" -->
