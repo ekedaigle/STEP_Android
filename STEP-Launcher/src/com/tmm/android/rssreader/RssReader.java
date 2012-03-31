@@ -66,6 +66,7 @@ public class RssReader {
 	 */
 	public void fillData(List<Article> articles) {
 
+		this.jobs.clear();
         for (Article article : articles) {
             JSONObject current = new JSONObject();
             try {

@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import step.email.EmailFragment;
+import step.email.UpdateInboxTask;
+
 import android.util.Log;
 
 import com.step.launcher.R;
@@ -28,6 +31,7 @@ public class NewspaperFragment extends Fragment {
 	private RssListAdapter adapter;
 	RssReaderTask rssReaderTask;
 	RssReader rssReader;
+	View test;
 	int position_hold;
 	int max = 4;//the highest number of articles we will have is 5
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
@@ -114,35 +118,53 @@ public class NewspaperFragment extends Fragment {
     
     
     
-    private OnClickListener btnHealthListener = new OnClickListener() {
+    private OnClickListener btnWorldListener = new OnClickListener() {
 
-		public void onClick(View v) {
+		public void onClick(View V) {
+			
 			// TODO Auto-generated method stub
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,1);
+			rssReaderTask.execute();
+			getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
+			
 			
 		}
     	
     };
 private OnClickListener btnGovernmentListener = new OnClickListener() {
 
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View V) {
 		
+		// TODO Auto-generated method stub
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,2);
+		rssReaderTask.execute();
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
 	}
     	
     };
 private OnClickListener btnSportsListener = new OnClickListener() {
 
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View V) {
 		
+		// TODO Auto-generated method stub
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,3);
+		rssReaderTask.execute();
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
 	}
     	
     };
 private OnClickListener btnFinanceListener = new OnClickListener() {
 
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View V) {
 		
+		// TODO Auto-generated method stub
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,4);
+		rssReaderTask.execute();
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
 	}
     	
     };
@@ -163,12 +185,10 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 		
 		V.findViewById(R.id.btnNext).setOnClickListener(btnNextListener);
 		V.findViewById(R.id.btnPrevious).setOnClickListener(btnPreviousListener);
-		
 		V.findViewById(R.id.btnGovernment).setOnClickListener(btnGovernmentListener);
 		V.findViewById(R.id.btnSports).setOnClickListener(btnSportsListener);
 		V.findViewById(R.id.btnFinance).setOnClickListener(btnFinanceListener);
-		V.findViewById(R.id.btnHealth).setOnClickListener(btnHealthListener);
-		
+		V.findViewById(R.id.btnWorld).setOnClickListener(btnWorldListener);
 		
 		final ListView list = (ListView) V.findViewById(R.id.newsFrag_listview);
 		list.setTextFilterEnabled(true);
@@ -177,16 +197,20 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 		try {
 			
 			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
-			rssReaderTask = new RssReaderTask(this.rssReader, V.findViewById(R.layout.newspaper_fragment),null);
+			rssReaderTask = new RssReaderTask(this.rssReader,0);
 			rssReaderTask.execute();
 	
 		} catch (Exception e) {
 			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
 		}
+		
+			
 				  
 
 		return V;
 				
 	}
+	
+	
 	
 }

@@ -92,12 +92,14 @@ public class RSSHandler extends DefaultHandler {
 		}
 		else if (localName.equalsIgnoreCase("link"))
 		{
+			/*
 			try {
 				Log.d("LOGGING RSS XML", "Setting article link url: " + chars.toString());
 				currentArticle.setUrl(new URL(chars.toString()));
 			} catch (MalformedURLException e) {
 				Log.e("RSA Error", e.getMessage() + chars.toString());
 			}
+			*/
 
 		}
 
