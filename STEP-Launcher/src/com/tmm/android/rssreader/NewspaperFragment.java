@@ -8,9 +8,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import step.email.EmailFragment;
-import step.email.UpdateInboxTask;
-
 import android.util.Log;
 
 import com.step.launcher.R;
@@ -40,6 +37,7 @@ public class NewspaperFragment extends Fragment {
 	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     	{
+    		max = parent.getCount()-1;
     		if(position == 0){
     			getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
     		}
@@ -199,6 +197,8 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
 			rssReaderTask = new RssReaderTask(this.rssReader,0);
 			rssReaderTask.execute();
+			
+			
 	
 		} catch (Exception e) {
 			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());

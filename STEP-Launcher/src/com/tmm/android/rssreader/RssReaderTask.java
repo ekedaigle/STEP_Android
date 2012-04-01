@@ -6,9 +6,6 @@ package com.tmm.android.rssreader;
 import java.util.List;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 /**
  * @author rob
@@ -18,6 +15,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	RssReader r;
 	//View v;
 	int newspaper_id;
+	
 
 	RssReaderTask(RssReader r1, int feeder) {
 		r = r1;
@@ -58,11 +56,10 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 
 		List<Article> articles = rh.getLatestArticles(feed_change);
 
-		Log.e("first tes","first test");
+		
 		
 		r.fillData(articles);
 
-		Log.e("first tes","second test");
 		
 		return "";
 

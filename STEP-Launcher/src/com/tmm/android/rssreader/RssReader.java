@@ -12,7 +12,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
+import java.util.regex.Pattern;
 public class RssReader {
 	
 	private final static String BOLD_OPEN = "<B>";
@@ -102,17 +102,20 @@ public class RssReader {
 		String delims = "[-]";
 		String[] dates = date_of_article.split(delims);
 		
+		String pattern = "<img src(.*)>";
+		String updated = description.replaceAll(pattern, "");
+		description = updated;
 		
 		StringBuffer header = new StringBuffer();
 		header.append(title);
-		header.append(" ");
-		header.append(dates[0]);
+		//header.append(" ");
+		//header.append(dates[0]);
 		
 		
 		
 		StringBuffer body = new StringBuffer();
-		body.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
-		body.append(BREAK);
+		//body.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
+		//body.append(BREAK);
 		body.append(description);
 		body.append(BREAK);
 		body.append(SMALL_OPEN).append(ITALIC_OPEN).append(dates[0]).append(ITALIC_CLOSE).append(SMALL_CLOSE);
