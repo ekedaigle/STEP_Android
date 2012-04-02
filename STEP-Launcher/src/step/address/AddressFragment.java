@@ -5,7 +5,9 @@ import step.email.EmailFragment;
 import com.step.launcher.R;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -33,6 +36,29 @@ public class AddressFragment extends Fragment {
 	{
         View V = inflater.inflate(R.layout.address_fragment, container, false);
         this.mContactAccessor = new ContactAccessor(getActivity());
+        
+//        buttons = new Button[NUM_BUTTONS];
+//        buttons[MUSIC] = (Button)findViewById(R.id.music_button);
+//        buttons[NEWSPAPER] = (Button)findViewById(R.id.newspaper_button);
+//        buttons[ADDRESS] = (Button)findViewById(R.id.address_button);
+//        buttons[EMAIL] = (Button)findViewById(R.id.email_button);
+//        
+//        button_icons_normal = new Drawable[NUM_BUTTONS];
+//        Resources res = getResources();
+//        button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button_landscape);
+//        button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_landscape);
+//        button_icons_normal[ADDRESS] = res.getDrawable(R.drawable.address_button_landscape);
+//        button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button_landscape);
+//        
+//        button_icons_selected = new Drawable[NUM_BUTTONS];
+//        button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed_landscape);
+//        button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed_landscape);
+//        button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed_landscape);
+//        button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed_landscape);
+        
+        
+        
+        
         mContactListView = (ListView) V.findViewById(R.id.addressFrag_listview);
         mContactListView.setOnItemClickListener(listItemSelectListener);
         V.findViewById(R.id.btnSave).setOnClickListener(btnSaveListener);
