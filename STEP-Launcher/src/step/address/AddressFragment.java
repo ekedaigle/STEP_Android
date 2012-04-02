@@ -26,6 +26,7 @@ import android.provider.ContactsContract.Contacts;
 public class AddressFragment extends Fragment {
 	private ContactAccessor mContactAccessor;
 	private ListView mContactListView;
+	private boolean addingNew = false;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -35,6 +36,9 @@ public class AddressFragment extends Fragment {
         mContactListView = (ListView) V.findViewById(R.id.addressFrag_listview);
         mContactListView.setOnItemClickListener(listItemSelectListener);
         V.findViewById(R.id.btnSave).setOnClickListener(btnSaveListener);
+        V.findViewById(R.id.btnDelete).setOnClickListener(btnDeleteListener);
+        V.findViewById(R.id.btnAddContact).setOnClickListener(btnAddContactListener);
+        V.findViewById(R.id.btnAddSave).setOnClickListener(btnAddSaveListener);
         EditText text = (EditText) V.findViewById(R.id.contact_address);
         text.addTextChangedListener(textWatcher);
         text = (EditText) V.findViewById(R.id.contact_DisplayName);
@@ -60,19 +64,54 @@ public class AddressFragment extends Fragment {
 		}
 		
 		public void onTextChanged(CharSequence s, int start, int before, int count){
-			getActivity().findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
+			if(AddressFragment.this.addingNew == true){
+				getActivity().findViewById(R.id.btnAddSave).setVisibility(View.VISIBLE);
+			} else {
+				getActivity().findViewById(R.id.btnSave).setVisibility(View.VISIBLE);
+			}
 		}
 		
 	};
 	
+    private OnClickListener btnAddContactListener = new OnClickListener() {
+    	public void onClick(View v)
+    	{
+    		AddressFragment.this.addingNew = true;
+    		AddressFragment.this.mContactAccessor.clearView();
+    		populateContactList();
+    		getActivity().findViewById(R.id.btnAddSave).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.btnSave).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.btnDelete).setVisibility(View.GONE);
+    	}
+    };
+	
+    private OnClickListener btnAddSaveListener = new OnClickListener() {
+    	public void onClick(View v)
+    	{
+    		AddressFragment.this.addingNew = false;
+    		AddressFragment.this.mContactAccessor.addContact();
+    		populateContactList();
+    		getActivity().findViewById(R.id.btnAddSave).setVisibility(View.GONE);
+    	}
+    };
+    
     private OnClickListener btnSaveListener = new OnClickListener() {
     	public void onClick(View v)
     	{
-    		EditText et = (EditText) AddressFragment.this.getActivity().findViewById(R.id.contact_DisplayName);
-    		String name = et.getText().toString();
-    		AddressFragment.this.mContactAccessor.modifyContactInfo(name);
+    		TextView _mid = (TextView) getActivity().findViewById(R.id.contact_id);
+    		String contactId = _mid.getText().toString();
+    		AddressFragment.this.mContactAccessor.modifyContactInfo();
+    		AddressFragment.this.mContactAccessor.loadContact(getActivity().getContentResolver(), contactId);
     		populateContactList();
     		getActivity().findViewById(R.id.btnSave).setVisibility(View.GONE);
+    	}
+    };
+    
+    private OnClickListener btnDeleteListener = new OnClickListener() {
+    	public void onClick(View v)
+    	{
+    		AddressFragment.this.mContactAccessor.deleteContact(getActivity().getContentResolver());
+    		populateContactList();
     	}
     };
 	
@@ -86,6 +125,10 @@ public class AddressFragment extends Fragment {
     			_id = AddressFragment.this.mContactAccessor.getContactList().get(position).mContactId;
         		ci = AddressFragment.this.mContactAccessor.loadContact(getActivity().getContentResolver(), _id);
         		AddressFragment.this.mContactAccessor.displayContactInfo(ci);
+        		AddressFragment.this.addingNew = false;
+        		getActivity().findViewById(R.id.btnAddSave).setVisibility(View.GONE);
+        		getActivity().findViewById(R.id.btnSave).setVisibility(View.GONE);
+        		getActivity().findViewById(R.id.btnDelete).setVisibility(View.VISIBLE);
         	}
         	catch(Exception e)
         	{
