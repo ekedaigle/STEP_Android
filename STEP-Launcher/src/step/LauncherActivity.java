@@ -50,16 +50,16 @@ public class LauncherActivity extends Activity
         
         button_icons_normal = new Drawable[NUM_BUTTONS];
         Resources res = getResources();
-        button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button_landscape);
-        button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_landscape);
-        button_icons_normal[ADDRESS] = res.getDrawable(R.drawable.address_button_landscape);
-        button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button_landscape);
+        button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button);
+        button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button);
+        button_icons_normal[ADDRESS] = res.getDrawable(R.drawable.address_button);
+        button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button);
         
         button_icons_selected = new Drawable[NUM_BUTTONS];
-        button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed_landscape);
-        button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed_landscape);
-        button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed_landscape);
-        button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed_landscape);
+        button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed);
+        button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed);
+        button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed);
+        button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed);
         
         fragments = new Fragment[NUM_BUTTONS];
         fragments[MUSIC] = new MusicFragment();
