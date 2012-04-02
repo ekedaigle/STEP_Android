@@ -142,7 +142,7 @@ public class ContactAccessor {
 	        "_ID = '" + contactId + "'", null, null);
 	    if (cursor.moveToFirst()) {
 	        String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-	        //  Get all phone numbers.
+	    	//  Get all phone numbers.
 			contactInfo.setName(contactName);
 	        Cursor phones = contentResolver.query(Phone.CONTENT_URI, null,
 	            Phone.CONTACT_ID + " = " + contactId, null, null);
