@@ -12,7 +12,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
+import java.util.regex.Pattern;
 public class RssReader {
 	
 	private final static String BOLD_OPEN = "<B>";
@@ -66,6 +66,7 @@ public class RssReader {
 	 */
 	public void fillData(List<Article> articles) {
 
+		this.jobs.clear();
         for (Article article : articles) {
             JSONObject current = new JSONObject();
             try {
@@ -97,21 +98,24 @@ public class RssReader {
 		String title = article.getTitle();
 		String description = article.getDescription();
 		String date_of_article = article.getPubDate();
-		String imgLink = article.getImgLink();
+		//String imgLink = article.getImgLink();
 		String delims = "[-]";
 		String[] dates = date_of_article.split(delims);
 		
+		String pattern = "<img src(.*)>";
+		String updated = description.replaceAll(pattern, "");
+		description = updated;
 		
 		StringBuffer header = new StringBuffer();
 		header.append(title);
-		header.append(" ");
-		header.append(dates[0]);
+		//header.append(" ");
+		//header.append(dates[0]);
 		
 		
 		
 		StringBuffer body = new StringBuffer();
-		body.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
-		body.append(BREAK);
+		//body.append(BOLD_OPEN).append(title).append(BOLD_CLOSE);
+		//body.append(BREAK);
 		body.append(description);
 		body.append(BREAK);
 		body.append(SMALL_OPEN).append(ITALIC_OPEN).append(dates[0]).append(ITALIC_CLOSE).append(SMALL_CLOSE);
@@ -120,6 +124,6 @@ public class RssReader {
 		current.put("header", Html.fromHtml(header.toString()));
 		current.put("text", Html.fromHtml(body.toString()));
 		//Log.e("Nimit see html","the html is" + Html.fromHtml(sb.toString()));
-		current.put("imageLink", imgLink);
+		//current.put("imageLink", imgLink);
 	}
 }
