@@ -58,7 +58,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Genre>, Objec
 		while (true)
 		{
 			try {
-				sock = new Socket("10.0.50.1",  port);
+				sock = new Socket("192.168.10.1",  port);
 				sendStream = new DataOutputStream(sock.getOutputStream());
 				recvStream = new DataInputStream(sock.getInputStream());
 			} catch (UnknownHostException e) {
