@@ -131,6 +131,19 @@
 	                    android:textAppearance="?android:attr/textAppearanceMedium">
 		        	</EditText>
             	</LinearLayout>
+            	<Button
+	                android:id="@+id/btnAddSave"
+	                android:visibility="gone"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="2dip"
+	                android:background="#cdc9c9"
+	                android:clickable="true"
+	                android:text="Add"
+	                android:textColor="#000"
+	                android:textSize="12pt"
+	                android:textStyle="bold" >
+            	</Button>
 	        	<Button
 	                android:id="@+id/btnSave"
 	                android:visibility="gone"
@@ -140,6 +153,19 @@
 	                android:background="#cdc9c9"
 	                android:clickable="true"
 	                android:text="Save"
+	                android:textColor="#000"
+	                android:textSize="12pt"
+	                android:textStyle="bold" >
+            	</Button>
+            	<Button
+	                android:id="@+id/btnDelete"
+	                android:visibility="visible"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="2dip"
+	                android:background="#cdc9c9"
+	                android:clickable="true"
+	                android:text="Delete"
 	                android:textColor="#000"
 	                android:textSize="12pt"
 	                android:textStyle="bold" >

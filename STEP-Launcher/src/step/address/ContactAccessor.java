@@ -7,6 +7,8 @@ import step.email.EmailListAdapter;
 
 import com.step.launcher.R;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -22,6 +24,7 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,6 +35,11 @@ public class ContactAccessor {
 	private boolean mShowInvisible;
 	private Activity mActivity;
 	private ContactList mContactList;
+	private boolean mEmailNull;
+	private boolean mAddressNull;
+	private boolean mMobileNull;
+	private boolean mHomeNull;
+	
 	
 	public ContactAccessor(Activity act) {
 		this.mActivity = act;
@@ -70,8 +78,138 @@ public class ContactAccessor {
 		this.mActivity.findViewById(R.id.btnSave).setVisibility(View.GONE);
 	}
 	
-	public void modifyContactInfo(String id) {
+	public void deleteContact(ContentResolver contentResolver) {
+		TextView _mid = (TextView) this.mActivity.findViewById(R.id.contact_id);
+		String contactId = _mid.getText().toString();
+		String where = ContactsContract.Data.CONTACT_ID+ " = ? ";
+		String[] params = new String[] {contactId};
+		
+		ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        ops.add(ContentProviderOperation.newDelete(ContactsContract.RawContacts.CONTENT_URI)
+    	        .withSelection(where, params)
+    	        .build());
+        try {
+			contentResolver.applyBatch(ContactsContract.AUTHORITY, ops);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OperationApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void clearView() {
+		TextView _mid = (TextView) this.mActivity.findViewById(R.id.contact_id);
+		EditText mName = (EditText) this.mActivity.findViewById(R.id.contact_DisplayName);
+		EditText mHomeNumber = (EditText) this.mActivity.findViewById(R.id.contact_Homephone);
+		EditText mMobileNumber = (EditText) this.mActivity.findViewById(R.id.contact_Mobilephone);
+		EditText mAddress = (EditText) this.mActivity.findViewById(R.id.contact_address);
+		EditText mEmail = (EditText) this.mActivity.findViewById(R.id.contact_email);
+		
+		_mid.setText("");
+		mName.setText("");
+		mHomeNumber.setText("");
+		mMobileNumber.setText("");
+		mAddress.setText("");
+		mEmail.setText("");
+	}
+	
+	public void addContact(){
+		EditText mName = (EditText) this.mActivity.findViewById(R.id.contact_DisplayName);
+		EditText mHomeNumber = (EditText) this.mActivity.findViewById(R.id.contact_Homephone);
+		EditText mMobileNumber = (EditText) this.mActivity.findViewById(R.id.contact_Mobilephone);
+		EditText mAddress = (EditText) this.mActivity.findViewById(R.id.contact_address);
+		EditText mEmail = (EditText) this.mActivity.findViewById(R.id.contact_email);
+		
+		String name = mName.getText().toString();
+		ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+		String where = "";
+		String[] params = null;
+		
+		
+		Cursor newNameCur = this.mActivity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
+		        "DISPLAY_NAME = '" + name + "'", null, null);
+		if(newNameCur.moveToFirst())
+		{
+			Log.d("CONTACT APP", "Name already exists");
+			return;
+		}
+	    
+	    if(name.contentEquals("") || name == null)
+	    {
+	    	Log.d("CONTACT APP", "Name cannot be blank");
+	    	return;
+	    }
+	    
+	    ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+	             .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+	             .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+	             .build());
+		// Set Name Parameters
+		ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+				.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+				.withValue(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE)
+				.withValue(StructuredName.DISPLAY_NAME, name)
+				.build());
+		// Set Address Parameters
+		if(mAddress.getText().toString() != null){
+			ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+					.withValue(Data.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE)
+					.withValue(StructuredPostal.TYPE, StructuredPostal.TYPE_HOME)
+					.withValue(StructuredPostal.FORMATTED_ADDRESS, mAddress.getText().toString())
+					.build());
+		}
+
+		// Set Email Parameters
+		if(mEmail.getText().toString() != null){
+			ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+					.withValue(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE)
+					.withValue(Email.TYPE, Email.TYPE_HOME)
+					.withValue(Email.DATA, mEmail.getText().toString())
+					.build());
+		}
+
+		// Set Home Phone Parameters
+		if(mHomeNumber.getText().toString() != null){
+			ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+					.withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+					.withValue(Phone.TYPE, Phone.TYPE_HOME)
+					.withValue(Phone.NUMBER, mHomeNumber.getText().toString())
+					.build());
+		}
+		// Set Cell Phone Parameters
+		if(mMobileNumber.getText().toString() != null){
+			ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+					.withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+					.withValue(Phone.TYPE, Phone.TYPE_MOBILE)
+					.withValue(Phone.NUMBER, mMobileNumber.getText().toString())
+					.build());
+		}
+		try {
+			//ops.add(builder.build());
+			this.mActivity.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (OperationApplicationException e){
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void modifyContactInfo() {
 		// Register Fields
+		
+		//AccountManager am = AccountManager.get(this.mActivity);
+		//Account[] accounts = am.getAccounts();
+		
 		TextView _mid = (TextView) this.mActivity.findViewById(R.id.contact_id);
 		EditText mName = (EditText) this.mActivity.findViewById(R.id.contact_DisplayName);
 		EditText mHomeNumber = (EditText) this.mActivity.findViewById(R.id.contact_Homephone);
@@ -80,55 +218,118 @@ public class ContactAccessor {
 		EditText mEmail = (EditText) this.mActivity.findViewById(R.id.contact_email);
 		
 		String contactId = _mid.getText().toString(); 
-		ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+		String name = mName.getText().toString();
+		ArrayList<ContentProviderOperation> update_ops = new ArrayList<ContentProviderOperation>();
+		ArrayList<ContentProviderOperation> insert_ops = new ArrayList<ContentProviderOperation>();
 		String where = "";
 		String[] params = null;
 		
+		//this.mActivity.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
+		Cursor OldNameCur = this.mActivity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
+		        "_ID = '" + contactId + "'", null, null);
+	    if (OldNameCur.moveToFirst()) {
+	        String contactName = OldNameCur.getString(OldNameCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+	        //String account = OldNameCur.getString(OldNameCur.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_NAME));
+	        if(!contactName.contentEquals(name)){
+				Cursor newNameCur = this.mActivity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
+				        "DISPLAY_NAME = '" + name + "'", null, null);
+				if(newNameCur.moveToFirst())
+				{
+					Log.d("CONTACT APP", "Name already exists");
+					return;
+				}
+	        }
+	    }
+	    
+	    if(name.contentEquals("") || name == null)
+	    {
+	    	Log.d("CONTACT APP", "Name cannot be blank");
+	    	return;
+	    }
 		// Set Name Parameters
-		params = new String [] {contactId, String.valueOf(StructuredName.MIMETYPE)};
-		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ StructuredName.CONTENT_ITEM_TYPE+"' AND "+StructuredName.MIMETYPE + "=?";
-		ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+		params = new String [] {contactId};
+		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ StructuredName.CONTENT_ITEM_TYPE+"'";
+		update_ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
 				.withSelection(where, params)
-				.withValue(StructuredName.DISPLAY_NAME, mName.getText().toString())
+				.withValue(StructuredName.DISPLAY_NAME, name)
 				.build());
-		
 		// Set Address Parameters
-		params = new String [] {contactId, String.valueOf(StructuredPostal.TYPE_HOME)};
-		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ StructuredPostal.CONTENT_ITEM_TYPE+"' AND "+StructuredPostal.TYPE + "=?";
-		ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
-				.withSelection(where, params)
-				.withValue(StructuredPostal.FORMATTED_ADDRESS, mAddress.getText().toString())
-				.build());
-		
+		if(this.mAddressNull) {
+			insert_ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValue(Data.RAW_CONTACT_ID, contactId)
+					.withValue(Data.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE)
+					.withValue(StructuredPostal.TYPE, StructuredPostal.TYPE_HOME)
+					.withValue(StructuredPostal.FORMATTED_ADDRESS, mAddress.getText().toString())
+					.build());
+		} else {
+			params = new String [] {contactId, String.valueOf(StructuredPostal.TYPE_HOME)};
+			where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ StructuredPostal.CONTENT_ITEM_TYPE+"' AND "+StructuredPostal.TYPE + "=?";
+			update_ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+					.withSelection(where, params)
+					.withValue(StructuredPostal.FORMATTED_ADDRESS, mAddress.getText().toString())
+					.build());
+		}
 		// Set Email Parameters
-		params = new String [] {contactId, String.valueOf(Email.TYPE_HOME)};
-		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ Email.CONTENT_ITEM_TYPE+"' AND "+ Email.TYPE + "=?";
-		ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
-				.withSelection(where, params)
-				.withValue(Email.DATA, mEmail.getText().toString())
-				.build());
-		
+		if(this.mEmailNull){
+			insert_ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValue(Data.RAW_CONTACT_ID, contactId)
+					.withValue(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE)
+					.withValue(Email.TYPE, Email.TYPE_HOME)
+					.withValue(Email.DATA, mEmail.getText().toString())
+					.build());
+		} else {
+			params = new String [] {contactId, String.valueOf(Email.TYPE_HOME)};
+			where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+ Email.CONTENT_ITEM_TYPE+"' AND "+ Email.TYPE + "=?";
+			update_ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+					.withSelection(where, params)
+					.withValue(Email.DATA, mEmail.getText().toString())
+					.build());
+		}
 		// Set Home Phone Parameters
-		params = new String [] {contactId, String.valueOf(Phone.TYPE_HOME)};
-		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+Phone.CONTENT_ITEM_TYPE+"' AND "+Phone.TYPE + "=?";
-		ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
-				.withSelection(where, params)
-				.withValue(Phone.NUMBER, mHomeNumber.getText().toString())
-				.build());
-		
+		if(this.mHomeNull){
+			insert_ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValue(Data.RAW_CONTACT_ID, contactId)
+					.withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+					.withValue(Phone.TYPE, Phone.TYPE_HOME)
+					.withValue(Phone.NUMBER, mHomeNumber.getText().toString())
+					.build());
+		} else {
+			params = new String [] {contactId, String.valueOf(Phone.TYPE_HOME)};
+			where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+Phone.CONTENT_ITEM_TYPE+"' AND "+Phone.TYPE + "=?";
+			update_ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+					.withSelection(where, params)
+					.withValue(Phone.NUMBER, mHomeNumber.getText().toString())
+					.build());
+		}
 		// Set Cell Phone Parameters
-		params = new String [] {contactId, String.valueOf(Phone.TYPE_MOBILE)};
-		where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+Phone.CONTENT_ITEM_TYPE+"' AND "+Phone.TYPE + "=?";
-		ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
-				.withSelection(where, params)
-				.withValue(Phone.NUMBER, mMobileNumber.getText().toString())
-				.build());
+		if(this.mMobileNull){
+			insert_ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+					.withValue(Data.RAW_CONTACT_ID, contactId)
+					.withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+					.withValue(Phone.TYPE, Phone.TYPE_MOBILE)
+					.withValue(Phone.NUMBER, mMobileNumber.getText().toString())
+					.build());
+		} else {
+			params = new String [] {contactId, String.valueOf(Phone.TYPE_MOBILE)};
+			where = Data.CONTACT_ID + "=? AND " + Data.MIMETYPE +"='"+Phone.CONTENT_ITEM_TYPE+"' AND "+Phone.TYPE + "=?";
+			update_ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+					.withSelection(where, params)
+					.withValue(Phone.NUMBER, mMobileNumber.getText().toString())
+					.build());
+		}
 		try {
 			//ops.add(builder.build());
-			this.mActivity.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+			if(!update_ops.isEmpty()){
+				this.mActivity.getContentResolver().applyBatch(ContactsContract.AUTHORITY, update_ops);
+			}
+			if(!insert_ops.isEmpty()){
+				this.mActivity.getContentResolver().applyBatch(ContactsContract.AUTHORITY, insert_ops);
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (OperationApplicationException e){
+			e.printStackTrace();
+		} catch (Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -190,7 +391,12 @@ public class ContactAccessor {
         addresses.close();
 	}
 	cursor.close();
-		
+	
+	this.mAddressNull = contactInfo.getAddress()==null ? true : false;
+	this.mEmailNull   = contactInfo.getEmail()==null ? true : false;
+	this.mHomeNull    = contactInfo.getHomeNumber()==null ? true : false;
+	this.mMobileNull  = contactInfo.getMobileNumber()==null ? true : false;
+	
 	return contactInfo;
 	}
 	
