@@ -1,8 +1,8 @@
 package step.music;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public interface MusicAsyncTaskCallback
 {
-	void taskGotGenres(ArrayList<ArrayList<String>> categories);
+	void taskGotStations(Map<String, Station[]> data);
 }

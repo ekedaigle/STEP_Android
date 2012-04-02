@@ -15,18 +15,38 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/music_top_bar_height"
             android:gravity="center_vertical|center_horizontal"
-            android:text="Music view" />
+            android:textSize="24dp"
+            android:background="@drawable/music_nowplaying_label"
+            android:text="Now Playing" />
     </LinearLayout>
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android" 
-    	android:id="@+id/gridview"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="fill_parent"
-    	android:numColumns="auto_fit"
-    	android:verticalSpacing="10dp"
-    	android:horizontalSpacing="10dp"
-    	android:columnWidth="276dp"
-    	android:stretchMode="columnWidth"
-    	android:gravity="center" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+        
+		<ScrollView
+		    android:id="@+id/musicScrollView"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="0.5" >
+		    
+			<LinearLayout
+			    xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:id="@+id/musicScrollLayout"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical" >
+		    </LinearLayout>
+	    </ScrollView>
+	    
+		<GridView
+		    android:id="@+id/musicGridView"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_weight="0.2" >
+		</GridView>
+    </LinearLayout>
 
 </LinearLayout>
