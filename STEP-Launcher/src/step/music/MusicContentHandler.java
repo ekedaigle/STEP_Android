@@ -2,6 +2,7 @@ package step.music;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.xml.sax.Attributes;
@@ -12,10 +13,16 @@ public class MusicContentHandler extends DefaultHandler {
 	
 	private ArrayList<ArrayList<String>> categories;
 	private ArrayList<String> category;
-	private Map<String, Station[]> stations = new HashMap<String, Station[]>();
+	private Map<String, Genre> stations = new HashMap<String, Genre>();
 	
 	@Override
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+		if (localName.compareTo("category") == 0)
+		{
+			
+		}
+		
+		
 		if (localName.compareTo("categories") == 0)
 			categories = new ArrayList<ArrayList<String> >();
 		else if (localName.compareTo("category") == 0)
@@ -35,7 +42,7 @@ public class MusicContentHandler extends DefaultHandler {
 		}
 	}
 	
-	public Map<String, Station[]> getStations()
+	public Map<String, Genre> getStations()
 	{
 		return stations;
 	}

@@ -25,7 +25,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	
 	private MusicAsyncTask asyncTask;
 	private MusicAdapter adapter;
-	private Map<String, Station[]> stations;
+	private Map<String, Genre> stations;
 	private ArrayList<Button> genre_buttons;
 	private LinearLayout scrollLayout;
 	
@@ -41,15 +41,11 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
         asyncTask.setCallback(this);
         asyncTask.execute(baseStationPort);
         
-        HashMap<String, Station[]> testMap = new HashMap<String, Station[]>();
-        testMap.put("Genre1", new Station[3]);
-        testMap.put("Genre2", new Station[4]);
-        this.taskGotStations(testMap);
         return v;
 	}
 
 	@Override
-	public void taskGotStations(Map<String, Station[]> stations)
+	public void taskGotStations(Map<String, Genre> stations)
 	{
 		this.stations = stations;
 		LinearLayout layout = (LinearLayout)scrollLayout;
@@ -66,6 +62,6 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	public void onClick(View v)
 	{
 		String title = ((Button)v).getText().toString();
-		Station[] stationList = stations.get(title);
+		Genre genre = stations.get(title);
 	}
 }
