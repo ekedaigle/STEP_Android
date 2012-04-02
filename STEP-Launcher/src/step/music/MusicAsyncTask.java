@@ -8,6 +8,8 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -27,7 +29,7 @@ import org.xml.sax.XMLReader;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<String>>, Object>
+public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Station[]>, Object>
 {
 	private Socket sock;
 	private DataOutputStream sendStream;
@@ -73,7 +75,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				continue;
 			}
 			
 			break;
@@ -108,7 +110,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 				e.printStackTrace();
 			}
 			
-			publishProgress(handler.getCategories());
+			publishProgress(handler.getStations());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -131,10 +133,10 @@ public class MusicAsyncTask extends AsyncTask<Integer, ArrayList<ArrayList<Strin
 	}
 	
 	@Override
-	protected void onProgressUpdate(ArrayList<ArrayList<String>>... data)
+	protected void onProgressUpdate(Map<String, Station[]>... data)
 	{
 		if (data.length > 0)
-			callback.taskGotGenres(data[0]);
+			callback.taskGotStations(data[0]);
     }
 
 }

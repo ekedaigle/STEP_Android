@@ -1,6 +1,8 @@
 package step.music;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -10,6 +12,7 @@ public class MusicContentHandler extends DefaultHandler {
 	
 	private ArrayList<ArrayList<String>> categories;
 	private ArrayList<String> category;
+	private Map<String, Station[]> stations = new HashMap<String, Station[]>();
 	
 	@Override
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
@@ -25,15 +28,15 @@ public class MusicContentHandler extends DefaultHandler {
 	}
 	
 	@Override
-	public void endElement(String uri, String localName, String qName)throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (localName.compareTo("category") == 0) {
 			categories.add(category);
 			category = null;
 		}
 	}
 	
-	public ArrayList<ArrayList<String>> getCategories()
+	public Map<String, Station[]> getStations()
 	{
-		return categories;
+		return stations;
 	}
 }
