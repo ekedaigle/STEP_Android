@@ -8,6 +8,7 @@
         android:textSize="12pt"
         android:textStyle="bold" 
         android:gravity="center"
+        android:ellipsize="end"
         android:background="@drawable/generic_button_action"
         android:layout_height="fill_parent"
 		android:layout_width="fill_parent"/>    
