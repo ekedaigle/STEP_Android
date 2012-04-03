@@ -7,6 +7,7 @@ import com.step.launcher.R;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,8 +46,7 @@ public class SendEmailTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String result)
 	{
-    	TextView tv   = (TextView) this.activity.findViewById(R.id.txtConn);
-    	tv.setText("Mail Sent");
+    	Log.d("EMAIL APP", "Mail Sent");
 		EditText body = (EditText) this.activity.findViewById(R.id.compose_message_content);
     	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
     	EditText to   = (EditText) this.activity.findViewById(R.id.compose_to);

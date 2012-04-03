@@ -36,29 +36,6 @@ public class AddressFragment extends Fragment {
 	{
         View V = inflater.inflate(R.layout.address_fragment, container, false);
         this.mContactAccessor = new ContactAccessor(getActivity());
-        
-//        buttons = new Button[NUM_BUTTONS];
-//        buttons[MUSIC] = (Button)findViewById(R.id.music_button);
-//        buttons[NEWSPAPER] = (Button)findViewById(R.id.newspaper_button);
-//        buttons[ADDRESS] = (Button)findViewById(R.id.address_button);
-//        buttons[EMAIL] = (Button)findViewById(R.id.email_button);
-//        
-//        button_icons_normal = new Drawable[NUM_BUTTONS];
-//        Resources res = getResources();
-//        button_icons_normal[MUSIC] = res.getDrawable(R.drawable.music_button_landscape);
-//        button_icons_normal[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_landscape);
-//        button_icons_normal[ADDRESS] = res.getDrawable(R.drawable.address_button_landscape);
-//        button_icons_normal[EMAIL] = res.getDrawable(R.drawable.email_button_landscape);
-//        
-//        button_icons_selected = new Drawable[NUM_BUTTONS];
-//        button_icons_selected[MUSIC] = res.getDrawable(R.drawable.music_button_pressed_landscape);
-//        button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed_landscape);
-//        button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed_landscape);
-//        button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed_landscape);
-        
-        
-        
-        
         mContactListView = (ListView) V.findViewById(R.id.addressFrag_listview);
         mContactListView.setOnItemClickListener(listItemSelectListener);
         V.findViewById(R.id.btnSave).setOnClickListener(btnSaveListener);
@@ -105,6 +82,8 @@ public class AddressFragment extends Fragment {
     		AddressFragment.this.addingNew = true;
     		AddressFragment.this.mContactAccessor.clearView();
     		populateContactList();
+    		getActivity().findViewById(R.id.lblContactStart).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.scrlConatact).setVisibility(View.VISIBLE);
     		getActivity().findViewById(R.id.btnAddSave).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.btnSave).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.btnDelete).setVisibility(View.GONE);
@@ -136,6 +115,8 @@ public class AddressFragment extends Fragment {
     private OnClickListener btnDeleteListener = new OnClickListener() {
     	public void onClick(View v)
     	{
+    		getActivity().findViewById(R.id.lblContactStart).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.scrlConatact).setVisibility(View.GONE);
     		AddressFragment.this.mContactAccessor.deleteContact(getActivity().getContentResolver());
     		populateContactList();
     	}
@@ -152,6 +133,8 @@ public class AddressFragment extends Fragment {
         		ci = AddressFragment.this.mContactAccessor.loadContact(getActivity().getContentResolver(), _id);
         		AddressFragment.this.mContactAccessor.displayContactInfo(ci);
         		AddressFragment.this.addingNew = false;
+        		getActivity().findViewById(R.id.lblContactStart).setVisibility(View.GONE);
+        		getActivity().findViewById(R.id.scrlConatact).setVisibility(View.VISIBLE);
         		getActivity().findViewById(R.id.btnAddSave).setVisibility(View.GONE);
         		getActivity().findViewById(R.id.btnSave).setVisibility(View.GONE);
         		getActivity().findViewById(R.id.btnDelete).setVisibility(View.VISIBLE);

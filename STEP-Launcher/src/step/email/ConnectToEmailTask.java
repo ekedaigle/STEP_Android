@@ -2,14 +2,14 @@ package step.email;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.util.Log;
 import android.view.*;
 
 public class ConnectToEmailTask extends AsyncTask<String, Void, String> {
 	Mail m;
 	View v;
-	ConnectToEmailTask(Mail m1, View v1){
+	ConnectToEmailTask(Mail m1){
 		m = m1;
-		v = v1;
 	}
 	@Override
 	protected String doInBackground(String...strings)
@@ -36,8 +36,7 @@ public class ConnectToEmailTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String result)
 	{
-		TextView con = (TextView) v;
-		con.setText(result);
+		Log.d("EMAIL APP", result);
     	UpdateInboxTask task = new UpdateInboxTask(this.m);
     	task.execute();
 		//textView.setText(result);

@@ -11,136 +11,218 @@
 	    android:layout_weight="3"
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical" > 
-  		<Button
+		<Button
              android:id="@+id/btnAddContact"
              android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_margin="2dip"
+             android:layout_height="@dimen/music_top_bar_height"
              android:clickable="true"
 			 android:layout_alignParentBottom="true"
-             android:background="@drawable/address_add_contact"
+			 android:text="Add Contact"
+			 android:textSize="12pt"
+			 android:textColor="#FFF"
+             android:background="@drawable/address_addcon_bkgd"
              android:textStyle="bold" />
+		<TextView
+	        android:id="@+id/lblContacts"
+	        android:layout_width="fill_parent"
+	        android:layout_height="@dimen/music_top_bar_height"
+   			android:background="@drawable/music_nowplaying_label"
+   			android:textSize="14pt"
+   			android:text="CONTACTS"
+   			android:textStyle="bold"
+   			android:gravity="center_vertical|center_horizontal"
+			android:layout_alignParentTop="true"/>
 		<ListView 
 			android:id="@+id/addressFrag_listview"
 			android:layout_width="fill_parent"
-			android:layout_alignParentTop="true"
+			android:background="@drawable/side_bar"
 			android:layout_above="@id/btnAddContact"
-			android:layout_height="fill_parent"
+			android:layout_below="@id/lblContacts"
+			android:layout_height="wrap_content"
 			android:visibility="visible"
 			android:scrollbars="vertical" />
+
      </RelativeLayout>
-		
+	<TextView
+	    android:id="@+id/lblContactStart"
+	    android:layout_width="0dp"
+	    android:layout_weight="7"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/address_contact_bkgd"
+	    android:text="Pick a Existing Contact or Add a New Contact to Begin"
+	    android:textStyle="bold"
+	    android:gravity="center"
+	    android:textColor="#FFF"
+	    android:textSize ="24pt"/>
 	<ScrollView
 	    android:id="@+id/scrlConatact"
 	    android:layout_width="0dp"
 	    android:layout_weight="7"
+	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_height="fill_parent"
-	    android:visibility="visible">
+	    android:visibility="gone">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/button_spacing"
+   			android:layout_marginRight="@dimen/button_spacing"
             android:orientation="vertical" >
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#ededed" >
+                android:orientation="vertical" >
                 <TextView
 					android:id="@+id/contact_id"
 					android:text=""
 					android:layout_width="fill_parent"
                 	android:layout_height="wrap_content"
                 	android:visibility="gone"/>
-                <TextView
-					android:id="@+id/lblContactName"
-					android:text="Contact Name"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-                    android:id="@+id/contact_DisplayName"
-                    android:layout_width="fill_parent"
+                <RelativeLayout
+                    android:id="@+id/contactNameRelLay"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Name"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-	        	<TextView
-					android:id="@+id/lblContactAddress"
-					android:text="Home Address"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-                    android:id="@+id/contact_address"
-                    android:layout_width="fill_parent"
+                    android:layout_width="fill_parent" >
+	                <TextView
+						android:id="@+id/lblContactName"
+						android:text="Contact Name: "
+						android:textSize="12pt"
+						android:layout_centerHorizontal="true"
+						android:layout_alignParentLeft="true"
+						android:layout_width="wrap_content"
+	                	android:layout_height="fill_parent"
+	                	android:visibility="visible"/>
+	                <EditText
+	                    android:id="@+id/contact_DisplayName"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_centerHorizontal="true"
+	                    android:layout_toRightOf="@id/lblContactName"
+	                    android:textSize="12pt" 
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Enter Name"
+	                    android:inputType="textPersonName|textAutoCorrect|textCapSentences"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"
+	                    android:textColor="@android:color/primary_text_light"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/AddressRelLay"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Address"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-	        	<TextView
-					android:id="@+id/lblContactEmail"
-					android:text="Email Address"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-                    android:id="@+id/contact_email"
-                    android:layout_width="fill_parent"
+                    android:layout_width="fill_parent" >
+		        	<TextView
+						android:id="@+id/lblContactAddress"
+						android:text="Home Address:"
+						android:textSize="12pt"
+						android:layout_centerHorizontal="true"
+						android:layout_alignParentLeft="true"
+						android:layout_width="wrap_content"
+	                	android:layout_height="fill_parent"
+	                	android:visibility="visible"/>
+	                <EditText
+	                    android:id="@+id/contact_address"
+						android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:layout_centerHorizontal="true"
+	                    android:layout_toRightOf="@id/lblContactAddress"
+	                    android:textSize="12pt" 
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Enter Address"
+	                    android:minLines="2"
+	                    android:inputType="textPostalAddress|textAutoCorrect|textCapSentences|textMultiLine"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"
+	                    android:textColor="@android:color/primary_text_light"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+	            </RelativeLayout>
+				<RelativeLayout
+                    android:id="@+id/EmailRelLay"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Email (johndoe@email.com)"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-	        	<TextView
-					android:id="@+id/lblHomePhone"
-					android:text="Home Phone Number"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-                    android:id="@+id/contact_Homephone"
-                    android:layout_width="fill_parent"
+                    android:layout_width="fill_parent" >
+		        	<TextView
+						android:id="@+id/lblContactEmail"
+						android:text="Email Address: "
+						android:textSize="12pt"
+						android:layout_centerHorizontal="true"
+						android:layout_alignParentLeft="true"
+						android:layout_width="wrap_content"
+	                	android:layout_height="fill_parent"
+	                	android:visibility="visible"/>
+	                <EditText
+	                    android:id="@+id/contact_email"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:layout_centerHorizontal="true"
+	                    android:layout_toRightOf="@id/lblContactEmail"
+	                    android:textSize="12pt" 
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Enter Email Address"
+	                    android:inputType="textEmailAddress"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"
+	                    android:textColor="@android:color/primary_text_light"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+	            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/HomeRelLay"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Home Phone Number (xxx-xxx-xxxx)"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-                <TextView
-					android:id="@+id/lblMobilePhone"
-					android:text="Mobile Phone Number"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>		        	
-                <EditText
-                    android:id="@+id/contact_Mobilephone"
-                    android:layout_width="fill_parent"
+                    android:layout_width="fill_parent" >
+		        	<TextView
+						android:id="@+id/lblHomePhone"
+						android:text="Home Phone Number: "
+						android:textSize="12pt"
+						android:layout_centerHorizontal="true"
+						android:layout_alignParentLeft="true"
+						android:layout_width="wrap_content"
+	                	android:layout_height="fill_parent"
+	                	android:visibility="visible"/>
+	                <EditText
+	                    android:id="@+id/contact_Homephone"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:layout_centerHorizontal="true"
+	                    android:layout_toRightOf="@id/lblHomePhone"
+	                    android:textSize="12pt" 
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Enter number"
+	                    android:inputType="phone"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"
+	                    android:textColor="@android:color/primary_text_light"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+	            </RelativeLayout>
+				<RelativeLayout
+                    android:id="@+id/MobileRelLay"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Mobile Phone Number (xxx-xxx-xxxx)"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:layout_width="fill_parent" >
+	                <TextView
+						android:id="@+id/lblMobilePhone"
+						android:text="Mobile Phone Number:"
+						android:textSize="12pt"
+						android:layout_centerHorizontal="true"
+						android:layout_alignParentLeft="true"
+						android:layout_width="wrap_content"
+	                	android:layout_height="fill_parent"
+	                	android:visibility="visible"/>		        	
+	                <EditText
+	                    android:id="@+id/contact_Mobilephone"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="fill_parent"
+	                    android:layout_centerHorizontal="true"
+	                    android:layout_toRightOf="@id/lblMobilePhone"
+	                    android:textSize="12pt" 
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Enter number"
+	                    android:inputType="phone"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"
+	                    android:textColor="@android:color/primary_text_light"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+				</RelativeLayout>
 			</LinearLayout>
            	<Button
                 android:id="@+id/btnAddSave"

@@ -2,187 +2,188 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:id="@+id/layBtnNTable"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="146dp"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/btnInbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:clickable="true"
-                android:text="@string/inbox"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-
-            <Button
-                android:id="@+id/btnCompose"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:text="@string/compose"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-
-            <Button
-                android:id="@+id/btnSentMail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:text="@string/sentMail"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-            
-           <Button
-                android:id="@+id/btnSync"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:text="SYNC"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-            
-            <TextView
-		        android:id="@+id/txtConn"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:gravity="right"
-		        android:text="" >
-		    </TextView>
-        </LinearLayout>
-
+    android:baselineAligned="false"
+	android:weightSum="10"
+    android:orientation="horizontal" >
+    
+    <RelativeLayout
+	    android:id="@+id/emailRelLaySidebar"
+	    android:layout_width="0dp"
+	    android:layout_weight="3"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" > 
+		<Button
+             android:id="@+id/btnCompose"
+             android:layout_width="fill_parent"
+             android:layout_height="@dimen/music_top_bar_height"
+             android:clickable="true"
+			 android:layout_alignParentBottom="true"
+			 android:text="New Email"
+			 android:textSize="12pt"
+			 android:textColor="#FFF"
+             android:background="@drawable/address_addcon_bkgd"
+             android:textStyle="bold" />
+		<TextView
+	        android:id="@+id/lblInbox"
+	        android:layout_width="fill_parent"
+	        android:layout_height="@dimen/music_top_bar_height"
+   			android:background="@drawable/music_nowplaying_label"
+   			android:textSize="14pt"
+   			android:text="INBOX"
+   			android:textStyle="bold"
+   			android:gravity="center_vertical|center_horizontal"
+			android:layout_alignParentTop="true"/>
 		<ListView 
-		    android:id="@+id/emailFrag_listview"
-        	android:layout_width="fill_parent"
-        	android:layout_height="fill_parent"
-        	android:visibility="visible"
-        	android:scrollbars="vertical" />
-		<ScrollView
-		    android:id="@+id/scrlReadEmail"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:visibility="gone" >
-	        <TextView
-	            android:id="@+id/txtReadEmail"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:background="#FFF"
-	            android:text=""
-	            android:textColor="#000"
-	            android:textSize="10pt"
-	            android:textStyle="bold"
-	            android:typeface="serif">
-	        </TextView>
-		</ScrollView>
-		
-		<ScrollView
-		    android:id="@+id/scrlCompose"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:visibility="gone">
-	        <LinearLayout
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical" >
+			android:id="@+id/emailFrag_listview"
+			android:layout_width="fill_parent"
+			android:background="@drawable/side_bar"
+			android:layout_above="@id/btnCompose"
+			android:layout_below="@id/lblInbox"
+			android:layout_height="wrap_content"
+			android:visibility="visible"
+			android:scrollbars="vertical" />
+
+    </RelativeLayout>
+    
+    <TextView
+	    android:id="@+id/lblEmailStart"
+	    android:layout_width="0dp"
+	    android:layout_weight="7"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/address_contact_bkgd"
+	    android:text="Pick a Email to Read or Write a New Email to Begin"
+	    android:textStyle="bold"
+	    android:gravity="center"
+	    android:textColor="#FFF"
+	    android:textSize ="24pt"/>
+
+	<ScrollView
+	    android:id="@+id/scrlReadEmail"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="gone" >
+        <TextView
+            android:id="@+id/txtReadEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:text=""
+            android:textColor="#000"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:typeface="serif">
+        </TextView>
+	</ScrollView>
+
+<!-- 	-->
+<!-- 	This is the scrollView for the compose view -->
+<!-- 	-->
 	
-	            <LinearLayout
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:orientation="vertical"
-	                android:background="#ededed" >
-	                <LinearLayout
-	                    android:id="@+id/to_wrapper"
-	                    android:layout_height="wrap_content"
-	                    android:baselineAligned="true"
-		                android:layout_marginLeft="6dip"
-		                android:layout_marginRight="6dip"
-	                    android:layout_width="fill_parent">
-		                <EditText
-		                    android:id="@+id/compose_to"	                    
-		                    android:layout_height="wrap_content"
-		                    android:inputType="textEmailAddress|textMultiLine"
-		                    android:imeOptions="actionNext"
-		                    android:hint="To"
-		                    android:textColor="@android:color/primary_text_light"
-		                    android:textAppearance="?android:attr/textAppearanceMedium"
-		                    android:layout_width="fill_parent"
-		                    android:layout_marginRight="6dip"
-	                        android:layout_weight="5">
-	                    </EditText>
-		                <ImageButton
-		                    android:id="@+id/add_to"
-	                        android:src="@drawable/ic_button_contacts"
-		                    android:layout_weight="1"
-	                        android:layout_height="fill_parent"
-		                    android:layout_width="60dip"
-		                    android:layout_marginTop="1dip">
-		            	</ImageButton>
-					</LinearLayout>
-	
-	                <EditText
-	                    android:id="@+id/compose_subject"
-	                    android:layout_width="fill_parent"
-	                    android:layout_height="wrap_content"
-	                    android:layout_marginLeft="6dip"
-	                    android:layout_marginRight="6dip"
-	                    android:hint="Subject"
-	                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-	                    android:imeOptions="actionNext"
-	                    android:singleLine="true"
-	                    android:textColor="@android:color/primary_text_light"
-	                    android:textAppearance="?android:attr/textAppearanceMedium">
-		        	</EditText>
-            	</LinearLayout>
-            	<EditText
+	<ScrollView
+	    android:id="@+id/scrlCompose"
+	    android:layout_width="0dp"
+	    android:layout_weight="7"
+	    android:background="@drawable/address_contact_bkgd"
+	    android:layout_height="fill_parent"
+	    android:visibility="gone">
+        <LinearLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="@dimen/button_spacing"
+  		   android:layout_marginRight="@dimen/button_spacing"
+  		   android:layout_marginTop="@dimen/button_spacing"
+           android:orientation="vertical" >
+           <LinearLayout
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="@dimen/button_spacing"
+               android:orientation="vertical" >
+               <Button
+			   		android:id="@+id/btnAddAddressee"
+					android:text="Add Recipient+"
+					android:textSize="12pt"
+		 			android:textColor="#FFF"
+		 			android:textStyle="bold"
+            		android:background="@drawable/address_addcon_bkgd"
+					android:layout_width="fill_parent"
+           			android:layout_height="@dimen/button_height"
+					android:visibility="visible"/>	                
+                <TextView
+                    android:id="@+id/compose_to"	                    
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:layout_below="@id/btnAddAddressee"
+                    android:layout_width="fill_parent"
+                    android:textSize="12pt"
+                    android:ellipsize="end"
+                    android:layout_marginRight="6dip"/>
+               <RelativeLayout
+                   android:id="@+id/composeSubjRelLay"
+                   android:layout_height="wrap_content"
+                   android:layout_width="fill_parent" >
+	        	<TextView
+					android:id="@+id/lblComposeSubj"
+					android:text="Subject"
+					android:textSize="12pt"
+					android:textStyle="bold"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:layout_width="fill_parent"
+                	android:layout_height="wrap_content"
+                	android:visibility="visible"/>
+                <EditText
+                    android:id="@+id/compose_subject"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblComposeSubj"
+                    android:layout_marginLeft="6dip"
+                    android:layout_marginRight="6dip"
+                    android:hint="Subject"
+                    android:textSize="12pt"
+                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"/>
+            </RelativeLayout>
+			<RelativeLayout
+                   android:id="@+id/composeBodyRelLay"
+                   android:layout_height="wrap_content"
+                   android:layout_width="fill_parent" >
+	        	<TextView
+					android:id="@+id/lblComposeBody"
+					android:text="Message Body"
+					android:textSize="12pt"
+					android:textStyle="bold"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:layout_width="fill_parent"
+                	android:layout_height="wrap_content"
+                	android:visibility="visible"/>
+                <EditText
 	                android:id="@+id/compose_message_content"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_weight="1.0"
+	                android:layout_below="@id/lblComposeBody"
+	                android:textSize="12pt"
 	                android:gravity="left|top"
 	                android:hint="Message Text"
 	                android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
 	                android:imeOptions="actionDone|flagNoEnterAction"
-	                android:minLines="3"
-	                android:textColor="@android:color/primary_text_light"
-	                android:textAppearance="?android:attr/textAppearanceMedium" >
-	        	</EditText>
-	        	<Button
-	                android:id="@+id/btnSend"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="2dip"
-	                android:background="#cdc9c9"
-	                android:clickable="true"
-	                android:text="Send"
-	                android:textColor="#000"
-	                android:textSize="12pt"
-	                android:textStyle="bold" >
-            	</Button>
-            </LinearLayout>
-		</ScrollView>
-	</LinearLayout>
+	                android:minLines="3"/>
+            </RelativeLayout>
+		</LinearLayout>
+        <Button
+	        android:id="@+id/btnSend"
+	        android:layout_width="match_parent"
+	        android:layout_margin="2dip"
+	        android:background="@drawable/address_addcon_bkgd"
+         	android:layout_height="@dimen/button_height"
+	        android:clickable="true"
+	        android:text="Send"
+	        android:textColor="#FFF"
+	        android:textSize="12pt"
+	        android:textStyle="bold" />
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>
 	        

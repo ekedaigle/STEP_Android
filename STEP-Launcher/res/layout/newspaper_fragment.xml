@@ -85,7 +85,7 @@
 	            android:background="#FFF"
 	            android:text=""
 	            android:textColor="#000"
-	            android:textSize="10pt"
+	            android:textSize="15pt"
 	            android:textStyle="bold"
 	            android:typeface="serif">
 	        </TextView>
