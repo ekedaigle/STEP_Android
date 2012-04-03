@@ -27,7 +27,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	private MusicAsyncTask asyncTask;
 	private MusicAdapter adapter;
 	private Map<String, Genre> stations;
-	private ArrayList<Button> genre_buttons;
+	private Button[] genre_buttons = null;
 	private LinearLayout scrollLayout;
 	private View v;
 	
@@ -39,9 +39,17 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
         
         scrollLayout = (LinearLayout)v.findViewById(R.id.musicScrollLayout);
         
-        asyncTask = new MusicAsyncTask();
-        asyncTask.setCallback(this);
-        asyncTask.execute(baseStationPort);
+        if (genre_buttons == null)
+        {
+	        asyncTask = new MusicAsyncTask();
+	        asyncTask.setCallback(this);
+	        asyncTask.execute(baseStationPort);
+        }
+        else
+        {
+        	for (Button b : genre_buttons)
+        		scrollLayout.addView(b);
+        }
         
         return v;
 	}
@@ -53,6 +61,8 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 		LinearLayout layout = (LinearLayout)scrollLayout;
 		layout.removeAllViews();
 		Resources r = getResources();
+		genre_buttons = new Button[stations.size()];
+		int index = 0;
 		
 		for (String genre : stations.keySet())
 		{
@@ -60,6 +70,8 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 			b.setText(genre);
 			b.setBackgroundDrawable(r.getDrawable(R.drawable.generic_button));
 			b.setTextSize(24);
+			genre_buttons[index] = b;
+			index += 1;
 			layout.addView(b);
 		}
 	}
@@ -68,5 +80,12 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	{
 		String title = ((Button)v).getText().toString();
 		Genre genre = stations.get(title);
+	}
+	
+	@Override
+	public void onDestroyView()
+	{
+		super.onDestroyView();
+		scrollLayout.removeAllViews();
 	}
 }
