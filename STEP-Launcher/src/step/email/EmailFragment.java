@@ -1,7 +1,9 @@
 package step.email;
 import com.step.launcher.R;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,17 +14,30 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EmailFragment extends Fragment {
 
 	//define data source
 	public Mail mail;
 	
-    private OnClickListener btnSyncListener = new OnClickListener() {
+    private OnClickListener btnAddAddressee = new OnClickListener() {
     	public void onClick(View v)
     	{
-        	UpdateInboxTask task = new UpdateInboxTask(EmailFragment.this.mail);
-        	task.execute();
+        	final CharSequence[] items = {"Milk", "Butter", "Cheese"};
+        	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        	builder.setTitle("Pick an item");
+        	builder.setItems(items, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					Toast.makeText(getActivity(),  items[which], Toast.LENGTH_SHORT).show();
+				}
+			});
+        	
+        	AlertDialog alert = builder.create();
+        	alert.show();
     	}
     };
 	
@@ -96,7 +111,7 @@ public class EmailFragment extends Fragment {
 		//V.findViewById(R.id.btnInbox).setOnClickListener(btnInboxListener);
 		V.findViewById(R.id.btnCompose).setOnClickListener(btnComposeListener);
 		V.findViewById(R.id.btnSend).setOnClickListener(btnSendMailListener);
-		//V.findViewById(R.id.btnSync).setOnClickListener(btnSyncListener);
+		V.findViewById(R.id.btnAddAddressee).setOnClickListener(btnAddAddressee);
 		//setup the data source
 		this.mail = new Mail(getActivity(), list);
         mail.setUserPass("capstone.group6.2012", "capstone2012");
