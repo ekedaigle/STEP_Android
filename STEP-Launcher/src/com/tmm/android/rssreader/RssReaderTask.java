@@ -27,9 +27,11 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... strings) {
 
 		String feed_change = null;
+		/*
 		switch(newspaper_id)
 		{
-		case 0: feed_change ="http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss"; 
+		case 0: feed_change ="http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
+		
 		break;
 		case 1: feed_change = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=w&output=rss";
 		break;
@@ -41,8 +43,33 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		break;
 		
 		}
+		*/
+		
+		switch(newspaper_id)
+		{
+		case 0: feed_change ="http://www.rssez.com/get/news.google.com/news?ned=us&topic=h&output=rss";
+		
+		break;
+		case 1: feed_change = "http://www.rssez.com/get/news.google.com/news?ned=us&topic=w&output=rss";
+		break;
+		case 2: feed_change = "http://www.rssez.com/get/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln";
+		break;
+		case 3: feed_change = "http://www.rssez.com/get/sports.yahoo.com/mlb/teams/bos/rss.xml";
+		break;
+		case 4: feed_change = "http://www.rssez.com/get/finance.yahoo.com/rss/topfinstories";;
+		break;
+		
+		}
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		//case 0: feed_change = "http://www.rssez.com/get/news.google.com/news?ned=us&topic=h&output=rss";
 		
 		// String feed ="http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
 		// finance = "http://fulltextrssfeed.com/finance.yahoo.com/rss/topfinstories";
