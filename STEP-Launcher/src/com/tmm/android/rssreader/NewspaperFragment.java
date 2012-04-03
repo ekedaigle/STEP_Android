@@ -199,10 +199,25 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 			rssReaderTask.execute();
 			
 			
+			
 	
 		} catch (Exception e) {
 			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
 		}
+		Log.e("here","here");
+		
+		
+		
+		try
+    	{
+			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+			NewspaperFragment.this.rssReader.readArticle(0, getActivity().findViewById(R.id.txtReadArticle));
+    		
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
 		
 			
 				  
@@ -212,5 +227,9 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 	}
 	
 	
+	public void displayArticle() throws Exception{
+		
+		this.rssReader.readArticle(0, getActivity().findViewById(R.id.txtReadArticle));
+	}
 	
 }
