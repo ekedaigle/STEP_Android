@@ -43,7 +43,7 @@ public class ContactAccessor {
 	
 	public ContactAccessor(Activity act) {
 		this.mActivity = act;
-		this.mShowInvisible = false;
+		this.mShowInvisible = true;
 		this.mContactList = new ContactList();
 	}
 	

@@ -75,7 +75,7 @@ public class Mail{
     	
     	Properties imapProps = new Properties();
     	imapProps.setProperty("mail.store.protocol", "imaps");
-		this.session = Session.getDefaultInstance(imapProps, null);
+    	this.session = Session.getDefaultInstance(imapProps, null);
 		this.store = this.session.getStore("imaps");
 		this.store.connect("imap.gmail.com", this.username, this.password);
         //Download message headers from server
