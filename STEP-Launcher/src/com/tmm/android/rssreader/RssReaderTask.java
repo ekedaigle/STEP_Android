@@ -45,6 +45,9 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		}
 		*/
 		
+		
+		
+		
 		switch(newspaper_id)
 		{
 		case 0: feed_change ="http://www.rssez.com/get/news.google.com/news?ned=us&topic=h&output=rss";
@@ -95,15 +98,16 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
+		
 		//TextView con = (TextView) v;
-		try
+		/*try
 		{
 			this.r.displayArticles();
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		
 		
