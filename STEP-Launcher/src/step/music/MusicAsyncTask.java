@@ -29,7 +29,7 @@ import org.xml.sax.XMLReader;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Station[]>, Object>
+public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Genre>, Object>
 {
 	private Socket sock;
 	private DataOutputStream sendStream;
@@ -58,7 +58,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Station[]>, O
 		while (true)
 		{
 			try {
-				sock = new Socket("10.0.50.1",  port);
+				sock = new Socket("192.168.10.1",  port);
 				sendStream = new DataOutputStream(sock.getOutputStream());
 				recvStream = new DataInputStream(sock.getInputStream());
 			} catch (UnknownHostException e) {
@@ -133,7 +133,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Station[]>, O
 	}
 	
 	@Override
-	protected void onProgressUpdate(Map<String, Station[]>... data)
+	protected void onProgressUpdate(Map<String, Genre>... data)
 	{
 		if (data.length > 0)
 			callback.taskGotStations(data[0]);

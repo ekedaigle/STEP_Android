@@ -11,32 +11,77 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MusicContentHandler extends DefaultHandler {
 	
-	private ArrayList<ArrayList<String>> categories;
-	private ArrayList<String> category;
-	private Map<String, Station[]> stations = new HashMap<String, Station[]>();
+	private Map<String, Genre> stations = new HashMap<String, Genre>();
+	private Genre genre = null;
+	private String genre_name = null;
+	private Station station = null;
+	private ArrayList<Station> station_list = null;
+	private String station_name = null;
+	private String station_description = null;
+	private String text = null;
 	
 	@Override
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-		if (localName.compareTo("categories") == 0)
-			categories = new ArrayList<ArrayList<String> >();
-		else if (localName.compareTo("category") == 0)
+		if (localName.compareTo("category") == 0)
 		{
-			category = new ArrayList<String>();
-			category.add(atts.getValue("name"));
+			genre = new Genre();
+			genre.id = Integer.parseInt(atts.getValue("id"));
 		}
-		else if (localName.compareTo("genre") == 0)
-			category.add(atts.getValue("name"));
+		
+		else if (localName.compareTo("station") == 0)
+		{
+			station = new Station();
+			station.id = Integer.parseInt(atts.getValue("id"));
+		}
+		
+		else if (localName.compareTo("stations") == 0)
+		{
+			station_list = new ArrayList<Station>();
+		}
+	}
+	
+	@Override
+	public void characters (char buf [], int offset, int len) throws SAXException
+	{
+		text = new String(buf, offset, len);
 	}
 	
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (localName.compareTo("category") == 0) {
-			categories.add(category);
-			category = null;
+			stations.put(genre_name, genre);
+			genre = null;
+			genre_name = null;
+		}
+		
+		else if (localName.compareTo("name") == 0)
+		{
+			if (station == null) // name for genre
+				genre_name = text;
+			else // name for station
+				station_name = text;
+		}
+		
+		else if (localName.compareTo("description") == 0)
+		{
+			station_description = text.toString();
+		}
+		
+		else if (localName.compareTo("station") == 0)
+		{
+			station_list.add(station);
+			station = null;
+		}
+		
+		else if (localName.compareTo("stations") == 0)
+		{
+			genre.stations = new Station[station_list.size()];
+			station_list.toArray(genre.stations);
+			station_list = null;
 		}
 	}
 	
-	public Map<String, Station[]> getStations()
+	public Map<String, Genre> getStations()
 	{
 		return stations;
 	}

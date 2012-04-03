@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface MusicAsyncTaskCallback
 {
-	void taskGotStations(Map<String, Station[]> data);
+	void taskGotStations(Map<String, Genre> data);
 }
