@@ -15,8 +15,6 @@ import android.widget.ListView;
 import java.util.regex.Pattern;
 public class RssReader {
 	
-	private final static String BOLD_OPEN = "<B>";
-	private final static String BOLD_CLOSE = "</B>";
 	private final static String BREAK = "<BR>";
 	private final static String ITALIC_OPEN = "<I>";
 	private final static String ITALIC_CLOSE = "</I>";
@@ -24,17 +22,12 @@ public class RssReader {
 	private final static String SMALL_CLOSE = "</SMALL>";
 	
 	private ArrayList<JSONObject> jobs;
-	private Activity activity; 
-	private ListView newspaper_listView;
-	
 	public ArrayList<JSONObject> getJobs(){
 		return this.jobs;
 	}
 	
-	RssReader(Activity a, ListView lv){
+	RssReader(Activity a){
 		this.jobs = new ArrayList<JSONObject>();
-		this.activity = a;
-		this.newspaper_listView = lv;
 	}
 	
 	public void readArticle(int idx, View v) throws Exception{
@@ -80,11 +73,7 @@ public class RssReader {
 
 	}
 	
-	public void displayArticles(){
-		RssListAdapter adapter = new RssListAdapter(this.activity, R.layout.news_list_element, this.jobs);
-		 
-		this.newspaper_listView.setAdapter(adapter);
-	}
+	
 
 
 	/**

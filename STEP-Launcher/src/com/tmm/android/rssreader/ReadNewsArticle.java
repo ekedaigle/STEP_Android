@@ -23,11 +23,12 @@ public class ReadNewsArticle{
 	{
 		//String images = null;
 		
-		
+		String header;
 		try {
 			
 			
 			//images = (String) item.get("imageLink");
+			header = (String) item.get("header").toString();
 			result = (String) item.get("text").toString();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

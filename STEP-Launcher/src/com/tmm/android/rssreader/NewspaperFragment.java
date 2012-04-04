@@ -8,11 +8,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.step.launcher.R;
-import com.tmm.android.rssreader.RssListAdapter;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,8 +20,6 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class NewspaperFragment extends Fragment {
-	//RssActivity rssActivity;
-	private RssListAdapter adapter;
 	RssReaderTask rssReaderTask;
 	RssReader rssReader;
 	View test;
@@ -34,39 +28,7 @@ public class NewspaperFragment extends Fragment {
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
 
 	
-	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
-    	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    	{
-    		
-    		max = parent.getCount()-1;
-    		if(position == 0){
-    			getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
-    			getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-    		}
-    		else if(position == max)
-    		{
-    			getActivity().findViewById(R.id.btnPrevious).setVisibility(View.VISIBLE);
-    			getActivity().findViewById(R.id.btnNext).setVisibility(View.GONE);
-    		}
-    		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
-    		
-    		
-    		
-    		try
-        	{
-    			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
-    			NewspaperFragment.this.rssReader.readArticle(position, getActivity().findViewById(R.id.txtReadArticle));
-        		position_hold = position;
-        	}
-        	catch(Exception e)
-        	{
-        		e.printStackTrace();
-        	}
-        		
-    	}
-    };
-    private OnClickListener btnPreviousListener = new OnClickListener() {
+	private OnClickListener btnPreviousListener = new OnClickListener() {
 
 		public void onClick(View V) {
 			try
@@ -132,7 +94,6 @@ public class NewspaperFragment extends Fragment {
 			
 			
 		}
-    	
     };
 private OnClickListener btnGovernmentListener = new OnClickListener() {
 
@@ -194,23 +155,7 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 		V.findViewById(R.id.btnSports).setOnClickListener(btnSportsListener);
 		V.findViewById(R.id.btnFinance).setOnClickListener(btnFinanceListener);
 		V.findViewById(R.id.btnWorld).setOnClickListener(btnWorldListener);
-		
-		final ListView list = (ListView) V.findViewById(R.id.newsFrag_listview);
-		list.setTextFilterEnabled(true);
-		list.setOnItemClickListener(listItemSelectListener);
-	    this.rssReader = new RssReader(getActivity(), list);
-		try {
-			
-			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
-			rssReaderTask = new RssReaderTask(this.rssReader,getActivity().findViewById(R.id.txtReadArticle),0);
-			rssReaderTask.execute();
-			
-			
-			
-	
-		} catch (Exception e) {
-			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
-		}
+		this.rssReader = new RssReader(getActivity());
 		
 				  
 

@@ -95,7 +95,6 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		
 		
 		r.fillData(articles);
-
 		
 		return "";
 
@@ -105,6 +104,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result){
 		
 		try {
+			
 			this.r.readArticle(0, v);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
