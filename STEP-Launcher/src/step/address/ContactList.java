@@ -20,8 +20,9 @@ public class ContactList {
 		// Run query
 		this.mContactList.clear();
         ContentResolver cr = activity.getContentResolver();
+        String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
 		Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
+                null, null, null, sortOrder);
         if (cur.getCount() > 0) {
 		    while (cur.moveToNext()) {
 		        String id = cur.getString(
