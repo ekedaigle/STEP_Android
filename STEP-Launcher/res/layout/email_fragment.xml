@@ -60,18 +60,20 @@
 	<ScrollView
 	    android:id="@+id/scrlReadEmail"
 	    android:layout_width="fill_parent"
+	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_height="fill_parent"
 	    android:visibility="gone" >
         <TextView
+            android:layout_marginLeft="@dimen/button_spacing"
+  		   	android:layout_marginRight="@dimen/button_spacing"
+  		   	android:layout_marginTop="@dimen/button_spacing"
             android:id="@+id/txtReadEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF"
             android:text=""
             android:textColor="#000"
             android:textSize="10pt"
-            android:textStyle="bold"
-            android:typeface="serif">
+            android:textStyle="bold">
         </TextView>
 	</ScrollView>
 

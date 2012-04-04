@@ -62,7 +62,7 @@ public class EmailFragment extends Fragment {
 							TextView tv = (TextView) getActivity().findViewById(R.id.compose_to);
 							tv.setText(edtEmail.getText().toString());
 							getActivity().findViewById(R.id.recipientLinLay).setVisibility(View.VISIBLE);
-							Toast.makeText(getActivity(), edtEmail.getText().toString(), Toast.LENGTH_SHORT).show();
+							//Toast.makeText(getActivity(), edtEmail.getText().toString(), Toast.LENGTH_SHORT).show();
 						}
 					});
 					alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -94,7 +94,7 @@ public class EmailFragment extends Fragment {
 					TextView tv = (TextView) getActivity().findViewById(R.id.compose_to);
 					tv.setText(ci.get(position-1).getEmail());
 					getActivity().findViewById(R.id.recipientLinLay).setVisibility(View.VISIBLE);
-    				Toast.makeText(getActivity(),  ci.get(position-1).getEmail(), Toast.LENGTH_SHORT).show();
+    				//Toast.makeText(getActivity(),  ci.get(position-1).getEmail(), Toast.LENGTH_SHORT).show();
     				listDialog.dismiss();
         		
     			}
