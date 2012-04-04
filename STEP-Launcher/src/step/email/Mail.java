@@ -59,6 +59,7 @@ public class Mail{
     private EmailList emailList;
     private ListView email_listView;
     private ArrayList<ContactInfo> cli_w_email;
+    private CurrentMessage mCurMsg;
     boolean pop3 = false;
     
     Mail(Activity a, ListView email_listView){
@@ -66,8 +67,17 @@ public class Mail{
     	this.emailList = new EmailList();
     	this.email_listView = email_listView;
     	this.cli_w_email = new ArrayList<ContactInfo>();
+    	mCurMsg = new CurrentMessage();
     	getContactsWithEmail();
     };
+    
+    public CurrentMessage getCurMsg(){
+    	return mCurMsg;
+    }
+    
+    public Activity getActivity(){
+    	return this.activity;
+    }
     
     public ArrayList<ContactInfo> get_cli_w_email(){
     	return this.cli_w_email;
@@ -193,8 +203,8 @@ public class Mail{
 		this.email_listView.setAdapter(adapter);
     }
     
-    public void readEmail(int idx, View v) throws Exception{
-    	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx, v);
+    public void readEmail(int idx) throws Exception{
+    	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx);
     	task.execute();
     }
     

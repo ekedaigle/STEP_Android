@@ -8,6 +8,8 @@ import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
 
+import com.step.launcher.R;
+
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -18,11 +20,9 @@ import android.widget.TextView;
 public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	Mail m;
 	int idx;
-	View v;
-	ReadEmailMessageTask(Mail m1, int idx, View v){
+	ReadEmailMessageTask(Mail m1, int idx){
 		this.m = m1;
 		this.idx = idx;
-		this.v = v;
 	}
 	@Override
 	protected String doInBackground(String...strings)
@@ -35,6 +35,8 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 		File sdcard = Environment.getExternalStorageDirectory();
 		File dir = new File(sdcard.getAbsolutePath()+"/step/emailapp/attachments");
 		dir.mkdirs();
+		
+		this.m.getCurMsg().clearMsgData();
 		//String folder = "../attachments/";
 		
 		try
@@ -66,6 +68,7 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 					   file = new File(dir, filename);
 					   file.createNewFile();
 					   ((MimeBodyPart)part).saveFile(file);
+					   this.m.getCurMsg().addAttachmentLoc(filename);
 					   Log.d("Email Fragment", "Saved the Attachment "+i+" to the following filename ["+filename+"].");
 				   } catch (IOException ex) {
 					   Log.e("Email Fragment", "Caught an exception trying to save an attachment to the filename ["+filename+"].", ex);
@@ -76,21 +79,12 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
            }
 
 	        if(content != null){
-					Address[] to = this.m.msgs[this.idx].getAllRecipients();
-					Address[] from = this.m.msgs[this.idx].getFrom();
-					String subj = this.m.msgs[this.idx].getSubject();
-					
-					fullBody = new String();
-					fullBody = "TO: ";
-					fullBody = fullBody.concat(to[0].toString());
-					fullBody = fullBody.concat("\nFROM: ");
-					fullBody = fullBody.concat(from[0].toString());
-					fullBody = fullBody.concat("\nSUBJ: ");
-					fullBody = fullBody.concat(subj);
-					fullBody = fullBody.concat("\n\n");
-					fullBody = fullBody.concat(content);
-					return fullBody;
+	        	this.m.getCurMsg().setBody(content);
+	        	this.m.getCurMsg().setTo(this.m.msgs[this.idx].getAllRecipients());
+	        	this.m.getCurMsg().setFrom(this.m.msgs[this.idx].getFrom());
+	        	this.m.getCurMsg().setSubj(this.m.msgs[this.idx].getSubject());
 			}
+	        
 		}
 		catch(Exception e)
 		{
@@ -101,8 +95,12 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	}
 	protected void onPostExecute(String result)
 	{
-    	TextView t = (TextView) this.v;
-    	t.setText(result);
+    	TextView tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailFrom);
+    	tv.setText(this.m.getCurMsg().getFrom());
+    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailSubject);
+    	tv.setText(this.m.getCurMsg().getSubj());
+    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailBody);
+    	tv.setText(this.m.getCurMsg().getBody());
 	}
 	
 }

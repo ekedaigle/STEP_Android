@@ -160,7 +160,7 @@ public class EmailFragment extends Fragment {
     		
     		try
         	{
-        		EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+        		EmailFragment.this.mail.readEmail(position);
         	}
         	catch(Exception e)
         	{
