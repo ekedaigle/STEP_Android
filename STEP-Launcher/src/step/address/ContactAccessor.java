@@ -365,13 +365,10 @@ public class ContactAccessor {
 	            Email.CONTACT_ID + " = " + contactId, null, null);
 	        while (emails.moveToNext()) {
 	            String email = emails.getString(emails.getColumnIndex(Email.DATA));
-	            int type = emails.getInt(emails.getColumnIndex(Phone.TYPE));
+	            int type = emails.getInt(emails.getColumnIndex(Email.TYPE));
 	            switch (type) {
 	                case Email.TYPE_HOME:
 	                    contactInfo.setEmail(email);
-	                    break;
-	                case Email.TYPE_WORK:
-	                    // do something with the Work email here...
 	                    break;
 	            }
 	        }
