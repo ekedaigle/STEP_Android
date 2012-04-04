@@ -38,8 +38,9 @@ public class RssReader {
 	}
 	
 	public void readArticle(int idx, View v) throws Exception{
-    	ReadNewsArticleTask task = new ReadNewsArticleTask(this, v, idx);
-    	task.execute();
+    	ReadNewsArticle task = new ReadNewsArticle(this, v, idx);
+    	String k = "";
+    	task.getArticle(k);
     }
 	
 	public ArrayList<JSONObject> getLatestRssFeed(){
