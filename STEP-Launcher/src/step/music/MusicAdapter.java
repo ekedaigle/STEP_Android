@@ -1,5 +1,7 @@
 package step.music;
 
+import com.step.launcher.R;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class MusicAdapter extends BaseAdapter {
 	
 	//@Override
 	public int getCount() {
-		return 12;
+		return titles.length;
 	}
 
 	//@Override
@@ -50,10 +52,12 @@ public class MusicAdapter extends BaseAdapter {
 		{
 			button = new Button(context);
 			button.setHeight(130);
+			button.setBackgroundDrawable(fragment.getResources().getDrawable(R.drawable.generic_button));
+			button.setTextSize(24);
 			button.setOnClickListener(new View.OnClickListener() {
-		//		@Override
+				@Override
 				public void onClick(View v) {
-					fragment.onClick(v);
+					fragment.onStationClick(v);
 				}
 			});
 		}

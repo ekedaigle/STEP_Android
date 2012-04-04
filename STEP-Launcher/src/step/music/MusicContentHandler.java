@@ -69,6 +69,8 @@ public class MusicContentHandler extends DefaultHandler {
 		
 		else if (localName.compareTo("station") == 0)
 		{
+			station.description = station_description;
+			station.name = station_name;
 			station_list.add(station);
 			station = null;
 		}

@@ -12,13 +12,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.GridLayoutAnimationController;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import step.music.MusicAsyncTask;
 
-public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
+public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, View.OnClickListener {
 	
 	private final int baseStationPort = 13330;
 	
@@ -27,8 +29,10 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 	private MusicAsyncTask asyncTask;
 	private MusicAdapter adapter;
 	private Map<String, Genre> stations;
-	private Button[] genre_buttons = null;
+	private ArrayList<Button> genre_buttons;
 	private LinearLayout scrollLayout;
+	private GridView musicGridView;
+	private Genre selected_genre;
 	private View v;
 	
 	@Override
@@ -38,6 +42,9 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
         title = (TextView)v.findViewById(R.id.music_title);
         
         scrollLayout = (LinearLayout)v.findViewById(R.id.musicScrollLayout);
+        musicGridView = (GridView)v.findViewById(R.id.musicGridView);
+        adapter = new MusicAdapter(this);
+        musicGridView.setAdapter(adapter);
         
         if (genre_buttons == null)
         {
@@ -61,8 +68,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 		LinearLayout layout = (LinearLayout)scrollLayout;
 		layout.removeAllViews();
 		Resources r = getResources();
-		genre_buttons = new Button[stations.size()];
-		int index = 0;
+		genre_buttons = new ArrayList<Button>(stations.size());
 		
 		for (String genre : stations.keySet())
 		{
@@ -70,16 +76,46 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback {
 			b.setText(genre);
 			b.setBackgroundDrawable(r.getDrawable(R.drawable.generic_button));
 			b.setTextSize(24);
-			genre_buttons[index] = b;
-			index += 1;
+			b.setOnClickListener(this);
+			genre_buttons.add(b);
 			layout.addView(b);
 		}
 	}
 	
 	public void onClick(View v)
 	{
+		if (genre_buttons.contains(v))
+		{
+			String title = ((Button)v).getText().toString();
+			selected_genre = stations.get(title);
+			String[] titles = new String[selected_genre.stations.length];
+			int index = 0;
+			
+			for (Station s : selected_genre.stations)
+			{
+				titles[index] = s.name;
+				index += 1;
+			}
+			
+			adapter.setTitles(titles);
+		}
+	}
+	
+	public void onStationClick(View v)
+	{
 		String title = ((Button)v).getText().toString();
-		Genre genre = stations.get(title);
+		Station selected_station = null;
+		
+		for (Station s : selected_genre.stations)
+		{
+			if (s.name.compareTo(title) == 0)
+				selected_station = s;
+		}
+		
+		if (selected_station != null)
+		{
+			asyncTask.sendMessage("PLAY " + selected_genre.id + " " + selected_station.id);
+		}
 	}
 	
 	@Override
