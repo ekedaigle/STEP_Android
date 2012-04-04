@@ -8,23 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class ReadNewsArticleTask extends AsyncTask<String, Void, String>{
+public class ReadNewsArticle{
 	RssReader r;
 	View v;
 	int idx;
 	JSONObject item;
-	ReadNewsArticleTask(RssReader r1, View v1, int idx1){
+	ReadNewsArticle(RssReader r1, View v1, int idx1){
 	this.r = r1;
 	this.v = v1;
 	this.idx = idx1;
 	item = this.r.getJobs().get(this.idx);
 	}
-	@Override
-	protected String doInBackground(String... arg0) {
-		String fullBody = null;
-		return fullBody;
-	}
-	protected void onPostExecute(String result)
+	protected void getArticle(String result)
 	{
 		//String images = null;
 		

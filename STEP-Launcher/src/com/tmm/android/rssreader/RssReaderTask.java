@@ -5,7 +5,13 @@ package com.tmm.android.rssreader;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * @author rob
@@ -13,21 +19,21 @@ import android.os.AsyncTask;
  */
 public class RssReaderTask extends AsyncTask<String, Void, String> {
 	RssReader r;
-	//View v;
+	View v;
 	int newspaper_id;
-	
+	JSONObject item;
 
-	RssReaderTask(RssReader r1, int feeder) {
-		r = r1;
-		//v = v1;
-		newspaper_id = feeder;
+	RssReaderTask(RssReader r1, View v1, int feeder) {
+		this.r = r1;
+		this.v = v1;
+		this.newspaper_id = feeder;
 	}
 
 	@Override
 	protected String doInBackground(String... strings) {
 
 		String feed_change = null;
-		/*
+		
 		switch(newspaper_id)
 		{
 		case 0: feed_change ="http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=h&output=rss";
@@ -35,7 +41,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		break;
 		case 1: feed_change = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=w&output=rss";
 		break;
-		case 2: feed_change = "http://fulltextrssfeed.com/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln";
+		case 2: feed_change = "http://fulltextrssfeed.com/dir.yahoo.com/rss/dir/getrss.php?gov";
 		break;
 		case 3: feed_change = "http://fulltextrssfeed.com/sports.yahoo.com/mlb/teams/bos/rss.xml";
 		break;
@@ -43,8 +49,11 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		break;
 		
 		}
-		*/
 		
+		
+		
+		
+		/*
 		switch(newspaper_id)
 		{
 		case 0: feed_change ="http://www.rssez.com/get/news.google.com/news?ned=us&topic=h&output=rss";
@@ -52,7 +61,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		break;
 		case 1: feed_change = "http://www.rssez.com/get/news.google.com/news?ned=us&topic=w&output=rss";
 		break;
-		case 2: feed_change = "http://www.rssez.com/get/www.google.com/news/section?pz=1&cf=all&ned=us&topic=m&ict=ln";
+		case 2: feed_change = "http://www.rssez.com/get/dir.yahoo.com/rss/dir/getrss.php?gov";
 		break;
 		case 3: feed_change = "http://www.rssez.com/get/sports.yahoo.com/mlb/teams/bos/rss.xml";
 		break;
@@ -61,7 +70,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		
 		}
 		
-		
+		*/
 		
 		
 		
@@ -93,24 +102,14 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
-
-		//TextView con = (TextView) v;
-		try
-		{
-			this.r.displayArticles();
+	protected void onPostExecute(String result){
+		
+		try {
+			this.r.readArticle(0, v);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		
-		//this.r.displayArticles();
-
 		
 	}
 

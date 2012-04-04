@@ -1,8 +1,16 @@
 package step.email;
 
+import step.address.ContactInfo;
+import step.address.ContactList.ContactListItem;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.View;
 import android.widget.*;
 
@@ -15,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.NoSuchProviderException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Address;
@@ -49,13 +58,42 @@ public class Mail{
     public Message[] msgs;
     private EmailList emailList;
     private ListView email_listView;
+    private ArrayList<ContactInfo> cli_w_email;
     boolean pop3 = false;
     
     Mail(Activity a, ListView email_listView){
     	this.activity = a;
     	this.emailList = new EmailList();
     	this.email_listView = email_listView;
+    	this.cli_w_email = new ArrayList<ContactInfo>();
+    	getContactsWithEmail();
     };
+    
+    public ArrayList<ContactInfo> get_cli_w_email(){
+    	return this.cli_w_email;
+    }
+    
+    public void getContactsWithEmail(){
+    	ContentResolver cr = this.activity.getContentResolver();
+    	String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
+    	Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, sortOrder);
+        if (cur.getCount() > 0) {
+		    while (cur.moveToNext()) {
+		        String contactId = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+		        String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		        Cursor emails = cr.query(Email.CONTENT_URI, null, Email.CONTACT_ID + " = " + contactId, null, null);
+		        if(emails.moveToNext()) {
+		            String email = emails.getString(emails.getColumnIndex(Email.DATA));
+		            if(email!=null && !email.contentEquals("")){
+			            ContactInfo ci = new ContactInfo();
+			            ci.setName(name);
+			            ci.setEmail(email);
+			            this.cli_w_email.add(ci);
+		            }
+		        }
+		    }
+		}
+    }
 	
     public void setUserPass(String username, String password) {
         this.username = username;
@@ -75,7 +113,7 @@ public class Mail{
     	
     	Properties imapProps = new Properties();
     	imapProps.setProperty("mail.store.protocol", "imaps");
-		this.session = Session.getDefaultInstance(imapProps, null);
+    	this.session = Session.getDefaultInstance(imapProps, null);
 		this.store = this.session.getStore("imaps");
 		this.store.connect("imap.gmail.com", this.username, this.password);
         //Download message headers from server
@@ -185,7 +223,7 @@ public class Mail{
     	MimeMessage message = new MimeMessage(smtpSession);
     	EditText body = (EditText) this.activity.findViewById(R.id.compose_message_content);
     	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
-    	EditText to   = (EditText) this.activity.findViewById(R.id.compose_to);
+    	TextView to   = (TextView) this.activity.findViewById(R.id.compose_to);
     	
     	message.setText(body.getText().toString());
     	message.setSubject(subj.getText().toString());

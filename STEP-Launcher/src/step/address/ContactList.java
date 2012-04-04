@@ -19,22 +19,36 @@ public class ContactList {
 	public void populateContactList(boolean showInvisible, Activity activity) {
 		// Run query
 		this.mContactList.clear();
-		ContentResolver cr = activity.getContentResolver();
-		Uri uri = ContactsContract.Contacts.CONTENT_URI;
-		String[] projection = new String[] {
-				ContactsContract.Contacts._ID,
-				ContactsContract.Contacts.DISPLAY_NAME
-		};
-		String selection = ContactsContract.Contacts.IN_VISIBLE_GROUP + " = '" +
-				(showInvisible ? "0" : "1") + "'";
-		String[] selectionArgs = null;
-		String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
-		Cursor cursor = activity.managedQuery(uri, projection, selection, selectionArgs, sortOrder);
-		while(cursor.moveToNext()){
-			ContactListItem cli = new ContactListItem(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)),
-					cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
-			this.mContactList.add(cli);
-		}
+        ContentResolver cr = activity.getContentResolver();
+        String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
+		Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                null, null, null, sortOrder);
+        if (cur.getCount() > 0) {
+		    while (cur.moveToNext()) {
+		        String id = cur.getString(
+	                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+		        String name = cur.getString(
+	                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		        ContactListItem cli = new ContactListItem(id, name);
+		        this.mContactList.add(cli);
+		    }
+	    }
+//		ContentResolver cr = activity.getContentResolver();
+//		Uri uri = ContactsContract.Contacts.CONTENT_URI;
+//		String[] projection = new String[] {
+//				ContactsContract.Contacts._ID,
+//				ContactsContract.Contacts.DISPLAY_NAME
+//		};
+//		String selection = ContactsContract.Contacts.IN_VISIBLE_GROUP + " = '" +
+//				(showInvisible ? "0" : "1") + "'";
+//		String[] selectionArgs = null;
+//		String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
+//		Cursor cursor = activity.managedQuery(uri, projection, selection, selectionArgs, sortOrder);
+//		while(cursor.moveToNext()){
+//			ContactListItem cli = new ContactListItem(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)),
+//					cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+//			this.mContactList.add(cli);
+//		}
 	}
 	
 	public ArrayList<ContactListItem> getContactList(){

@@ -1,5 +1,6 @@
 package step.email;
 import step.*;
+import step.address.ContactInfo;
 import step.email.EmailList.EmailListItem;
 
 import java.util.ArrayList;
@@ -13,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class EmailListAdapter extends BaseAdapter{
+public class DialogListAdapter extends BaseAdapter{
 	// store the context (as an inflated layout)
 	private LayoutInflater inflater;
 	// store the resource (typically list_item.xml)
 	private int resource;
 	// store (a reference to) the data
-	private ArrayList<EmailListItem> data;
+	private ArrayList<ContactInfo> data;
 	
 	/**
 	 * Default constructor. Creates the new Adapter object to
@@ -28,7 +29,7 @@ public class EmailListAdapter extends BaseAdapter{
 	 * @param resource
 	 * @param data
 	 */
-	public EmailListAdapter(Context context, int resource, ArrayList<EmailListItem> data) {
+	public DialogListAdapter(Context context, int resource, ArrayList<ContactInfo> data) {
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.resource = resource;
 		this.data = data;
@@ -84,22 +85,14 @@ public class EmailListAdapter extends BaseAdapter{
 		}
 		
 		// pull out the object
-		EmailListItem item = this.data.get(position);
+		ContactInfo item = this.data.get(position);
 		
 		// Extract the view object
-		View viewElement = view.findViewById(R.id.emailList_subject);
+		View viewElement = view.findViewById(R.id.dialogContactEntryText);
 		// cast to the correct type
 		TextView tv = (TextView) viewElement;
 		// set the value
-		tv.setText(item.subject);
-		
-		viewElement = view.findViewById(R.id.emailList_from);
-		tv = (TextView) viewElement;
-		tv.setText(item.from);
-		
-//		viewElement = view.findViewById(R.id.emailList_date);
-//		tv = (TextView) viewElement;
-//		tv.setText(item.date);
+		tv.setText(item.getName());;
 		
 		// return final view object
 		return view;

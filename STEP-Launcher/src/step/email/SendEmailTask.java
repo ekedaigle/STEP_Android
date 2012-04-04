@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SendEmailTask extends AsyncTask<String, Void, String> {
 	private Activity activity;
@@ -38,6 +39,7 @@ public class SendEmailTask extends AsyncTask<String, Void, String> {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Toast.makeText(this.activity, "Send Failed!", Toast.LENGTH_SHORT).show();
 			return "Connection Failed";
 		}
         return "Connected";
@@ -46,10 +48,10 @@ public class SendEmailTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String result)
 	{
-    	Log.d("EMAIL APP", "Mail Sent");
+		Toast.makeText(this.activity, "Email Sent!", Toast.LENGTH_SHORT).show();
 		EditText body = (EditText) this.activity.findViewById(R.id.compose_message_content);
     	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
-    	EditText to   = (EditText) this.activity.findViewById(R.id.compose_to);
+    	TextView to   = (TextView) this.activity.findViewById(R.id.compose_to);
     	body.setText("");
     	subj.setText("");
     	to.setText("");

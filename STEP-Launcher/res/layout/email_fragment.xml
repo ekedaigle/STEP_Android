@@ -60,18 +60,20 @@
 	<ScrollView
 	    android:id="@+id/scrlReadEmail"
 	    android:layout_width="fill_parent"
+	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_height="fill_parent"
 	    android:visibility="gone" >
         <TextView
+            android:layout_marginLeft="@dimen/button_spacing"
+  		   	android:layout_marginRight="@dimen/button_spacing"
+  		   	android:layout_marginTop="@dimen/button_spacing"
             android:id="@+id/txtReadEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF"
             android:text=""
             android:textColor="#000"
             android:textSize="10pt"
-            android:textStyle="bold"
-            android:typeface="serif">
+            android:textStyle="bold">
         </TextView>
 	</ScrollView>
 
@@ -98,91 +100,110 @@
                android:layout_height="wrap_content"
                android:layout_marginTop="@dimen/button_spacing"
                android:orientation="vertical" >
-               <Button
-			   		android:id="@+id/btnAddAddressee"
-					android:text="Add Recipient+"
-					android:textSize="12pt"
-		 			android:textColor="#FFF"
-		 			android:textStyle="bold"
-            		android:background="@drawable/address_addcon_bkgd"
-					android:layout_width="fill_parent"
-           			android:layout_height="@dimen/button_height"
-					android:visibility="visible"/>	                
-                <TextView
-                    android:id="@+id/compose_to"	                    
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="gone"
-                    android:layout_below="@id/btnAddAddressee"
-                    android:layout_width="fill_parent"
-                    android:textSize="12pt"
-                    android:ellipsize="end"
-                    android:layout_marginRight="6dip"/>
+               <LinearLayout
+                   android:id="@+id/composeSubjLinLay"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_width="fill_parent" >
+					<LinearLayout
+					    android:id="@+id/recipientLinLay"
+					    android:layout_height="fill_parent"
+					    android:layout_width="wrap_content"
+					    android:visibility="gone"
+					    android:orientation="horizontal">
+						<TextView
+		                    android:id="@+id/lblCompose_to"	                    
+		                    android:layout_height="wrap_content"
+							android:text="TO: "
+		                    android:layout_width="wrap_content"
+		                    android:textSize="12pt"
+		                    android:ellipsize="end"
+		                    android:layout_marginRight="6dip"/>	                
+		                <TextView
+		                    android:id="@+id/compose_to"	                    
+		                    android:layout_height="wrap_content"
+							android:text=""
+		                    android:layout_width="wrap_content"
+		                    android:textSize="12pt"
+		                    android:ellipsize="end"
+		                    android:layout_marginRight="6dip"/>
+		            </LinearLayout>
+					<Button
+				   		android:id="@+id/btnAddAddressee"
+						android:text="Add Recipient+"
+						android:textSize="12pt"
+			 			android:textColor="#FFF"
+			 			android:textStyle="bold"
+	            		android:background="@drawable/address_addcon_bkgd"
+						android:layout_width="fill_parent"
+	           			android:layout_height="@dimen/button_height"
+						android:visibility="visible"/>
+               </LinearLayout>
                <RelativeLayout
                    android:id="@+id/composeSubjRelLay"
                    android:layout_height="wrap_content"
                    android:layout_width="fill_parent" >
-	        	<TextView
-					android:id="@+id/lblComposeSubj"
-					android:text="Subject"
-					android:textSize="12pt"
-					android:textStyle="bold"
-					android:layout_alignParentTop="true"
-					android:layout_centerHorizontal="true"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-                    android:id="@+id/compose_subject"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/lblComposeSubj"
-                    android:layout_marginLeft="6dip"
-                    android:layout_marginRight="6dip"
-                    android:hint="Subject"
-                    android:textSize="12pt"
-                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"/>
+		        	<TextView
+						android:id="@+id/lblComposeSubj"
+						android:text="Subject"
+						android:textSize="12pt"
+						android:textStyle="bold"
+						android:layout_alignParentTop="true"
+						android:layout_centerHorizontal="true"
+						android:layout_width="fill_parent"
+	                	android:layout_height="wrap_content"
+	                	android:visibility="visible"/>
+	                <EditText
+	                    android:id="@+id/compose_subject"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_below="@id/lblComposeSubj"
+	                    android:layout_marginLeft="6dip"
+	                    android:layout_marginRight="6dip"
+	                    android:hint="Subject"
+	                    android:textSize="12pt"
+	                    android:inputType="textEmailSubject|textAutoCorrect|textCapSentences|textImeMultiLine"
+	                    android:imeOptions="actionNext"
+	                    android:singleLine="true"/>
             </RelativeLayout>
 			<RelativeLayout
                    android:id="@+id/composeBodyRelLay"
                    android:layout_height="wrap_content"
                    android:layout_width="fill_parent" >
-	        	<TextView
-					android:id="@+id/lblComposeBody"
-					android:text="Message Body"
-					android:textSize="12pt"
-					android:textStyle="bold"
-					android:layout_alignParentTop="true"
-					android:layout_centerHorizontal="true"
-					android:layout_width="fill_parent"
-                	android:layout_height="wrap_content"
-                	android:visibility="visible"/>
-                <EditText
-	                android:id="@+id/compose_message_content"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_below="@id/lblComposeBody"
-	                android:textSize="12pt"
-	                android:gravity="left|top"
-	                android:hint="Message Text"
-	                android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
-	                android:imeOptions="actionDone|flagNoEnterAction"
-	                android:minLines="3"/>
+		        	<TextView
+						android:id="@+id/lblComposeBody"
+						android:text="Message Body"
+						android:textSize="12pt"
+						android:textStyle="bold"
+						android:layout_alignParentTop="true"
+						android:layout_centerHorizontal="true"
+						android:layout_width="fill_parent"
+	                	android:layout_height="wrap_content"
+	                	android:visibility="visible"/>
+	                <EditText
+		                android:id="@+id/compose_message_content"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_below="@id/lblComposeBody"
+		                android:textSize="12pt"
+		                android:gravity="left|top"
+		                android:hint="Message Text"
+		                android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
+		                android:imeOptions="actionDone|flagNoEnterAction"
+		                android:minLines="3"/>
             </RelativeLayout>
-		</LinearLayout>
-        <Button
-	        android:id="@+id/btnSend"
-	        android:layout_width="match_parent"
-	        android:layout_margin="2dip"
-	        android:background="@drawable/address_addcon_bkgd"
-         	android:layout_height="@dimen/button_height"
-	        android:clickable="true"
-	        android:text="Send"
-	        android:textColor="#FFF"
-	        android:textSize="12pt"
-	        android:textStyle="bold" />
+			</LinearLayout>
+	        <Button
+		        android:id="@+id/btnSend"
+		        android:layout_width="match_parent"
+		        android:layout_margin="2dip"
+		        android:background="@drawable/address_addcon_bkgd"
+	         	android:layout_height="@dimen/button_height"
+		        android:clickable="true"
+		        android:text="Send"
+		        android:textColor="#FFF"
+		        android:textSize="12pt"
+		        android:textStyle="bold" />
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

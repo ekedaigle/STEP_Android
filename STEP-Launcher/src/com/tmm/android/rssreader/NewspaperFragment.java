@@ -37,12 +37,15 @@ public class NewspaperFragment extends Fragment {
 	private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     	{
+    		
     		max = parent.getCount()-1;
     		if(position == 0){
     			getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
+    			getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
     		}
     		else if(position == max)
     		{
+    			getActivity().findViewById(R.id.btnPrevious).setVisibility(View.VISIBLE);
     			getActivity().findViewById(R.id.btnNext).setVisibility(View.GONE);
     		}
     		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
@@ -121,10 +124,11 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 			
 			// TODO Auto-generated method stub
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,1);
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),1);
 			rssReaderTask.execute();
-			getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
-    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 			
 			
 		}
@@ -135,10 +139,11 @@ private OnClickListener btnGovernmentListener = new OnClickListener() {
 	public void onClick(View V) {
 		
 		// TODO Auto-generated method stub
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,2);
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),2);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
     	
     };
@@ -147,10 +152,11 @@ private OnClickListener btnSportsListener = new OnClickListener() {
 	public void onClick(View V) {
 		
 		// TODO Auto-generated method stub
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,3);
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),3);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
     	
     };
@@ -159,10 +165,11 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 	public void onClick(View V) {
 		
 		// TODO Auto-generated method stub
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,4);
+		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),4);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
+		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
     	
     };
@@ -195,8 +202,9 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 		try {
 			
 			ArrayList<JSONObject> jobs = new ArrayList<JSONObject>();
-			rssReaderTask = new RssReaderTask(this.rssReader,0);
+			rssReaderTask = new RssReaderTask(this.rssReader,getActivity().findViewById(R.id.txtReadArticle),0);
 			rssReaderTask.execute();
+			
 			
 			
 	
@@ -204,12 +212,12 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 			Log.e("RSS ERROR", "Error loading RSS Feed Stream >> " + e.getMessage() + " //" + e.toString());
 		}
 		
-			
 				  
 
 		return V;
 				
 	}
+	
 	
 	
 	

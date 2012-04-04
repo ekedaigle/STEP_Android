@@ -61,7 +61,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         return v;
 	}
 
-	@Override
+	//@Override
 	public void taskGotStations(Map<String, Genre> stations)
 	{
 		this.stations = stations;
