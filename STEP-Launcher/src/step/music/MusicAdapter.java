@@ -58,7 +58,7 @@ public class MusicAdapter extends BaseAdapter {
 			button.setHeight(100);
 			button.setBackgroundDrawable(fragment.getResources().getDrawable(R.drawable.generic_button));
 			button.setTextSize(24);
-			button.setLayoutParams(new AbsListView.LayoutParams(300, LayoutParams.WRAP_CONTENT));
+			button.setLayoutParams(new AbsListView.LayoutParams(200, LayoutParams.WRAP_CONTENT));
 			button.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {

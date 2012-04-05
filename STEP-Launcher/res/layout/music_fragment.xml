@@ -26,7 +26,8 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal" >
         
-		<ScrollView
+		<view
+		    class="step.ButtonScrollView"
 		    android:id="@+id/musicScrollView"
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
@@ -47,12 +48,14 @@
 			    android:orientation="vertical" >
 		    </LinearLayout>
 -->
-	    </ScrollView>
+	    </view>
 	    
 		<GridView
 		    android:id="@+id/musicGridView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
+			android:numColumns="2"
+			android:background="@drawable/address_contact_bkgd"
 			android:layout_weight="0.2" >
 		</GridView>
     </LinearLayout>
