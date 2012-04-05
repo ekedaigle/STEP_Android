@@ -30,8 +30,9 @@ public class RssReader {
 		this.jobs = new ArrayList<JSONObject>();
 	}
 	
-	public void readArticle(int idx, View v) throws Exception{
-    	ReadNewsArticle task = new ReadNewsArticle(this, v, idx);
+	public void readArticle(int idx, View text, View text_header) throws Exception{
+    	ReadNewsArticle task = new ReadNewsArticle(this, text, text_header, idx);
+    	
     	String k = "";
     	task.getArticle(k);
     }

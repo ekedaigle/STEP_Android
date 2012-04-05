@@ -6,23 +6,33 @@
 	android:weightSum="10"
     android:orientation="horizontal" >
     <RelativeLayout
-	    android:id="@+id/emailRelLaySidebar"
+	    android:id="@+id/newsRelLaySidebar"
 	    android:layout_width="0dp"
 	    android:layout_weight="3"
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical" >
-
+<TextView
+	        android:id="@+id/lblCategories"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+   			android:background="@drawable/news_categories_label"
+   			android:textSize="14pt"
+   			android:text=""
+   			android:textStyle="bold"
+   			android:gravity="center_vertical|center_horizontal"
+			android:layout_alignParentTop="true"/>
             <Button
                 android:id="@+id/btnWorld"
-                android:layout_alignParentTop="true"
+                android:layout_below="@id/lblCategories"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/music_top_bar_height"
                 android:layout_margin="2dip"
-                android:background="@drawable/news_sports"
+                android:background="@drawable/news_world"
                 android:clickable="true"
                 android:textColor="#000"
                 android:textSize="12pt"
                 android:textStyle="bold" >
+                
             </Button>
 
             <Button
@@ -60,9 +70,65 @@
                 android:textSize="12pt"
                 android:textStyle="bold" >
             </Button>
+            <Button
+                android:id="@+id/btnHealth"
+                android:layout_width="fill_parent"
+                android:layout_below="@id/btnSports"
+                android:layout_height="@dimen/music_top_bar_height"
+                android:layout_margin="2dip"
+                android:background="@drawable/news_health"
+                android:textColor="#000"
+                android:textSize="12pt"
+                android:textStyle="bold" >
+            </Button>
         </RelativeLayout>
-	
+	<LinearLayout
+	    android:id="@+id/newTextSidebar"
+	    android:layout_weight="7"
+	    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+            <TextView
+	            android:id="@+id/txtReadTitle"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/news_title_label"
+	            android:textColor="#000"
+	            android:textSize="15pt"
+	            android:textStyle="bold"
+	            android:typeface="serif">
+	        </TextView>
+            <RelativeLayout
+                   android:id="@+id/composeSubjRelLay"
+                   android:layout_height="wrap_content"
+                   android:layout_width="fill_parent" >
+            <Button
+	                android:id="@+id/btnPrevious"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="2dip"
+	                android:background="@drawable/news_previous"
+	                android:clickable="true"
+	                android:textColor="#000"
+	                android:textSize="12pt"
+	                android:textStyle="bold" >
+            	</Button>
+            <Button
+	                android:id="@+id/btnNext"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_toRightOf="@id/btnPrevious"
+	                android:layout_margin="2dip"
+	                android:background="@drawable/news_next"
+	                android:clickable="true"
+	                android:textColor="#000"
+	                android:textSize="12pt"
+	                android:textStyle="bold" >
+            	</Button>
+            	</RelativeLayout>
+            	
 	<ScrollView
+	    android:fillViewport="true"
 		    android:id="@+id/scrlReadArticle"
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
@@ -71,17 +137,7 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="vertical" >
-	            <TextView
-	            android:id="@+id/txtReadTitle"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:background="#FFF"
-	            android:text=""
-	            android:textColor="#000"
-	            android:textSize="15pt"
-	            android:textStyle="bold"
-	            android:typeface="serif">
-	        </TextView>
+	            
 	        <TextView
 	            android:id="@+id/txtReadArticle"
 	            android:layout_width="fill_parent"
@@ -93,34 +149,11 @@
 	            android:textStyle="bold"
 	            android:typeface="serif">
 	        </TextView>
-	        <Button
-	                android:id="@+id/btnPrevious"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="2dip"
-	                android:background="#cdc9c9"
-	                android:clickable="true"
-	                android:text="Previous"
-	                android:textColor="#000"
-	                android:textSize="12pt"
-	                android:textStyle="bold" >
-            	</Button>
-            <Button
-	                android:id="@+id/btnNext"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="2dip"
-	                android:background="#cdc9c9"
-	                android:clickable="true"
-	                android:text="Next"
-	                android:textColor="#000"
-	                android:textSize="12pt"
-	                android:textStyle="bold" >
-            	</Button>	
+	        	
 	        
 	        </LinearLayout>
 		</ScrollView>
-		
+		</LinearLayout>
 	
 	
 	

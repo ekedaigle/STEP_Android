@@ -20,12 +20,14 @@ import android.widget.TextView;
 public class RssReaderTask extends AsyncTask<String, Void, String> {
 	RssReader r;
 	View v;
+	View v_header;
 	int newspaper_id;
 	JSONObject item;
 
-	RssReaderTask(RssReader r1, View v1, int feeder) {
+	RssReaderTask(RssReader r1, View v1, View v2, int feeder) {
 		this.r = r1;
 		this.v = v1;
+		this.v_header= v2;
 		this.newspaper_id = feeder;
 	}
 
@@ -105,7 +107,7 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		
 		try {
 			
-			this.r.readArticle(0, v);
+			this.r.readArticle(0, v,v_header);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

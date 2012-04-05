@@ -10,20 +10,22 @@ import android.widget.TextView;
 
 public class ReadNewsArticle{
 	RssReader r;
-	View v;
+	View textView;
+	View textHeader;
 	int idx;
 	JSONObject item;
-	ReadNewsArticle(RssReader r1, View v1, int idx1){
+	ReadNewsArticle(RssReader r1, View v1, View v2, int idx1){
 	this.r = r1;
-	this.v = v1;
+	this.textView = v1;
+	this.textHeader = v2;
 	this.idx = idx1;
 	item = this.r.getJobs().get(this.idx);
 	}
 	protected void getArticle(String result)
 	{
 		//String images = null;
-		
-		String header;
+		String header = null;
+	
 		try {
 			
 			
@@ -34,7 +36,30 @@ public class ReadNewsArticle{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	TextView t = (TextView) this.v;
+    	TextView t = (TextView) this.textView;
+    	TextView th = (TextView) this.textHeader;
+    	//Log.e("the image links are "," the images links are " + images);
+    	//Log.e("the image links are "," the images count is " + images.length());
+    	t.setText(result);
+    	th.setText(header);
+    	
+	}
+	protected void getTitle(String result)
+	{
+		//String images = null;
+		
+	
+		try {
+			
+			
+			//images = (String) item.get("imageLink");
+			
+			result = (String) item.get("header").toString();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	TextView t = (TextView) this.textView;
     	//Log.e("the image links are "," the images links are " + images);
     	//Log.e("the image links are "," the images count is " + images.length());
     	t.setText(result);
