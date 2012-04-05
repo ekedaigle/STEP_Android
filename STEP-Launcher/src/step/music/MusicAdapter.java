@@ -5,8 +5,12 @@ import com.step.launcher.R;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
+import android.widget.AbsoluteLayout;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class MusicAdapter extends BaseAdapter {
 
@@ -51,9 +55,10 @@ public class MusicAdapter extends BaseAdapter {
 		if (convertView == null)
 		{
 			button = new Button(context);
-			button.setHeight(130);
+			button.setHeight(100);
 			button.setBackgroundDrawable(fragment.getResources().getDrawable(R.drawable.generic_button));
 			button.setTextSize(24);
+			button.setLayoutParams(new AbsListView.LayoutParams(300, LayoutParams.WRAP_CONTENT));
 			button.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {

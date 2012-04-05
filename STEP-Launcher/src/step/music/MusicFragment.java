@@ -1,13 +1,19 @@
 package step.music;
 
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.ByteOrder;
 
 import com.step.launcher.R;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.res.Resources;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +22,8 @@ import android.view.animation.GridLayoutAnimationController;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import step.music.MusicAsyncTask;
@@ -31,6 +39,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	private Map<String, Genre> stations;
 	private ArrayList<Button> genre_buttons;
 	private LinearLayout scrollLayout;
+	private RadioGroup musicScrollGroup;
 	private GridView musicGridView;
 	private Genre selected_genre;
 	private View v;
@@ -41,21 +50,48 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         v = inflater.inflate(R.layout.music_fragment, container, false);
         title = (TextView)v.findViewById(R.id.music_title);
         
-        scrollLayout = (LinearLayout)v.findViewById(R.id.musicScrollLayout);
+        musicScrollGroup = (RadioGroup)v.findViewById(R.id.musicScrollGroup);
         musicGridView = (GridView)v.findViewById(R.id.musicGridView);
         adapter = new MusicAdapter(this);
         musicGridView.setAdapter(adapter);
         
         if (genre_buttons == null)
         {
-	        asyncTask = new MusicAsyncTask();
+        	// find base station ip
+        	WifiManager manager = (WifiManager)getActivity().getSystemService(Context.WIFI_SERVICE);
+        	int addr = manager.getDhcpInfo().gateway;
+        	byte[] bytes = new byte[4];
+        	
+        	// Need to flip the byte order, since java is big-endian and the
+        	// tablet is little-endian. Java is so fucking useless that it
+        	// doesn't handle this shit for you.
+        	if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN)
+        	{
+	        	bytes[0] = (byte)addr;
+	        	bytes[1] = (byte)(addr >> 8);
+	        	bytes[2] = (byte)(addr >> 16);
+	        	bytes[3] = (byte)(addr >> 24);
+        	}
+        	else
+        		bytes = BigInteger.valueOf(addr).toByteArray();
+        	
+        	InetAddress baseStationAddr = null;
+        	
+			try {
+				baseStationAddr = InetAddress.getByAddress(bytes);
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+	        asyncTask = new MusicAsyncTask(baseStationAddr);
 	        asyncTask.setCallback(this);
 	        asyncTask.execute(baseStationPort);
         }
         else
         {
         	for (Button b : genre_buttons)
-        		scrollLayout.addView(b);
+        		musicScrollGroup.addView(b);
         }
         
         return v;
@@ -65,20 +101,23 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	public void taskGotStations(Map<String, Genre> stations)
 	{
 		this.stations = stations;
-		LinearLayout layout = (LinearLayout)scrollLayout;
-		layout.removeAllViews();
+		//LinearLayout layout = (LinearLayout)scrollLayout;
+		//layout.removeAllViews();
+		musicScrollGroup.removeAllViews();
+		
 		Resources r = getResources();
 		genre_buttons = new ArrayList<Button>(stations.size());
 		
 		for (String genre : stations.keySet())
 		{
-			Button b = new Button(this.getActivity());
+			RadioButton b = new RadioButton(this.getActivity());
 			b.setText(genre);
-			b.setBackgroundDrawable(r.getDrawable(R.drawable.generic_button));
+			b.setButtonDrawable(r.getDrawable(R.drawable.null_drawable));
+			b.setBackgroundDrawable(r.getDrawable(R.drawable.generic_radio_button));
 			b.setTextSize(24);
 			b.setOnClickListener(this);
 			genre_buttons.add(b);
-			layout.addView(b);
+			musicScrollGroup.addView(b);
 		}
 	}
 	
@@ -122,6 +161,6 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	public void onDestroyView()
 	{
 		super.onDestroyView();
-		scrollLayout.removeAllViews();
+		musicScrollGroup.removeAllViews();
 	}
 }

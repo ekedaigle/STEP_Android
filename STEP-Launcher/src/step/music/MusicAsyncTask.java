@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.ConnectException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,6 +42,13 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Genre>, Objec
 	private MusicAsyncTaskCallback callback;
 	private MusicContentHandler handler;
 	private BlockingQueue<String> queue;
+	private InetAddress baseStationAddr;
+	
+	public MusicAsyncTask(InetAddress addr)
+	{
+		super();
+		this.baseStationAddr = addr;
+	}
 
 	public void setCallback(MusicAsyncTaskCallback callback)
 	{
@@ -58,7 +70,7 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Genre>, Objec
 		while (true)
 		{
 			try {
-				sock = new Socket("192.168.10.1",  port);
+				sock = new Socket(baseStationAddr,  port);
 				sendStream = new DataOutputStream(sock.getOutputStream());
 				recvStream = new DataInputStream(sock.getInputStream());
 			} catch (UnknownHostException e) {
