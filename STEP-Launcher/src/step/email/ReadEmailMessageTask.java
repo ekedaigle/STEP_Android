@@ -65,6 +65,7 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 					   filename = "Attachment" + i;
 				   }
 				   try {
+					   Log.d("EMAIL APP", dir.toString());
 					   file = new File(dir, filename);
 					   file.createNewFile();
 					   ((MimeBodyPart)part).saveFile(file);
@@ -101,6 +102,10 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
     	tv.setText(this.m.getCurMsg().getSubj());
     	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailBody);
     	tv.setText(this.m.getCurMsg().getBody());
+    	if(this.m.getCurMsg().getNumAttachment() > 0){
+    		this.m.getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.VISIBLE);
+    		this.m.getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
+    	}
 	}
 	
 }

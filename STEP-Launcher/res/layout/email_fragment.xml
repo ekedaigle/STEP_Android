@@ -118,6 +118,29 @@
 		            android:textSize="12pt"/>
 	        </LinearLayout>
    			<LinearLayout 
+			    android:id="@+id/readEmailAttachment_LinLay"
+			    android:layout_marginRight="@dimen/button_spacing"
+  		   		android:layout_marginTop="@dimen/button_spacing"
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:visibility="gone"
+			    android:layout_height="wrap_content">
+		        <ImageView
+		            android:id="@+id/attachmentImg"
+		            android:layout_width="wrap_content"
+		            android:layout_height="fill_parent"
+		            android:visibility="gone"/>
+		        <Button
+		            android:id="@+id/btnGetAttachment"
+		            android:text="Get Attachment"
+		            android:background="@drawable/address_addcon_bkgd"
+					android:layout_width="fill_parent"
+	           		android:layout_height="@dimen/button_height"
+		            android:textColor="#FFF"
+		            android:visibility="gone"
+		            android:textSize="12pt"/>
+	        </LinearLayout>
+			<LinearLayout 
 			    android:id="@+id/readEmailBody_LinLay"
 			    android:orientation="horizontal"
 			    android:layout_marginRight="@dimen/button_spacing"
