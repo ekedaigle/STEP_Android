@@ -72,11 +72,11 @@ public class ButtonScrollView extends FrameLayout implements OnClickListener {
 	public void onClick(View v) {
 		if (v == upButton)
 		{
-			frameLayout.scrollBy(0, -10);
+			frameLayout.scrollBy(0, -30);
 		}
 		else if (v == downButton)
 		{
-			frameLayout.scrollBy(0, 10);
+			frameLayout.scrollBy(0, 30);
 		}
 	}
 	
