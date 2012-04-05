@@ -9,6 +9,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,15 +129,19 @@ public class EmailFragment extends Fragment {
     	}
     };
     
-    private OnClickListener btnInboxListener = new OnClickListener() {
+    private OnClickListener btnGetAttachmentListener = new OnClickListener() {
     	public void onClick(View v)
     	{
         	//Visible = 0
         	//Invisible = 1
         	//Gone = 2
-    		getActivity().findViewById(R.id.emailFrag_listview).setVisibility(View.VISIBLE);
-    		getActivity().findViewById(R.id.scrlReadEmail).setVisibility(View.GONE);
-    		getActivity().findViewById(R.id.scrlCompose).setVisibility(View.GONE);
+    		ImageView iv = (ImageView) getActivity().findViewById(R.id.attachmentImg);
+    		CurrentMessage cm = EmailFragment.this.mail.getCurMsg();
+    		Toast.makeText(getActivity(), cm.getAttachmentLoc(0), Toast.LENGTH_SHORT).show();
+    		Bitmap bmp = BitmapFactory.decodeFile(EmailFragment.this.mail.getCurMsg().getAttachmentLoc(0));
+    		iv.setImageBitmap(bmp);
+    		getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.attachmentImg).setVisibility(View.VISIBLE);
     	}
     };
     
@@ -144,6 +151,9 @@ public class EmailFragment extends Fragment {
         	//Visible = 0
         	//Invisible = 1
         	//Gone = 2
+    		getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.attachmentImg).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.lblEmailStart).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.scrlReadEmail).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.scrlCompose).setVisibility(View.VISIBLE);
@@ -154,6 +164,9 @@ public class EmailFragment extends Fragment {
     private OnItemClickListener listItemSelectListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     	{
+    		getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
+    		getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.GONE);
+    		getActivity().findViewById(R.id.attachmentImg).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.lblEmailStart).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.scrlReadEmail).setVisibility(View.VISIBLE);
     		getActivity().findViewById(R.id.scrlCompose).setVisibility(View.GONE);
@@ -181,6 +194,7 @@ public class EmailFragment extends Fragment {
 		V.findViewById(R.id.btnCompose).setOnClickListener(btnComposeListener);
 		V.findViewById(R.id.btnSend).setOnClickListener(btnSendMailListener);
 		V.findViewById(R.id.btnAddAddressee).setOnClickListener(btnAddAddressee);
+		V.findViewById(R.id.btnGetAttachment).setOnClickListener(btnGetAttachmentListener);
 		//setup the data source
 		this.mail = new Mail(getActivity(), list);
         mail.setUserPass("capstone.group6.2012", "capstone2012");

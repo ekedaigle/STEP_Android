@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
@@ -69,7 +70,8 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 					   file = new File(dir, filename);
 					   file.createNewFile();
 					   ((MimeBodyPart)part).saveFile(file);
-					   this.m.getCurMsg().addAttachmentLoc(filename);
+					   String location = dir.toString() +'/' + filename;
+					   this.m.getCurMsg().addAttachmentLoc(location);
 					   Log.d("Email Fragment", "Saved the Attachment "+i+" to the following filename ["+filename+"].");
 				   } catch (IOException ex) {
 					   Log.e("Email Fragment", "Caught an exception trying to save an attachment to the filename ["+filename+"].", ex);
@@ -90,22 +92,26 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return "Read Messages Failed";
+			return "Failed";
 		}
-		return "Failed";
+		return "Success";
 	}
 	protected void onPostExecute(String result)
 	{
-    	TextView tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailFrom);
-    	tv.setText(this.m.getCurMsg().getFrom());
-    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailSubject);
-    	tv.setText(this.m.getCurMsg().getSubj());
-    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailBody);
-    	tv.setText(this.m.getCurMsg().getBody());
-    	if(this.m.getCurMsg().getNumAttachment() > 0){
-    		this.m.getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.VISIBLE);
-    		this.m.getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
-    	}
+		if(!result.contentEquals("Failed")){
+	    	TextView tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailFrom);
+	    	tv.setText(this.m.getCurMsg().getFrom());
+	    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailSubject);
+	    	tv.setText(this.m.getCurMsg().getSubj());
+	    	tv = (TextView) this.m.getActivity().findViewById(R.id.txtReadEmailBody);
+	    	tv.setText(this.m.getCurMsg().getBody());
+	    	if(this.m.getCurMsg().getNumAttachment() > 0){
+	    		this.m.getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.VISIBLE);
+	    		this.m.getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
+	    	}
+		} else {
+			Toast.makeText(this.m.getActivity(), "Read Failed!" , Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 }

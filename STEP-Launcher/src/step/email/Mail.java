@@ -43,6 +43,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.ParseException;
 
 
@@ -235,7 +236,11 @@ public class Mail{
     	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
     	TextView to   = (TextView) this.activity.findViewById(R.id.compose_to);
     	
-    	message.setText(body.getText().toString());
+    	MimeMultipart content = new MimeMultipart("alternative");
+    	MimeBodyPart text = new MimeBodyPart();
+    	text.setText(body.getText().toString());
+    	content.addBodyPart(text);
+    	message.setContent(content);
     	message.setSubject(subj.getText().toString());
     	message.setFrom(new InternetAddress(this.username));
     	message.addRecipient(RecipientType.TO, new InternetAddress(to.getText().toString()));
