@@ -34,6 +34,14 @@ public class EmailFragment extends Fragment {
 	//define data source
 	public Mail mail;
 	
+	public void setMail(Mail m){
+		this.mail = m;
+	}
+	
+	public View getSidebarView(){
+		return getActivity().findViewById(R.id.emailFrag_listview);
+	}
+	
     private OnClickListener btnAddAddressee = new OnClickListener() {
     	public void onClick(View v)
     	{
@@ -170,10 +178,15 @@ public class EmailFragment extends Fragment {
     		getActivity().findViewById(R.id.lblEmailStart).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.scrlReadEmail).setVisibility(View.VISIBLE);
     		getActivity().findViewById(R.id.scrlCompose).setVisibility(View.GONE);
-    		
+    		EmailList eml = EmailFragment.this.mail.getEmailList();
+    		if(eml.getEmailList().get(position).isNew == true){
+    			EmailFragment.this.mail.getEmailList().getEmailList().get(position).isNew = false;
+    			view.findViewById(R.id.msgIsNew).setVisibility(View.GONE);
+    		}
+			
     		try
         	{
-        		EmailFragment.this.mail.readEmail(position);
+        		EmailFragment.this.mail.readEmail(eml.getEmailList().size() - position - 1);
         	}
         	catch(Exception e)
         	{
@@ -190,16 +203,25 @@ public class EmailFragment extends Fragment {
 		ListView list = (ListView) V.findViewById(R.id.emailFrag_listview);
 		list.setTextFilterEnabled(true);
 		list.setOnItemClickListener(listItemSelectListener);
+		this.mail.setListView(list);
 		//V.findViewById(R.id.btnInbox).setOnClickListener(btnInboxListener);
 		V.findViewById(R.id.btnCompose).setOnClickListener(btnComposeListener);
 		V.findViewById(R.id.btnSend).setOnClickListener(btnSendMailListener);
 		V.findViewById(R.id.btnAddAddressee).setOnClickListener(btnAddAddressee);
 		V.findViewById(R.id.btnGetAttachment).setOnClickListener(btnGetAttachmentListener);
 		//setup the data source
-		this.mail = new Mail(getActivity(), list);
-        mail.setUserPass("capstone.group6.2012", "capstone2012");
-        ConnectToEmailTask task = new ConnectToEmailTask(this.mail);
-    	task.execute();
+		if(this.mail.haveMsgs()){
+			try
+			{
+				this.mail.displayMessages();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		} else {
+			DisplayMessagesTask task = new DisplayMessagesTask(this.mail);
+			task.execute();
+		}
 		
 		return V;
 	}

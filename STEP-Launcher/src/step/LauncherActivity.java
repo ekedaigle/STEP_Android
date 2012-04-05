@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import step.address.AddressFragment;
+import step.email.ConnectToEmailTask;
 import step.email.EmailFragment;
+import step.email.Mail;
 import step.music.MusicFragment;
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.step.launcher.R;
 import com.tmm.android.rssreader.NewspaperFragment;
@@ -67,6 +70,11 @@ public class LauncherActivity extends Activity
         fragments[NEWSPAPER] = new NewspaperFragment();
         fragments[ADDRESS] = new AddressFragment();
         
+        Mail mail = new Mail(this);
+        mail.setUserPass("capstone.group6.2012", "capstone2012");
+        ((EmailFragment)fragments[EMAIL]).setMail(mail);
+        ConnectToEmailTask task = new ConnectToEmailTask(mail);
+    	task.execute();
         // have the music button selected by default
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_layout, fragments[MUSIC]);

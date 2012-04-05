@@ -2,13 +2,14 @@ package step.email;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.util.Log;
 import android.view.*;
 
 public class ConnectToEmailTask extends AsyncTask<String, Void, String> {
 	Mail m;
 	View v;
-	ConnectToEmailTask(Mail m1){
+	public ConnectToEmailTask(Mail m1){
 		m = m1;
 	}
 	@Override
@@ -37,8 +38,15 @@ public class ConnectToEmailTask extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result)
 	{
 		Log.d("EMAIL APP", result);
-    	UpdateInboxTask task = new UpdateInboxTask(this.m);
-    	task.execute();
+		if(result.contentEquals("Connection Failed")){
+			Toast.makeText(this.m.getActivity(), "Email Connection Failed. Retrying", Toast.LENGTH_SHORT).show();
+	        ConnectToEmailTask task = new ConnectToEmailTask(this.m);
+	    	task.execute();
+		}
+		this.m.setIsConnected(true);
+		Toast.makeText(this.m.getActivity(), "Email Connected", Toast.LENGTH_SHORT).show();
+		UpdateInboxTask task = new UpdateInboxTask(this.m);
+		task.execute();
 		//textView.setText(result);
 	}
 }

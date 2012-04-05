@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.mail.Address;
+import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.Folder;
 
@@ -24,7 +25,7 @@ public class EmailList {
 	
 	public void addMessages(Message[] msgs) throws Exception {
 		EmailListItem item; 
-		for(int i=0; i<msgs.length; i++)
+		for(int i=msgs.length-1; i>=0; i--)
 		{
 			item = new EmailListItem();
 			item.fromMsg(msgs[i]);
@@ -44,19 +45,21 @@ public class EmailList {
 		public String subject;
 		public String from;
 		public String date;
+		public boolean isNew;
 
 		
 		//Default Constructor
 		public EmailListItem() {
-			this("Subject", "From", "Date");
+			this("Subject", "From", "Date", false);
 		}
 		
 		//main constructor
-		public EmailListItem(String subject, String from, String date){
+		public EmailListItem(String subject, String from, String date, boolean is_new){
 			super();
 			this.subject = subject;
 			this.from = from;
 			this.date = date;
+			this.isNew = is_new;
 		}
 		
 		public void fromMsg(Message msg) throws Exception{
@@ -67,6 +70,7 @@ public class EmailList {
 			d = msg.getSentDate();
 			this.date = d.toString();
 			this.subject = msg.getSubject();
+			this.isNew = !msg.isSet(Flags.Flag.SEEN);
 		}
 	}
 }

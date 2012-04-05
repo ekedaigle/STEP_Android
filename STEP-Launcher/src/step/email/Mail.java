@@ -55,6 +55,8 @@ public class Mail{
     private String username, password;
     private Folder inbox;
     private Activity activity;
+    private boolean isConnected;
+    private boolean haveMsgs;
     //private TableModel tm;
     public Message[] msgs;
     private EmailList emailList;
@@ -63,14 +65,40 @@ public class Mail{
     private CurrentMessage mCurMsg;
     boolean pop3 = false;
     
-    Mail(Activity a, ListView email_listView){
+    public Mail(Activity a){
     	this.activity = a;
+    	this.isConnected = false;
+    	this.haveMsgs = false;
     	this.emailList = new EmailList();
-    	this.email_listView = email_listView;
     	this.cli_w_email = new ArrayList<ContactInfo>();
     	mCurMsg = new CurrentMessage();
     	getContactsWithEmail();
     };
+    
+    public void setHaveMsgs(boolean tf){
+    	this.haveMsgs = tf;
+    }
+    
+    public boolean haveMsgs()
+    {
+    	return this.haveMsgs;
+    }
+    
+    public boolean getIsConnected(){
+    	return this.isConnected;
+    }
+    
+    public void setIsConnected(boolean conn){
+    	this.isConnected = conn;
+    }
+    
+    public void setListView(ListView lv){
+    	this.email_listView = lv;
+    }
+    
+    public EmailList getEmailList(){
+    	return this.emailList;
+    }
     
     public CurrentMessage getCurMsg(){
     	return mCurMsg;

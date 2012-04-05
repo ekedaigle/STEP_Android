@@ -1,6 +1,7 @@
 package step.email;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 public class UpdateInboxTask extends AsyncTask<String, Void, String>{
 	Mail m;
@@ -12,23 +13,21 @@ public class UpdateInboxTask extends AsyncTask<String, Void, String>{
 	{
 		try
 		{
+			this.m.setHaveMsgs(false);
 			m.getMessages();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return "Get Messages Failed";
+			return "Failed";
 		}
 		return "Got Messages";
 	}
 	protected void onPostExecute(String result)
 	{
-		try
-		{
-			m.displayMessages();
-		}
-		catch (Exception e){
-			e.printStackTrace();
+		if(result.contentEquals("Got Messages")){
+			this.m.setHaveMsgs(true);
+			Toast.makeText(this.m.getActivity(), "Updated Messages", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
