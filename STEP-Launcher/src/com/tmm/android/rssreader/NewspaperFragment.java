@@ -88,7 +88,7 @@ public class NewspaperFragment extends Fragment {
 			// TODO Auto-generated method stub
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),1);
 			rssReaderTask.execute();
-			getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
     		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
     		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 			
@@ -102,7 +102,7 @@ private OnClickListener btnGovernmentListener = new OnClickListener() {
 		// TODO Auto-generated method stub
 		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),2);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
 		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
@@ -115,7 +115,7 @@ private OnClickListener btnSportsListener = new OnClickListener() {
 		// TODO Auto-generated method stub
 		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),3);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
 		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
@@ -128,7 +128,7 @@ private OnClickListener btnFinanceListener = new OnClickListener() {
 		// TODO Auto-generated method stub
 		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),4);
 		rssReaderTask.execute();
-		getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
 		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
 	}
