@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.step.launcher.R;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,157 +23,234 @@ import android.widget.AdapterView.OnItemClickListener;
 public class NewspaperFragment extends Fragment {
 	RssReaderTask rssReaderTask;
 	RssReader rssReader;
-	View test;
 	int position_hold;
-	int max = 4;//the highest number of articles we will have is 5
+	ArrayList<JSONObject> jobs_World;
+	int change_list = 0;
+	int world_hold = 0;
+	int sports_hold = 0;
+	int government_hold = 0;
+	int finance_hold = 0;
+
+	int max = 4;// the highest number of articles we will have is 5
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
 
-	
+	public void saveFeed() {
+		if (change_list == 0) {
+
+		} else if (change_list == 1) {
+			jobs_World = rssReader.getJobs();
+		} else if (change_list == 2) {
+
+		} else if (change_list == 3) {
+
+		} else if (change_list == 4) {
+
+		}
+
+	}
+
 	private OnClickListener btnPreviousListener = new OnClickListener() {
 
 		public void onClick(View V) {
-			try
-        	{
-    			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+			max = NewspaperFragment.this.rssReader.getJobs().size()-1;
+			
+			try {
+				// EmailFragment.this.mail.readEmail(position,
+				// getActivity().findViewById(R.id.txtReadEmail));
 				position_hold = position_hold - 1;
-				if(position_hold ==0)
-				{
-					getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
+				if (position_hold <= 0) {
+					position_hold = 0;
+					getActivity().findViewById(R.id.btnPrevious).setVisibility(
+							View.VISIBLE);
 				}
-				getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-    			NewspaperFragment.this.rssReader.readArticle(position_hold, getActivity().findViewById(R.id.txtReadArticle), getActivity().findViewById(R.id.txtReadTitle));
-        		
-        	}
-        	catch(Exception e)
-        	{
-        		e.printStackTrace();
-        	}
-			
+				getActivity().findViewById(R.id.btnNext).setVisibility(
+						View.VISIBLE);
+				NewspaperFragment.this.rssReader.readArticle(position_hold,
+						getActivity().findViewById(R.id.txtReadArticle),
+						getActivity().findViewById(R.id.txtReadTitle));
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
-    };
-    
-    
-    
-    private OnClickListener btnNextListener = new OnClickListener() {
+	};
+
+	private OnClickListener btnNextListener = new OnClickListener() {
 
 		public void onClick(View V) {
-			try
-        	{
+			max = NewspaperFragment.this.rssReader.getJobs().size()-1;
+			try {
 				
-				
-    			//EmailFragment.this.mail.readEmail(position, getActivity().findViewById(R.id.txtReadEmail));
+
+				// EmailFragment.this.mail.readEmail(position,
+				// getActivity().findViewById(R.id.txtReadEmail));
 				position_hold = position_hold + 1;
-				getActivity().findViewById(R.id.btnPrevious).setVisibility(View.VISIBLE);
-				NewspaperFragment.this.rssReader.readArticle(position_hold, getActivity().findViewById(R.id.txtReadArticle), getActivity().findViewById(R.id.txtReadTitle));
-    			if(position_hold == max)
-				{
-					getActivity().findViewById(R.id.btnNext).setVisibility(View.GONE);
+				if (position_hold >= max) {
+					position_hold = max;
+					
 				}
-        		
-        	}
-        	catch(Exception e)
-        	{
-        		e.printStackTrace();
-        	}
-			
+				getActivity().findViewById(R.id.btnPrevious).setVisibility(
+						View.VISIBLE);
+				NewspaperFragment.this.rssReader.readArticle(position_hold,
+						getActivity().findViewById(R.id.txtReadArticle),
+						getActivity().findViewById(R.id.txtReadTitle));
+				getActivity().findViewById(R.id.btnNext).setVisibility(
+						View.VISIBLE);
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
-    };
-    
-    
-    
-    
-    private OnClickListener btnWorldListener = new OnClickListener() {
+	};
+
+	private OnClickListener btnWorldListener = new OnClickListener() {
 
 		public void onClick(View V) {
-			
-			position_hold =0;
-			// TODO Auto-generated method stub
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),getActivity().findViewById(R.id.txtReadTitle),1);
-			rssReaderTask.execute();
-			
-			//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-    		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
-    		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
-			
-			
+
+			position_hold = 0;
+			if (world_hold == 0) {
+				//saveFeed();
+
+				// TODO Auto-generated method stub
+				rssReaderTask = new RssReaderTask(
+						NewspaperFragment.this.rssReader, getActivity()
+								.findViewById(R.id.txtReadArticle),
+						getActivity().findViewById(R.id.txtReadTitle), 1);
+				rssReaderTask.execute();
+				world_hold = 0;
+				change_list = 1;
+			} else {
+				Log.e("here", "here");
+				NewspaperFragment.this.rssReader.setJobs(jobs_World);
+				try {
+					Log.e("here", "here");
+					NewspaperFragment.this.rssReader.readArticle(position_hold,
+							getActivity().findViewById(R.id.txtReadArticle),
+							getActivity().findViewById(R.id.txtReadTitle));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
+					View.VISIBLE);
+			getActivity().findViewById(R.id.btnPrevious).setVisibility(
+					View.VISIBLE);
+
 		}
-    };
-private OnClickListener btnGovernmentListener = new OnClickListener() {
+	};
+	private OnClickListener btnGovernmentListener = new OnClickListener() {
 
-	public void onClick(View V) {
-		
-		// TODO Auto-generated method stub
-		position_hold =0;
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),getActivity().findViewById(R.id.txtReadTitle),2);
-		rssReaderTask.execute();
-		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-		getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
-	}
-    	
-    };
-private OnClickListener btnSportsListener = new OnClickListener() {
+		public void onClick(View V) {
 
-	public void onClick(View V) {
-		
-		// TODO Auto-generated method stub
-		position_hold =0;
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),getActivity().findViewById(R.id.txtReadTitle),3);
-		rssReaderTask.execute();
-		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-		getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
-	}
-    	
-    };
-private OnClickListener btnFinanceListener = new OnClickListener() {
+			// TODO Auto-generated method stub
+			position_hold = 0;
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
+					getActivity().findViewById(R.id.txtReadArticle),
+					getActivity().findViewById(R.id.txtReadTitle), 2);
+			rssReaderTask.execute();
+			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
+					View.VISIBLE);
+			getActivity().findViewById(R.id.btnPrevious).setVisibility(
+					View.VISIBLE);
+		}
 
-	public void onClick(View V) {
+	};
+	private OnClickListener btnSportsListener = new OnClickListener() {
+
+		public void onClick(View V) {
+
+			// TODO Auto-generated method stub
+			
+			position_hold = 0;
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
+					getActivity().findViewById(R.id.txtReadArticle),
+					getActivity().findViewById(R.id.txtReadTitle), 3);
+			rssReaderTask.execute();
+			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
+					View.VISIBLE);
+			getActivity().findViewById(R.id.btnPrevious).setVisibility(
+					View.VISIBLE);
+		}
+
+	};
+	private OnClickListener btnFinanceListener = new OnClickListener() {
+
 		
-		// TODO Auto-generated method stub
-		position_hold =0;
-		rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,getActivity().findViewById(R.id.txtReadArticle),getActivity().findViewById(R.id.txtReadTitle),4);
-		rssReaderTask.execute();
-		//getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-		getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.scrlReadArticle).setVisibility(View.VISIBLE);
-		getActivity().findViewById(R.id.btnPrevious).setVisibility(View.GONE);
-	}
-    	
-    };
-    
-    
-    
-    
-    
-    
-	
+		public void onClick(View V) {
+
+			// TODO Auto-generated method stub
+			//jobs_World = NewspaperFragment.this.rssReader.getJobs();	
+			
+			position_hold = 0;
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
+					getActivity().findViewById(R.id.txtReadArticle),
+					getActivity().findViewById(R.id.txtReadTitle), 4);
+			rssReaderTask.execute();
+			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
+					View.VISIBLE);
+			getActivity().findViewById(R.id.btnPrevious).setVisibility(
+					View.VISIBLE);
+		}
+
+	};
+	private OnClickListener btnHealthListener = new OnClickListener() {
+
+		public void onClick(View V) {
+
+			// TODO Auto-generated method stub
+			
+			position_hold = 0;
+			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
+					getActivity().findViewById(R.id.txtReadArticle),
+					getActivity().findViewById(R.id.txtReadTitle), 5);
+			rssReaderTask.execute();
+			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
+					View.VISIBLE);
+			getActivity().findViewById(R.id.btnPrevious).setVisibility(
+					View.VISIBLE);
+		}
+
+	};
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			final Bundle savedInstanceState) {
 
-				
-		final View V = inflater.inflate(R.layout.newspaper_fragment, container, false);
-		
-		
+		final View V = inflater.inflate(R.layout.newspaper_fragment, container,
+				false);
+
 		V.findViewById(R.id.btnNext).setOnClickListener(btnNextListener);
-		V.findViewById(R.id.btnPrevious).setOnClickListener(btnPreviousListener);
-		V.findViewById(R.id.btnGovernment).setOnClickListener(btnGovernmentListener);
+		V.findViewById(R.id.btnPrevious)
+				.setOnClickListener(btnPreviousListener);
+		V.findViewById(R.id.btnGovernment).setOnClickListener(
+				btnGovernmentListener);
 		V.findViewById(R.id.btnSports).setOnClickListener(btnSportsListener);
 		V.findViewById(R.id.btnFinance).setOnClickListener(btnFinanceListener);
 		V.findViewById(R.id.btnWorld).setOnClickListener(btnWorldListener);
+		V.findViewById(R.id.btnHealth).setOnClickListener(btnHealthListener);
 		this.rssReader = new RssReader(getActivity());
-		
-				  
 
 		return V;
-				
+
 	}
-	
-	
-	
-	
+
 }

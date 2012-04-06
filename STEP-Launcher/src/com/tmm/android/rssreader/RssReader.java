@@ -25,6 +25,9 @@ public class RssReader {
 	public ArrayList<JSONObject> getJobs(){
 		return this.jobs;
 	}
+	public void setJobs(ArrayList<JSONObject> job){
+		this.jobs = job;
+	}
 	
 	RssReader(Activity a){
 		this.jobs = new ArrayList<JSONObject>();

@@ -47,9 +47,12 @@ public class RssReaderTask extends AsyncTask<String, Void, String> {
 		break;
 		case 3: feed_change = "http://fulltextrssfeed.com/sports.yahoo.com/mlb/teams/bos/rss.xml";
 		break;
-		case 4: feed_change = "http://fulltextrssfeed.com/finance.yahoo.com/rss/topfinstories";;
+		case 4: feed_change = "http://fulltextrssfeed.com/finance.yahoo.com/rss/topfinstories";
 		break;
-		
+		case 5: feed_change = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=m&output=rss";
+		break;
+		case 6: feed_change = "http://fulltextrssfeed.com/news.google.com/news?ned=us&topic=e&output=rss";
+		break;
 		}
 		
 		
