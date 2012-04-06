@@ -5,10 +5,13 @@ import java.util.zip.Inflater;
 import com.step.launcher.R;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -16,13 +19,29 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-public class ButtonScrollView extends FrameLayout implements OnClickListener {
+public class ButtonScrollView extends FrameLayout implements OnTouchListener {
 	
-	LinearLayout linLayout;
-	ScrollView frameLayout;
-	Button upButton;
-	Button downButton;
-	View v;
+	private LinearLayout linLayout;
+	private ScrollView frameLayout;
+	private Button upButton;
+	private Button downButton;
+	private View v;
+	private Handler repeatHandler = new Handler();
+	private boolean upButtonClicked = false;
+	
+	private Runnable repeatTask = new Runnable()
+	{
+		@Override
+		public void run() {
+			if (upButtonClicked)
+				frameLayout.scrollBy(0, -30);
+			else
+				frameLayout.scrollBy(0, 30);
+			
+			repeatHandler.removeCallbacks(repeatTask);
+			repeatHandler.postAtTime(repeatTask, SystemClock.uptimeMillis() + 100);
+		}
+	};
 	
 	public ButtonScrollView(Context context, AttributeSet attr)
 	{
@@ -34,9 +53,9 @@ public class ButtonScrollView extends FrameLayout implements OnClickListener {
 		linLayout = (LinearLayout)v.findViewById(R.id.buttonScrollViewLinearLayout);
 		
 		upButton = (Button)v.findViewById(R.id.buttonScrollViewUpButton);
-		upButton.setOnClickListener(this);
+		upButton.setOnTouchListener(this);
 		downButton = (Button)v.findViewById(R.id.buttonScrollViewDownButton);
-		downButton.setOnClickListener(this);
+		downButton.setOnTouchListener(this);
 	}
 	
 	@Override
@@ -69,15 +88,29 @@ public class ButtonScrollView extends FrameLayout implements OnClickListener {
 	}
 	
 	@Override
-	public void onClick(View v) {
-		if (v == upButton)
+	public boolean onTouch(View v, MotionEvent m) {
+		int action = m.getAction();
+		
+		if (action == MotionEvent.ACTION_DOWN)
 		{
-			frameLayout.scrollBy(0, -30);
-		}
-		else if (v == downButton)
-		{
-			frameLayout.scrollBy(0, 30);
-		}
+			if (v == upButton)
+			{
+				frameLayout.scrollBy(0, -30);
+				upButtonClicked = true;
+			}
+			else if (v == downButton)
+			{
+				frameLayout.scrollBy(0, 30);
+				upButtonClicked = false;
+			}
+			
+			repeatHandler.removeCallbacks(repeatTask);
+			repeatHandler.postAtTime(repeatTask, SystemClock.uptimeMillis() + 800);
+		}	
+		else if (action == MotionEvent.ACTION_UP)
+			repeatHandler.removeCallbacks(repeatTask);
+		
+		return false;
 	}
 	
 	public FrameLayout getFrame()

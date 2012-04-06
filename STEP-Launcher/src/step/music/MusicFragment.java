@@ -18,7 +18,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.GridLayoutAnimationController;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import step.ButtonScrollView;
 import step.music.MusicAsyncTask;
 
 public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, View.OnClickListener {
@@ -40,7 +43,8 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	private ArrayList<Button> genre_buttons;
 	private LinearLayout scrollLayout;
 	private RadioGroup musicScrollGroup;
-	private GridView musicGridView;
+	private ButtonScrollView musicStationsView;
+	private LinearLayout musicStationsLayout;
 	private Genre selected_genre;
 	private View v;
 	
@@ -51,9 +55,10 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         title = (TextView)v.findViewById(R.id.music_title);
         
         musicScrollGroup = (RadioGroup)v.findViewById(R.id.musicScrollGroup);
-        musicGridView = (GridView)v.findViewById(R.id.musicGridView);
+        musicStationsView = (ButtonScrollView)v.findViewById(R.id.musicGridView);
+        title = (TextView)v.findViewById(R.id.music_title);
+        musicStationsLayout = (LinearLayout)v.findViewById(R.id.musicStationLayout);
         adapter = new MusicAdapter(this);
-        musicGridView.setAdapter(adapter);
         
         if (genre_buttons == null)
         {
@@ -127,16 +132,25 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 		{
 			String title = ((Button)v).getText().toString();
 			selected_genre = stations.get(title);
-			String[] titles = new String[selected_genre.stations.length];
-			int index = 0;
+			musicStationsLayout.removeAllViews();
 			
 			for (Station s : selected_genre.stations)
 			{
-				titles[index] = s.name;
-				index += 1;
+				Button button = new Button(getActivity());
+				button.setHeight(100);
+				button.setBackgroundDrawable(getResources().getDrawable(R.drawable.generic_button));
+				button.setTextSize(24);
+				button.setLayoutParams(new AbsListView.LayoutParams(200, LayoutParams.WRAP_CONTENT));
+				button.setText(s.name);
+				button.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						onStationClick(v);
+					}
+				});
+				
+				musicStationsLayout.addView(button);
 			}
-			
-			adapter.setTitles(titles);
 		}
 	}
 	
@@ -153,6 +167,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 		
 		if (selected_station != null)
 		{
+			this.title.setText("Now Playing: " + selected_station.name);
 			asyncTask.sendMessage("PLAY " + selected_genre.id + " " + selected_station.id);
 		}
 	}

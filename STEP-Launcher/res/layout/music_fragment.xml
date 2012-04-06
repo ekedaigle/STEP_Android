@@ -15,7 +15,7 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/music_top_bar_height"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="24dp"
+            android:textSize="30dp"
             android:background="@drawable/music_nowplaying_label"
             android:text="Now Playing" />
     </LinearLayout>
@@ -41,14 +41,22 @@
 		    </RadioGroup>
 	    </view>
 	    
-		<GridView
+		<view
+		    class="step.ButtonScrollView"
 		    android:id="@+id/musicGridView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:numColumns="2"
 			android:background="@drawable/address_contact_bkgd"
 			android:layout_weight="0.2" >
-		</GridView>
+		    
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:id="@+id/musicStationLayout"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical" >
+		    </LinearLayout>
+		</view>
     </LinearLayout>
 
 </LinearLayout>

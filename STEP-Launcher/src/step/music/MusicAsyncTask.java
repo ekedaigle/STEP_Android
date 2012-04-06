@@ -69,77 +69,86 @@ public class MusicAsyncTask extends AsyncTask<Integer, Map<String, Genre>, Objec
 		
 		while (true)
 		{
-			try {
-				sock = new Socket(baseStationAddr,  port);
-				sendStream = new DataOutputStream(sock.getOutputStream());
-				recvStream = new DataInputStream(sock.getInputStream());
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ConnectException e) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				
-				continue;
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				continue;
-			}
+			int port_offset = 0;
 			
-			break;
-		}
-		
-		try {
-			sendStream.writeBytes("GENRES");
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			
-			StringBuilder sb = new StringBuilder();
 			while (true)
 			{
-				String data = recvStream.readLine().trim();
-				sb.append(data);
+				try {
+					sock = new Socket(baseStationAddr,  port + port_offset);
+					sendStream = new DataOutputStream(sock.getOutputStream());
+					recvStream = new DataInputStream(sock.getInputStream());
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ConnectException e) {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					
+					port_offset = (port_offset + 1) % 10;
+					continue;
+	
+				} catch (IOException e) {
+					port_offset = (port_offset + 1) % 10;
+					continue;
+				}
 				
-				if (data.compareTo("</categories>") == 0)
-					break;
+				break;
 			}
 			
 			try {
-				SAXParser parser = factory.newSAXParser();
-				XMLReader reader = parser.getXMLReader();
-				reader.setContentHandler(handler);
-				InputSource is = new InputSource();
-				is.setByteStream(new ByteArrayInputStream(sb.toString().getBytes()));
-				reader.parse(is);
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			publishProgress(handler.getStations());
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		while (true)
-		{
-			try {
-				String msg = queue.take();
-				sendStream.writeBytes(msg);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				sendStream.writeBytes("GENRES");
+				SAXParserFactory factory = SAXParserFactory.newInstance();
+				
+				StringBuilder sb = new StringBuilder();
+				while (true)
+				{
+					String data = recvStream.readLine().trim();
+					sb.append(data);
+					
+					if (data.compareTo("</categories>") == 0)
+						break;
+				}
+				
+				try {
+					SAXParser parser = factory.newSAXParser();
+					XMLReader reader = parser.getXMLReader();
+					reader.setContentHandler(handler);
+					InputSource is = new InputSource();
+					is.setByteStream(new ByteArrayInputStream(sb.toString().getBytes()));
+					reader.parse(is);
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				publishProgress(handler.getStations());
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			while (true)
+			{
+				String msg = null;
+				
+				try {
+					msg = queue.take();
+					sendStream.writeBytes(msg);
+				} catch (Exception e) {
+					try {
+						if (msg != null)
+							queue.put(msg);
+					} catch (InterruptedException e1) {}
+					
+					break;
+				}
 			}
 		}
 	}
