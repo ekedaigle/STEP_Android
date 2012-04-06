@@ -97,11 +97,11 @@ public class EmailListAdapter extends BaseAdapter{
 		tv = (TextView) viewElement;
 		tv.setText(item.from);
 		
-		if(item.isNew){
-			viewElement = view.findViewById(R.id.msgIsNew);
-			tv = (TextView) viewElement;
-			tv.setVisibility(View.VISIBLE);
-		}
+//		if(item.isNew){
+//			viewElement = view.findViewById(R.id.msgIsNew);
+//			tv = (TextView) viewElement;
+//			tv.setVisibility(View.VISIBLE);
+//		}
 		// return final view object
 		return view;
 	}

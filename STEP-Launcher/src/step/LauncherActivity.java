@@ -5,8 +5,10 @@ import java.io.OutputStreamWriter;
 
 import step.address.AddressFragment;
 import step.email.ConnectToEmailTask;
+import step.email.DisplayMessagesTask;
 import step.email.EmailFragment;
 import step.email.Mail;
+import step.email.UpdateMessagesTimerTask;
 import step.music.MusicFragment;
 import android.app.Activity;
 import android.app.Fragment;
@@ -14,6 +16,7 @@ import android.app.FragmentTransaction;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,11 +35,13 @@ public class LauncherActivity extends Activity
 
 	private Fragment fragments[];
 	private Fragment current_fragment = null;
+	private Mail mail;
 	
 	private Button buttons[];
 	private Drawable button_icons_normal[];
 	private Drawable button_icons_selected[];
-	
+    private int m_interval = 30000; //30 seconds by default, can be changed later
+    private Handler m_handler;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -63,6 +68,7 @@ public class LauncherActivity extends Activity
         button_icons_selected[NEWSPAPER] = res.getDrawable(R.drawable.newspaper_button_pressed);
         button_icons_selected[ADDRESS] = res.getDrawable(R.drawable.address_button_pressed);
         button_icons_selected[EMAIL] = res.getDrawable(R.drawable.email_button_pressed);
+        m_handler = new Handler();
         
         fragments = new Fragment[NUM_BUTTONS];
         fragments[MUSIC] = new MusicFragment();
@@ -70,11 +76,12 @@ public class LauncherActivity extends Activity
         fragments[NEWSPAPER] = new NewspaperFragment();
         fragments[ADDRESS] = new AddressFragment();
         
-        Mail mail = new Mail(this);
+        this.mail = new Mail(this);
         mail.setUserPass("capstone.group6.2012", "capstone2012");
         ((EmailFragment)fragments[EMAIL]).setMail(mail);
         ConnectToEmailTask task = new ConnectToEmailTask(mail);
     	task.execute();
+    	m_statusChecker.run();
         // have the music button selected by default
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_layout, fragments[MUSIC]);
@@ -82,6 +89,16 @@ public class LauncherActivity extends Activity
         buttons[MUSIC].setBackgroundDrawable(button_icons_selected[MUSIC]);
         current_fragment = fragments[MUSIC];
     }
+    
+    Runnable m_statusChecker = new Runnable()
+    {
+         @Override 
+         public void run() {
+ 			  UpdateMessagesTimerTask task = new UpdateMessagesTimerTask(LauncherActivity.this.mail);
+ 			  task.execute();
+              m_handler.postDelayed(m_statusChecker, m_interval);
+         }
+    };
     
     private void changeToFragmentNum(int n)
     {

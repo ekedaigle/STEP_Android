@@ -1,50 +1,38 @@
 package step.email;
 
 import step.address.ContactInfo;
-import step.address.ContactList.ContactListItem;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
 import com.step.launcher.R;
 import com.sun.mail.pop3.POP3SSLStore;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.NoSuchProviderException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.Properties;
-import javax.mail.Address;
 import javax.mail.FetchProfile;
+import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.mail.Transport;
 import javax.mail.URLName;
-import javax.mail.internet.ContentType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.ParseException;
+import javax.mail.search.FlagTerm;
+
 
 
 public class Mail{
@@ -214,6 +202,33 @@ public class Mail{
 
         
     }
+    
+    public boolean getNewMessages() throws Exception{
+       
+       if(this.msgs.length >= this.inbox.getMessageCount()){
+    	   return false;
+       }
+       
+       //this.inbox.getMessages();
+       Flags seen = new Flags(Flags.Flag.SEEN);
+       FlagTerm unseenFlagTerm = new FlagTerm(seen, false);
+       Message newMsgs[] = this.inbox.search(unseenFlagTerm);
+    	
+       if(newMsgs.length != 0){
+    	   setHaveMsgs(false);
+    	   ArrayList<Message> msgList = new ArrayList<Message>(Arrays.asList(this.msgs));
+    	   for(int i = 0; i < newMsgs.length; i++){
+    		   msgList.add(newMsgs[i]);
+    	   }
+    	   Message full[] = new Message[msgList.size()];
+    	   msgList.toArray(full);
+    	   this.msgs = full;
+    	   this.emailList.clearMessages();
+    	   this.emailList.addMessages(this.msgs);
+    	   return true;
+       }
+       return false;
+     }
     
     public void getMessages() throws Exception{
        this.emailList.clearMessages();

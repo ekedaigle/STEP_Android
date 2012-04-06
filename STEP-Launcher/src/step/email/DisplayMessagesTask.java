@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 public class DisplayMessagesTask extends AsyncTask<String, Void, String>{
 	Mail m;
-	DisplayMessagesTask(Mail m1){
+	public DisplayMessagesTask(Mail m1){
 		m = m1;
 	}
 	@Override
