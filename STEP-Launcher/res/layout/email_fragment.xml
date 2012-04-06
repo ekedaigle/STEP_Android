@@ -81,7 +81,7 @@
 		            android:id="@+id/lblReadEmailFrom"
 		            android:layout_width="wrap_content"
 		            android:layout_height="fill_parent"
-		            android:text="TO: "
+		            android:text="FROM: "
 		            android:textColor="#000"
 		            android:textStyle="bold"
 		            android:textSize="12pt"/>
