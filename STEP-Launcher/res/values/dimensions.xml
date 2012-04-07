@@ -5,6 +5,5 @@
     <dimen name="button_spacing">10dp</dimen>
     <dimen name="button_text_size">60dp</dimen>
     <dimen name="music_top_bar_height">100dp</dimen>
-    <dimen name="news_button_height">109dp</dimen>
 
 </resources>

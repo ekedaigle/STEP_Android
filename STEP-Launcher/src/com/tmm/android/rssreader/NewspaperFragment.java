@@ -34,6 +34,21 @@ public class NewspaperFragment extends Fragment {
 	int max = 4;// the highest number of articles we will have is 5
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
 
+	public void saveFeed() {
+		if (change_list == 0) {
+
+		} else if (change_list == 1) {
+			jobs_World = rssReader.getJobs();
+		} else if (change_list == 2) {
+
+		} else if (change_list == 3) {
+
+		} else if (change_list == 4) {
+
+		}
+
+	}
+
 	private OnClickListener btnPreviousListener = new OnClickListener() {
 
 		public void onClick(View V) {
@@ -50,7 +65,6 @@ public class NewspaperFragment extends Fragment {
 				}
 				getActivity().findViewById(R.id.btnNext).setVisibility(
 						View.VISIBLE);
-				getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 				NewspaperFragment.this.rssReader.readArticle(position_hold,
 						getActivity().findViewById(R.id.txtReadArticle),
 						getActivity().findViewById(R.id.txtReadTitle));
@@ -83,7 +97,7 @@ public class NewspaperFragment extends Fragment {
 						getActivity().findViewById(R.id.txtReadTitle));
 				getActivity().findViewById(R.id.btnNext).setVisibility(
 						View.VISIBLE);
-				getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -97,19 +111,33 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			position_hold = 0;
-			
+			if (world_hold == 0) {
+				//saveFeed();
+
 				// TODO Auto-generated method stub
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 				rssReaderTask = new RssReaderTask(
 						NewspaperFragment.this.rssReader, getActivity()
 								.findViewById(R.id.txtReadArticle),
 						getActivity().findViewById(R.id.txtReadTitle), 1);
 				rssReaderTask.execute();
-				
-				
-			
+				world_hold = 0;
+				change_list = 1;
+			} else {
+				Log.e("here", "here");
+				NewspaperFragment.this.rssReader.setJobs(jobs_World);
+				try {
+					Log.e("here", "here");
+					NewspaperFragment.this.rssReader.readArticle(position_hold,
+							getActivity().findViewById(R.id.txtReadArticle),
+							getActivity().findViewById(R.id.txtReadTitle));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.btnNext)
+					.setVisibility(View.VISIBLE);
 			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
 					View.VISIBLE);
 			getActivity().findViewById(R.id.btnPrevious).setVisibility(
@@ -123,7 +151,6 @@ public class NewspaperFragment extends Fragment {
 
 			// TODO Auto-generated method stub
 			position_hold = 0;
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 2);
@@ -143,7 +170,7 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			// TODO Auto-generated method stub
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+			
 			position_hold = 0;
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
@@ -164,9 +191,10 @@ public class NewspaperFragment extends Fragment {
 		
 		public void onClick(View V) {
 
-			position_hold = 0;
 			// TODO Auto-generated method stub
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+			//jobs_World = NewspaperFragment.this.rssReader.getJobs();	
+			
+			position_hold = 0;
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 4);
@@ -186,7 +214,7 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			// TODO Auto-generated method stub
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+			
 			position_hold = 0;
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
