@@ -1,177 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-	android:weightSum="10"
-    android:orientation="horizontal" >
-    <RelativeLayout
-	    android:id="@+id/newsRelLaySidebar"
-	    android:layout_width="0dp"
-	    android:layout_weight="3"
-	    android:layout_height="fill_parent"
-	    android:orientation="vertical" >
-<TextView
-	        android:id="@+id/lblCategories"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-   			android:background="@drawable/news_categories_label"
-   			android:textSize="14pt"
-   			android:text=""
-   			android:textStyle="bold"
-   			android:gravity="center_vertical|center_horizontal"
-			android:layout_alignParentTop="true"/>
-            <Button
-                android:id="@+id/btnWorld"
-                android:layout_below="@id/lblCategories"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/news_button_height"
-                android:layout_margin="2dip"
-                android:background="@drawable/news_world_selector"
-                android:clickable="true"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-                
-            </Button>
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:baselineAligned="false" android:weightSum="10"
+	android:orientation="horizontal">
+	<RelativeLayout android:id="@+id/newsRelLaySidebar"
+		android:layout_width="0dp" android:layout_weight="3"
+		android:layout_height="fill_parent" android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnFinance"
-                android:layout_width="fill_parent"
-                android:layout_below="@id/btnWorld"
-                android:layout_height="@dimen/news_button_height"
-                android:layout_margin="2dip"
-                android:background="@drawable/news_finance_selector"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
+		<TextView android:id="@+id/lblCategories"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_alignParentTop="true" android:background="@drawable/news_categories_label"
+			android:gravity="center_vertical|center_horizontal" android:text=""
+			android:textSize="14pt" android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnGovernment"
-                android:layout_width="fill_parent"
-                android:layout_below="@id/btnFinance"
-                android:layout_height="@dimen/news_button_height"
-                android:layout_margin="2dip"
-                android:background="@drawable/news_government_selector"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-            
-           <Button
-                android:id="@+id/btnSports"
-                android:layout_width="fill_parent"
-                android:layout_below="@id/btnGovernment"
-                android:layout_height="@dimen/news_button_height"
-                android:layout_margin="2dip"
-                android:background="@drawable/news_sports_selector"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-            <Button
-                android:id="@+id/btnHealth"
-                android:layout_width="fill_parent"
-                android:layout_below="@id/btnSports"
-                android:layout_height="@dimen/news_button_height"
-                android:layout_margin="2dip"
-                android:background="@drawable/news_health_selector"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" >
-            </Button>
-        </RelativeLayout>
-	<LinearLayout
-	    android:id="@+id/newTextSidebar"
-	    android:layout_weight="7"
-	    android:layout_width="0dp"
-		    android:layout_height="fill_parent"
-	    android:orientation="vertical" >
-            <TextView
-	            android:id="@+id/txtReadTitle"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/news_title_label"
-	            android:textColor="#000"
-	            android:textSize="15pt"
-	            android:textStyle="bold"
-	            android:typeface="serif">
-	        </TextView>
-            <RelativeLayout
-                   android:id="@+id/composeSubjRelLay"
-                   android:layout_height="wrap_content"
-                   android:layout_width="fill_parent" >
-            <Button
-	                android:id="@+id/btnPrevious"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="2dip"
-	                android:background="@drawable/news_previous_selector"
-	                android:clickable="true"
-	                android:textColor="#000"
-	                android:textSize="12pt"
-	                android:textStyle="bold" >
-            	</Button>
-            <Button
-	                android:id="@+id/btnNext"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_toRightOf="@id/btnPrevious"
-	                android:layout_alignParentRight="true"
-	                android:layout_margin="2dip"
-	                android:background="@drawable/news_next_selector"
-	                android:clickable="true"
-	                android:textColor="#000"
-	                android:textSize="12pt"
-	                android:textStyle="bold" >
-            	</Button>
-            	</RelativeLayout>
-            	
-	<ScrollView
-	    android:fillViewport="true"
+		<RadioGroup android:id="@+id/newsRadioGroup"
+			android:layout_below="@id/lblCategories" android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<RadioButton android:id="@+id/btnWorld"
+				android:layout_width="fill_parent"
+				android:layout_height="@dimen/news_button_height"
+				android:layout_margin="2dip"
+				android:background="@drawable/news_world_selector"
+				android:button="@drawable/null_drawable"
+				android:clickable="true"
+				android:textColor="#000"
+				android:textSize="12pt"
+				android:textStyle="bold">
+			</RadioButton>
+
+			<RadioButton android:id="@+id/btnFinance"
+				android:layout_width="fill_parent"
+				android:layout_height="@dimen/news_button_height"
+				android:layout_margin="2dip"
+				android:background="@drawable/news_finance_selector"
+				android:button="@drawable/null_drawable"
+				android:textColor="#000"
+				android:textSize="12pt"
+				android:textStyle="bold">
+			</RadioButton>
+
+			<RadioButton android:id="@+id/btnGovernment"
+				android:layout_width="fill_parent"
+				android:layout_height="@dimen/news_button_height"
+				android:layout_margin="2dip"
+				android:background="@drawable/news_government_selector"
+				android:button="@drawable/null_drawable"
+				android:textColor="#000"
+				android:textSize="12pt"
+				android:textStyle="bold" >
+			</RadioButton>
+
+			<RadioButton android:id="@+id/btnSports"
+				android:layout_width="fill_parent"
+				android:layout_height="@dimen/news_button_height"
+				android:layout_margin="2dip"
+				android:background="@drawable/news_sports_selector"
+				android:button="@drawable/null_drawable"
+				android:textColor="#000"
+				android:textSize="12pt"
+				android:textStyle="bold" >
+			</RadioButton>
+			
+			<RadioButton android:id="@+id/btnHealth"
+				android:layout_width="fill_parent"
+				android:layout_height="@dimen/news_button_height"
+				android:layout_margin="2dip"
+				android:background="@drawable/news_health_selector"
+				android:button="@drawable/null_drawable"
+				android:textColor="#000"
+				android:textSize="12pt"
+				android:textStyle="bold" >
+			</RadioButton>
+		</RadioGroup>
+	</RelativeLayout>
+	<LinearLayout android:id="@+id/newTextSidebar"
+		android:layout_weight="7" android:layout_width="0dp"
+		android:layout_height="fill_parent" android:orientation="vertical">
+		<TextView android:id="@+id/txtReadTitle"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:background="@drawable/news_title_label" android:textColor="#000"
+			android:textSize="15pt" android:textStyle="bold" android:typeface="serif">
+		</TextView>
+		<RelativeLayout android:id="@+id/composeSubjRelLay"
+			android:layout_height="wrap_content" android:layout_width="fill_parent">
+			<Button android:id="@+id/btnPrevious" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_margin="2dip"
+				android:background="@drawable/news_previous_selector"
+				android:clickable="true" android:textColor="#000" android:textSize="12pt"
+				android:textStyle="bold">
+			</Button>
+			<Button android:id="@+id/btnNext" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_toRightOf="@id/btnPrevious"
+				android:layout_alignParentRight="true" android:layout_margin="2dip"
+				android:background="@drawable/news_next_selector" android:clickable="true"
+				android:textColor="#000" android:textSize="12pt" android:textStyle="bold">
+			</Button>
+		</RelativeLayout>
+
+		<view
+		    class="step.ButtonScrollView"
+		    android:fillViewport="true"
 		    android:id="@+id/scrlReadArticle"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:visibility="visible" >
-		    <LinearLayout
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical" >
-	            
-	        <TextView
-	            android:id="@+id/txtReadArticle"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/news_body"
-	            android:text=""
-	            android:textColor="#000"
-	            android:textSize="15pt"
-	            android:textStyle="bold"
-	            android:typeface="serif">
-	        </TextView>
-	        	
-	        
-	        </LinearLayout>
-		</ScrollView>
-		</LinearLayout>
-	
-	
-	
-<!--     <ScrollView  -->
-<!--         android:id="@+id/rulesscroll" -->
-<!--     	android:layout_width="fill_parent"  -->
-<!--     	android:layout_height="fill_parent"> -->
-   
-    
-<!-- 	<TextView android:id="@+id/job_text"  -->
-<!-- 		android:layout_width="wrap_content" -->
-<!-- 		android:layout_height="wrap_content"  -->
-<!-- 		android:textColor="#ffcc00" -->
-<!-- 		android:paddingTop="5dip" -->
-<!-- 		android:paddingBottom="38dip"  -->
-<!-- 		android:paddingLeft="8dip" -->
-<!-- 		android:paddingRight="8dip" /> -->
-<!--  	</ScrollView> -->
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:visibility="visible">
+			
+			<LinearLayout
+			    android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView android:id="@+id/txtReadArticle"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/news_body"
+					android:text=""
+					android:textColor="#000"
+					android:textSize="15pt"
+					android:textStyle="bold"
+					android:typeface="serif">
+				</TextView>
+
+
+			</LinearLayout>
+		</view>
+	</LinearLayout>
+
+
+
+	<!-- <ScrollView -->
+	<!-- android:id="@+id/rulesscroll" -->
+	<!-- android:layout_width="fill_parent" -->
+	<!-- android:layout_height="fill_parent"> -->
+
+
+	<!-- <TextView android:id="@+id/job_text" -->
+	<!-- android:layout_width="wrap_content" -->
+	<!-- android:layout_height="wrap_content" -->
+	<!-- android:textColor="#ffcc00" -->
+	<!-- android:paddingTop="5dip" -->
+	<!-- android:paddingBottom="38dip" -->
+	<!-- android:paddingLeft="8dip" -->
+	<!-- android:paddingRight="8dip" /> -->
+	<!-- </ScrollView> -->
 
 </LinearLayout>
