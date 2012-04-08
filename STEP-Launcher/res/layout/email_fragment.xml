@@ -44,7 +44,7 @@
 			android:scrollbars="vertical" />
 
     </RelativeLayout>
-    
+
     <TextView
 	    android:id="@+id/lblEmailStart"
 	    android:layout_width="0dp"
@@ -72,6 +72,7 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:orientation="vertical">
+
 			<LinearLayout 
 			    android:id="@+id/readEmailFrom_LinLay"
 			    android:orientation="horizontal"
@@ -148,6 +149,30 @@
 		            android:textColor="#000"
 		            android:textSize="12pt"/>
 	        </LinearLayout>
+	        <Button
+		        android:id="@+id/btnReplyMsg"
+		        android:layout_width="match_parent"
+		        android:layout_margin="2dip"
+		        android:background="@drawable/address_addcon_bkgd"
+	         	android:layout_height="@dimen/button_height"
+		        android:clickable="true"
+		        android:visibility="gone"
+		        android:text="Reply"
+		        android:textColor="#FFF"
+		        android:textSize="12pt"
+		        android:textStyle="bold" />
+	        <Button
+		        android:id="@+id/btnDeleteMsg"
+		        android:layout_width="match_parent"
+		        android:layout_margin="2dip"
+		        android:background="@drawable/address_addcon_bkgd"
+	         	android:layout_height="@dimen/button_height"
+		        android:clickable="true"
+		        android:visibility="gone"
+		        android:text="Delete"
+		        android:textColor="#FFF"
+		        android:textSize="12pt"
+		        android:textStyle="bold" />
 		</LinearLayout>
 
 	</ScrollView>
@@ -175,7 +200,7 @@
                android:layout_height="wrap_content"
                android:layout_marginTop="@dimen/button_spacing"
                android:orientation="vertical" >
-               <LinearLayout
+               <RelativeLayout
                    android:id="@+id/composeSubjLinLay"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
@@ -184,6 +209,7 @@
 					    android:id="@+id/recipientLinLay"
 					    android:layout_height="fill_parent"
 					    android:layout_width="wrap_content"
+					    android:layout_alignParentLeft="true"
 					    android:visibility="gone"
 					    android:orientation="horizontal">
 						<TextView
@@ -209,11 +235,12 @@
 						android:textSize="12pt"
 			 			android:textColor="#FFF"
 			 			android:textStyle="bold"
+			 			android:layout_toRightOf="@id/recipientLinLay" 
 	            		android:background="@drawable/address_addcon_bkgd"
 						android:layout_width="fill_parent"
 	           			android:layout_height="@dimen/button_height"
 						android:visibility="visible"/>
-               </LinearLayout>
+               </RelativeLayout>
                <RelativeLayout
                    android:id="@+id/composeSubjRelLay"
                    android:layout_height="wrap_content"

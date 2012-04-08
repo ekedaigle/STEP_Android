@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.mail.Address;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
@@ -40,48 +41,53 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 		this.m.getCurMsg().clearMsgData();
 		//String folder = "../attachments/";
 		
-		try
-		{
-           Multipart mp = (Multipart)this.m.msgs[this.idx].getContent();
+		try{
+		
            String contentType = this.m.msgs[this.idx].getContentType();
-           for (int i=0, n=mp.getCount(); i<n; i++) {
-        	   Part part = mp.getBodyPart(i);
-        	   
-        	   String disposition = part.getDisposition();
-
-        	   if (disposition == null)
-        	   {
-    			   // Check if plain
-    			   MimeBodyPart mbp = (MimeBodyPart)part;
-    			   if (mbp.isMimeType("text/plain")){
-    				   content = mbp.getContent().toString();
-    			   } else if(mbp.isMimeType("multipart/ALTERNATIVE")){
-    				   mp_msg = (Multipart)mbp.getContent();
-    				   content = mp_msg.getBodyPart(0).getContent().toString();
-    			   }
-        	   }
-        	   else if (disposition.equalsIgnoreCase(Part.ATTACHMENT)){
-				   filename = part.getFileName();
-				   if (filename == null || filename.length() == 0) {
-					   filename = "Attachment" + i;
+           if(contentType.contains("TEXT/PLAIN")){
+        	   content = this.m.msgs[this.idx].getContent().toString();
+           } else {
+        	   Multipart mp = (Multipart)this.m.msgs[this.idx].getContent();
+	           for (int i=0, n=mp.getCount(); i<n; i++) {
+	        	   Part part = mp.getBodyPart(i);
+	        	   
+	        	   String disposition = part.getDisposition();
+	
+	        	   if (disposition == null)
+	        	   {
+	    			   // Check if plain
+	    			   MimeBodyPart mbp = (MimeBodyPart)part;
+	    			   if (mbp.isMimeType("text/plain")){
+	    				   content = mbp.getContent().toString();
+	    			   } else if(mbp.isMimeType("multipart/ALTERNATIVE")){
+	    				   mp_msg = (Multipart)mbp.getContent();
+	    				   content = mp_msg.getBodyPart(0).getContent().toString();
+	    			   }
+	        	   }
+	        	   else if (disposition.equalsIgnoreCase(Part.ATTACHMENT)){
+					   filename = part.getFileName();
+					   if (filename == null || filename.length() == 0) {
+						   filename = "Attachment" + i;
+					   }
+					   try {
+						   Log.d("EMAIL APP", dir.toString());
+						   file = new File(dir, filename);
+						   file.createNewFile();
+						   ((MimeBodyPart)part).saveFile(file);
+						   String location = dir.toString() +'/' + filename;
+						   this.m.getCurMsg().addAttachmentLoc(location);
+						   Log.d("Email Fragment", "Saved the Attachment "+i+" to the following filename ["+filename+"].");
+					   } catch (IOException ex) {
+						   Log.e("Email Fragment", "Caught an exception trying to save an attachment to the filename ["+filename+"].", ex);
+					   }
+				      //Special non-attachment cases here of 
+				     // image/gif, text/html, ...
 				   }
-				   try {
-					   Log.d("EMAIL APP", dir.toString());
-					   file = new File(dir, filename);
-					   file.createNewFile();
-					   ((MimeBodyPart)part).saveFile(file);
-					   String location = dir.toString() +'/' + filename;
-					   this.m.getCurMsg().addAttachmentLoc(location);
-					   Log.d("Email Fragment", "Saved the Attachment "+i+" to the following filename ["+filename+"].");
-				   } catch (IOException ex) {
-					   Log.e("Email Fragment", "Caught an exception trying to save an attachment to the filename ["+filename+"].", ex);
-				   }
-			      //Special non-attachment cases here of 
-			     // image/gif, text/html, ...
-			   }
+	           }
            }
 
 	        if(content != null){
+	        	this.m.getCurMsg().setMsgNumber(this.idx);
 	        	this.m.getCurMsg().setBody(content);
 	        	this.m.getCurMsg().setTo(this.m.msgs[this.idx].getAllRecipients());
 	        	this.m.getCurMsg().setFrom(this.m.msgs[this.idx].getFrom());
@@ -109,6 +115,8 @@ public class ReadEmailMessageTask extends AsyncTask<String, Void, String>{
 	    		this.m.getActivity().findViewById(R.id.readEmailAttachment_LinLay).setVisibility(View.VISIBLE);
 	    		this.m.getActivity().findViewById(R.id.btnGetAttachment).setVisibility(View.VISIBLE);
 	    	}
+	    	this.m.getActivity().findViewById(R.id.btnDeleteMsg).setVisibility(View.VISIBLE);
+	    	this.m.getActivity().findViewById(R.id.btnReplyMsg).setVisibility(View.VISIBLE);
 		} else {
 			Toast.makeText(this.m.getActivity(), "Read Failed!" , Toast.LENGTH_SHORT).show();
 		}

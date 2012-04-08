@@ -12,14 +12,25 @@ public class CurrentMessage {
 	private int mNumAttachment;
 	private ArrayList<String> mAttachmentLoc;
 	private String mBody;
+	private int msgNumber;
 	
 	public CurrentMessage(){
 		mNumAttachment = 0;
+		msgNumber = -1;
 		mTo = null;
 		mFrom = null;
 		mSubj = null;
 		mAttachmentLoc = new ArrayList<String>();
 		mBody = null;
+	}
+	
+	
+	public void setMsgNumber(int num){
+		msgNumber = num;
+	}
+	
+	public int getMsgNumber(){
+		return msgNumber;
 	}
 	
 	public void clearMsgData(){

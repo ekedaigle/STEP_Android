@@ -101,6 +101,7 @@ public class Mail{
     }
     
     public void getContactsWithEmail(){
+    	this.cli_w_email.clear();
     	ContentResolver cr = this.activity.getContentResolver();
     	String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
     	Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, sortOrder);
@@ -250,6 +251,21 @@ public class Mail{
     public void readEmail(int idx) throws Exception{
     	ReadEmailMessageTask task = new ReadEmailMessageTask(this, idx);
     	task.execute();
+    }
+    
+    public void deleteMsg() throws Exception{
+    	this.msgs[this.mCurMsg.getMsgNumber()].setFlag(Flags.Flag.DELETED, true);
+        this.inbox.close(true);
+    	try {
+            
+        	this.inbox.open(Folder.READ_WRITE);
+            
+        } catch (MessagingException ex) {
+            
+        	this.inbox.open(Folder.READ_ONLY);
+            
+        }
+    	getMessages();
     }
     
     public void sendEmail() throws Exception{
