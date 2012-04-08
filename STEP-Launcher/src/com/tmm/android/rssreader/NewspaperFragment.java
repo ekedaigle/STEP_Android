@@ -5,8 +5,12 @@ package com.tmm.android.rssreader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
+
+import step.music.Genre;
+import step.music.MusicAsyncTaskCallback;
 
 import com.step.launcher.R;
 import android.app.Fragment;
@@ -20,16 +24,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class NewspaperFragment extends Fragment {
+public class NewspaperFragment extends Fragment implements RssReaderTaskCallback{
 	RssReaderTask rssReaderTask;
 	RssReader rssReader;
 	int position_hold;
-	ArrayList<JSONObject> jobs_World;
-	int change_list = 0;
-	int world_hold = 0;
-	int sports_hold = 0;
-	int government_hold = 0;
-	int finance_hold = 0;
+	
+	RssReaderCopy jobs_World;
+	RssReaderCopy jobs_Sports;
+	RssReaderCopy jobs_Government;
+	RssReaderCopy jobs_Finance;
+	RssReaderCopy jobs_Health;
+	
 
 	int max = 4;// the highest number of articles we will have is 5
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
@@ -62,6 +67,9 @@ public class NewspaperFragment extends Fragment {
 		}
 	};
 
+	
+	
+
 	private OnClickListener btnNextListener = new OnClickListener() {
 
 		public void onClick(View V) {
@@ -91,6 +99,43 @@ public class NewspaperFragment extends Fragment {
 
 		}
 	};
+	
+	public void taskGotRssFeed(int pick, ArrayList<JSONObject> store)
+	{
+		if (pick ==1)
+		{
+			
+			jobs_World.setJobs(store);
+			Log.e("world is","world is" + jobs_World.getJobs().get(0).toString());
+			
+			
+			
+			
+		}
+		else if (pick==2)
+		{
+			jobs_Government.setJobs(store);
+		}
+		else if (pick==3)
+		{
+			jobs_Sports.setJobs(store);
+		}
+		else if (pick==4)
+		{
+			
+			jobs_Finance.setJobs(store);
+			Log.e("world is","world is" + jobs_World.getJobs().get(0).toString());
+			
+		}
+		else if (pick==5)
+		{
+			jobs_Health.setJobs(store);
+		}
+		
+		
+	}
+	
+	
 
 	private OnClickListener btnWorldListener = new OnClickListener() {
 
@@ -99,12 +144,37 @@ public class NewspaperFragment extends Fragment {
 			position_hold = 0;
 			
 				// TODO Auto-generated method stub
+			
 			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+			//if(jobs_World == null){
+				jobs_World = new RssReaderCopy();
 				rssReaderTask = new RssReaderTask(
 						NewspaperFragment.this.rssReader, getActivity()
 								.findViewById(R.id.txtReadArticle),
 						getActivity().findViewById(R.id.txtReadTitle), 1);
+				rssReaderTask.setCallback(NewspaperFragment.this);
 				rssReaderTask.execute();
+				
+			//}
+				/*
+			else
+			{
+				
+				
+				
+				//rssReader = jobs_World;
+				try {
+					NewspaperFragment.this.rssReader.readArticle(position_hold,
+							getActivity().findViewById(R.id.txtReadArticle),
+							getActivity().findViewById(R.id.txtReadTitle));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			*/
+			
 				
 				
 			
@@ -122,11 +192,13 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			// TODO Auto-generated method stub
+			jobs_Government = new RssReaderCopy();
 			position_hold = 0;
 			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 2);
+			rssReaderTask.setCallback(NewspaperFragment.this);
 			rssReaderTask.execute();
 			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 			getActivity().findViewById(R.id.btnNext)
@@ -143,11 +215,13 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			// TODO Auto-generated method stub
+			jobs_Sports = new RssReaderCopy();
 			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 			position_hold = 0;
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 3);
+			rssReaderTask.setCallback(NewspaperFragment.this);
 			rssReaderTask.execute();
 			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 			getActivity().findViewById(R.id.btnNext)
@@ -164,12 +238,14 @@ public class NewspaperFragment extends Fragment {
 		
 		public void onClick(View V) {
 
+			jobs_Finance = new RssReaderCopy();
 			position_hold = 0;
 			// TODO Auto-generated method stub
 			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 4);
+			rssReaderTask.setCallback(NewspaperFragment.this);
 			rssReaderTask.execute();
 			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 			getActivity().findViewById(R.id.btnNext)
@@ -186,11 +262,13 @@ public class NewspaperFragment extends Fragment {
 		public void onClick(View V) {
 
 			// TODO Auto-generated method stub
+			jobs_Health = new RssReaderCopy();
 			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 			position_hold = 0;
 			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
 					getActivity().findViewById(R.id.txtReadArticle),
 					getActivity().findViewById(R.id.txtReadTitle), 5);
+			rssReaderTask.setCallback(NewspaperFragment.this);
 			rssReaderTask.execute();
 			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
 			getActivity().findViewById(R.id.btnNext)
@@ -209,6 +287,7 @@ public class NewspaperFragment extends Fragment {
 
 		final View V = inflater.inflate(R.layout.newspaper_fragment, container,
 				false);
+		
 
 		V.findViewById(R.id.btnNext).setOnClickListener(btnNextListener);
 		V.findViewById(R.id.btnPrevious)
@@ -220,6 +299,8 @@ public class NewspaperFragment extends Fragment {
 		V.findViewById(R.id.btnWorld).setOnClickListener(btnWorldListener);
 		V.findViewById(R.id.btnHealth).setOnClickListener(btnHealthListener);
 		this.rssReader = new RssReader(getActivity());
+		
+		
 
 		return V;
 
