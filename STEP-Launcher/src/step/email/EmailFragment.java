@@ -322,7 +322,7 @@ public class EmailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View V = inflater.inflate(R.layout.email_fragment, container, false);
-		ListView list = (ListView) V.findViewById(R.id.emailFrag_listview);
+		ListView list = (ListView) V.findViewById(R.id.emailFrag_listview).findViewById(R.id.buttonListViewFrameLayout);
 		list.setTextFilterEnabled(true);
 		list.setOnItemClickListener(listItemSelectListener);
 		this.mail.setListView(list);

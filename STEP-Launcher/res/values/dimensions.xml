@@ -6,5 +6,6 @@
     <dimen name="button_text_size">60dp</dimen>
     <dimen name="music_top_bar_height">100dp</dimen>
     <dimen name="news_button_height">109dp</dimen>
+    <dimen name="email_button_height">102dp</dimen>
 
 </resources>

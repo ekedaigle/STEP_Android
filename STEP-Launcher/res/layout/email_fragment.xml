@@ -33,7 +33,8 @@
    			android:textStyle="bold"
    			android:gravity="center_vertical|center_horizontal"
 			android:layout_alignParentTop="true"/>
-		<ListView 
+		<view
+		    class="step.ButtonListView"
 			android:id="@+id/emailFrag_listview"
 			android:layout_width="fill_parent"
 			android:background="@drawable/side_bar"
@@ -42,6 +43,15 @@
 			android:layout_height="wrap_content"
 			android:visibility="visible"
 			android:scrollbars="vertical" />
+<!-- 		<ListView  -->
+<!-- 			android:id="@+id/emailFrag_listview" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:background="@drawable/side_bar" -->
+<!-- 			android:layout_above="@id/btnCompose" -->
+<!-- 			android:layout_below="@id/lblInbox" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:visibility="visible" -->
+<!-- 			android:scrollbars="vertical" /> -->
 
     </RelativeLayout>
 
@@ -82,7 +92,7 @@
 		    <LinearLayout
 		        android:id="@+id/buttonLayLinLay"
 		        android:layout_width="match_parent"
-		        android:layout_height="@dimen/button_height"
+		        android:layout_height="@dimen/email_button_height"
 		        android:layout_margin="2dip"
 		        android:layout_marginBottom="@dimen/button_spacing"
                 android:layout_marginTop="@dimen/button_spacing"
@@ -175,7 +185,7 @@
 			            android:text="Get Attachment"
 			            android:background="@drawable/address_addcon_action"
 						android:layout_width="fill_parent"
-		           		android:layout_height="@dimen/button_height"
+		           		android:layout_height="@dimen/email_button_height"
 			            android:textColor="#FFF"
 			            android:textStyle="bold"
 			            android:visibility="gone"
@@ -269,7 +279,7 @@
 			 			android:layout_toRightOf="@id/recipientLinLay" 
 	            		android:background="@drawable/address_addcon_action"
 						android:layout_width="fill_parent"
-	           			android:layout_height="@dimen/button_height"
+	           			android:layout_height="@dimen/email_button_height"
 						android:visibility="visible"/>
                </RelativeLayout>
                <RelativeLayout
@@ -331,7 +341,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_margin="2dip"
 		        android:background="@drawable/address_addcon_action"
-	         	android:layout_height="@dimen/button_height"
+	         	android:layout_height="@dimen/email_button_height"
 		        android:clickable="true"
 		        android:text="Send"
 		        android:textColor="#FFF"
