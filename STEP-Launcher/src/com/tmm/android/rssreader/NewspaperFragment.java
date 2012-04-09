@@ -59,7 +59,7 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 				if (position_hold <= 0) {
 					position_hold = 0;
 					getActivity().findViewById(R.id.btnPrevious).setVisibility(
-							View.VISIBLE);
+							View.INVISIBLE);
 				}
 				getActivity().findViewById(R.id.btnNext).setVisibility(
 						View.VISIBLE);
@@ -87,15 +87,15 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 				position_hold = position_hold + 1;
 				if (position_hold >= max) {
 					position_hold = max;
-					
+					getActivity().findViewById(R.id.btnNext).setVisibility(
+							View.INVISIBLE);	
 				}
 				getActivity().findViewById(R.id.btnPrevious).setVisibility(
 						View.VISIBLE);
 				NewspaperFragment.this.rssReader.readArticle(position_hold,
 						getActivity().findViewById(R.id.txtReadArticle),
 						getActivity().findViewById(R.id.txtReadTitle));
-				getActivity().findViewById(R.id.btnNext).setVisibility(
-						View.VISIBLE);
+				
 				getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
 
 			} catch (Exception e) {
@@ -144,7 +144,7 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 		V.findViewById(R.id.scrlReadArticle).setVisibility(
 				View.VISIBLE);
 		V.findViewById(R.id.btnPrevious).setVisibility(
-				View.VISIBLE);
+				View.INVISIBLE);
 	}
 
 	private OnClickListener btnWorldListener = new OnClickListener() {
