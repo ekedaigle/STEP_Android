@@ -106,6 +106,8 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         }
         else
         {
+        	musicScrollGroup.removeAllViews();
+        	
         	for (Button b : genre_buttons)
         		musicScrollGroup.addView(b);
         }

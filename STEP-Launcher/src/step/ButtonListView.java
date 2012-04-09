@@ -29,16 +29,22 @@ public class ButtonListView extends FrameLayout implements OnTouchListener {
 	private View v;
 	private Handler repeatHandler = new Handler();
 	private boolean upButtonClicked = false;
+	private int pos;
+	private boolean lastWasUp = true;
 	
 	private Runnable repeatTask = new Runnable()
 	{
 		@Override
 		public void run() {
 			if (upButtonClicked){
-				pos++;
+				if (pos > 0)
+					pos--;
+				
 				frameLayout.smoothScrollToPosition(pos);
 			} else {
-				pos--;
+				if (pos < frameLayout.getCount())
+					pos++;
+				
 				frameLayout.smoothScrollToPosition(pos);
 			}
 			
@@ -100,13 +106,22 @@ public class ButtonListView extends FrameLayout implements OnTouchListener {
 		{
 			if (v == upButton)
 			{
-				pos++;
+				if (pos > 0)
+					pos -= (lastWasUp ? 1 : 4);
+				
+				lastWasUp = true;
 				frameLayout.smoothScrollToPosition(pos);
 				upButtonClicked = true;
 			}
 			else if (v == downButton)
 			{
-				pos--;
+				if (pos < frameLayout.getCount())
+					pos += (lastWasUp ? 4 : 1);
+				
+				if (pos >= frameLayout.getCount())
+					pos = frameLayout.getCount() - 1;
+				
+				lastWasUp = false;
 				frameLayout.smoothScrollToPosition(pos);
 				upButtonClicked = false;
 			}
