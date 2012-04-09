@@ -5,6 +5,7 @@
 	android:orientation="horizontal">
 	<RelativeLayout android:id="@+id/newsRelLaySidebar"
 		android:layout_width="0dp" android:layout_weight="3"
+		android:background="@drawable/side_bar"
 		android:layout_height="fill_parent" android:orientation="vertical">
 
 		<TextView android:id="@+id/lblCategories"
@@ -20,7 +21,6 @@
 			<RadioButton android:id="@+id/btnWorld"
 				android:layout_width="fill_parent"
 				android:layout_height="@dimen/news_button_height"
-				android:layout_margin="2dip"
 				android:background="@drawable/news_world_selector"
 				android:button="@drawable/null_drawable"
 				android:clickable="true"
@@ -32,7 +32,6 @@
 			<RadioButton android:id="@+id/btnFinance"
 				android:layout_width="fill_parent"
 				android:layout_height="@dimen/news_button_height"
-				android:layout_margin="2dip"
 				android:background="@drawable/news_finance_selector"
 				android:button="@drawable/null_drawable"
 				android:textColor="#000"
@@ -43,7 +42,6 @@
 			<RadioButton android:id="@+id/btnGovernment"
 				android:layout_width="fill_parent"
 				android:layout_height="@dimen/news_button_height"
-				android:layout_margin="2dip"
 				android:background="@drawable/news_government_selector"
 				android:button="@drawable/null_drawable"
 				android:textColor="#000"
@@ -54,7 +52,6 @@
 			<RadioButton android:id="@+id/btnSports"
 				android:layout_width="fill_parent"
 				android:layout_height="@dimen/news_button_height"
-				android:layout_margin="2dip"
 				android:background="@drawable/news_sports_selector"
 				android:button="@drawable/null_drawable"
 				android:textColor="#000"
@@ -65,7 +62,6 @@
 			<RadioButton android:id="@+id/btnHealth"
 				android:layout_width="fill_parent"
 				android:layout_height="@dimen/news_button_height"
-				android:layout_margin="2dip"
 				android:background="@drawable/news_health_selector"
 				android:button="@drawable/null_drawable"
 				android:textColor="#000"
