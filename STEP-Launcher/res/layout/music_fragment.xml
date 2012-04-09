@@ -14,25 +14,36 @@
             android:id="@+id/music_title"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/music_top_bar_height"
+            android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="40dp"
             android:background="@drawable/music_nowplaying_label"
             android:text="Now Playing" />
+        
+        <Button
+            android:id="@+id/musicStopButton"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/stop_button"
+            android:textSize="40dp" >
+
+        </Button>
     </LinearLayout>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:weightSum="10"
         android:orientation="horizontal" >
         
 		<view
 		    class="step.ButtonScrollView"
 		    android:id="@+id/musicScrollView"
 		    android:background="@drawable/side_bar"
-		    android:layout_width="fill_parent"
+		    android:layout_width="0dp"
 		    android:layout_height="fill_parent"
-		    android:layout_weight="0.5" >
+		    android:layout_weight="3" >
 		    
 		    <RadioGroup 
 		        android:id="@+id/musicScrollGroup"
@@ -44,11 +55,47 @@
 		    
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:id="@+id/musicStationLayout"
-		    android:layout_width="fill_parent"
+		    android:layout_width="0dp"
 		    android:layout_height="fill_parent"
-			android:layout_weight="0.2"
+			android:layout_weight="6"
 			android:background="@drawable/address_contact_bkgd"
 		    android:orientation="vertical" >
+	    </LinearLayout>
+	    
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/musicVolumeLayout"
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:background="@drawable/address_contact_bkgd"
+		    android:orientation="vertical" >
+		    
+		    <Button
+		        android:id="@+id/musicVolumeUp"
+		        android:layout_width="fill_parent"
+		        android:layout_height="0dp"
+		        android:layout_weight="0.3"
+		        android:textSize="70dp"
+		        android:background="@drawable/generic_button_action"
+		        android:text="+" >
+		    </Button>
+		    
+		    <ImageView
+		        android:layout_width="fill_parent"
+		        android:layout_height="0dp"
+		        android:layout_weight="0.4"
+		        android:background="@drawable/volume_icon" >
+		    </ImageView>
+		    
+		    <Button
+		        android:id="@+id/musicVolumeDown"
+		        android:layout_width="fill_parent"
+		        android:layout_height="0dp"
+		        android:layout_weight="0.3"
+		        android:background="@drawable/generic_button_action"
+		        android:textSize="70dp"
+		        android:text="-" >
+		    </Button>
 	    </LinearLayout>
     </LinearLayout>
 

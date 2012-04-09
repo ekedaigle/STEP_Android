@@ -52,9 +52,14 @@ public class SendEmailTask extends AsyncTask<String, Void, String> {
 		EditText body = (EditText) this.activity.findViewById(R.id.compose_message_content);
     	EditText subj = (EditText) this.activity.findViewById(R.id.compose_subject);
     	TextView to   = (TextView) this.activity.findViewById(R.id.compose_to);
-    	body.setText("");
-    	subj.setText("");
-    	to.setText("");
+    	
+    	try
+    	{
+	    	body.setText("");
+	    	subj.setText("");
+	    	to.setText("");
+    	}
+	    catch (NullPointerException e){}
 	}
 }
 
