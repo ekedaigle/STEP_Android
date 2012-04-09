@@ -28,6 +28,8 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 	RssReaderTask rssReaderTask;
 	RssReader rssReader;
 	int position_hold;
+	int selected_category = -1;
+	View V;
 	
 	RssReaderCopy jobs_World;
 	RssReaderCopy jobs_Sports;
@@ -35,6 +37,12 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 	RssReaderCopy jobs_Finance;
 	RssReaderCopy jobs_Health;
 	
+	public enum jobs
+	{
+		WORLD, SPORTS, GOVERNMENT, FINANCE, HEALTH
+	}
+	
+	RssReaderCopy[] copies = new RssReaderCopy[5];
 
 	int max = 4;// the highest number of articles we will have is 5
 	List<JSONObject> rssReaderList = new ArrayList<JSONObject>();
@@ -66,9 +74,6 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 
 		}
 	};
-
-	
-	
 
 	private OnClickListener btnNextListener = new OnClickListener() {
 
@@ -102,190 +107,81 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 	
 	public void taskGotRssFeed(int pick, ArrayList<JSONObject> store)
 	{
-		if (pick ==1)
-		{
-			
-			jobs_World.setJobs(store);
-			Log.e("world is","world is" + jobs_World.getJobs().get(0).toString());
-			
-			
-			
-			
-		}
-		else if (pick==2)
-		{
-			jobs_Government.setJobs(store);
-		}
-		else if (pick==3)
-		{
-			jobs_Sports.setJobs(store);
-		}
-		else if (pick==4)
-		{
-			
-			jobs_Finance.setJobs(store);
-			Log.e("world is","world is" + jobs_World.getJobs().get(0).toString());
-			
-		}
-		else if (pick==5)
-		{
-			jobs_Health.setJobs(store);
-		}
-		
-		
+		ArrayList<JSONObject> store_copy = new ArrayList<JSONObject>(store);
+		copies[pick - 1].setJobs(store_copy);
 	}
 	
-	
+	public void changeToCategory(int category)
+	{
+		selected_category = category;
+		position_hold = 0;
+		V.findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
+		
+		if (copies[category].getJobs() == null)
+		{
+			rssReaderTask = new RssReaderTask(
+					NewspaperFragment.this.rssReader, getActivity()
+							.findViewById(R.id.txtReadArticle),
+					getActivity().findViewById(R.id.txtReadTitle), category + 1);
+			rssReaderTask.setCallback(NewspaperFragment.this);
+			rssReaderTask.execute();
+		}
+		else
+		{
+			rssReader.setJobs(copies[category].getJobs());
+			
+			try {
+				NewspaperFragment.this.rssReader.readArticle(position_hold,
+						getActivity().findViewById(R.id.txtReadArticle),
+						getActivity().findViewById(R.id.txtReadTitle));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		V.findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
+		V.findViewById(R.id.scrlReadArticle).setVisibility(
+				View.VISIBLE);
+		V.findViewById(R.id.btnPrevious).setVisibility(
+				View.VISIBLE);
+	}
 
 	private OnClickListener btnWorldListener = new OnClickListener() {
-
 		public void onClick(View V) {
-
-			position_hold = 0;
-			
-				// TODO Auto-generated method stub
-			
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
-			//if(jobs_World == null){
-				jobs_World = new RssReaderCopy();
-				rssReaderTask = new RssReaderTask(
-						NewspaperFragment.this.rssReader, getActivity()
-								.findViewById(R.id.txtReadArticle),
-						getActivity().findViewById(R.id.txtReadTitle), 1);
-				rssReaderTask.setCallback(NewspaperFragment.this);
-				rssReaderTask.execute();
-				
-			//}
-				/*
-			else
-			{
-				
-				
-				
-				//rssReader = jobs_World;
-				try {
-					NewspaperFragment.this.rssReader.readArticle(position_hold,
-							getActivity().findViewById(R.id.txtReadArticle),
-							getActivity().findViewById(R.id.txtReadTitle));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			*/
-			
-				
-				
-			
-			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
-			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
-					View.VISIBLE);
-			getActivity().findViewById(R.id.btnPrevious).setVisibility(
-					View.VISIBLE);
-
+			changeToCategory(0);
 		}
 	};
+	
 	private OnClickListener btnGovernmentListener = new OnClickListener() {
-
 		public void onClick(View V) {
-
-			// TODO Auto-generated method stub
-			jobs_Government = new RssReaderCopy();
-			position_hold = 0;
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
-					getActivity().findViewById(R.id.txtReadArticle),
-					getActivity().findViewById(R.id.txtReadTitle), 2);
-			rssReaderTask.setCallback(NewspaperFragment.this);
-			rssReaderTask.execute();
-			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext)
-					.setVisibility(View.VISIBLE);
-			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
-					View.VISIBLE);
-			getActivity().findViewById(R.id.btnPrevious).setVisibility(
-					View.VISIBLE);
+			changeToCategory(1);
 		}
-
 	};
+	
 	private OnClickListener btnSportsListener = new OnClickListener() {
-
 		public void onClick(View V) {
-
-			// TODO Auto-generated method stub
-			jobs_Sports = new RssReaderCopy();
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
-			position_hold = 0;
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
-					getActivity().findViewById(R.id.txtReadArticle),
-					getActivity().findViewById(R.id.txtReadTitle), 3);
-			rssReaderTask.setCallback(NewspaperFragment.this);
-			rssReaderTask.execute();
-			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext)
-					.setVisibility(View.VISIBLE);
-			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
-					View.VISIBLE);
-			getActivity().findViewById(R.id.btnPrevious).setVisibility(
-					View.VISIBLE);
+			changeToCategory(2);
 		}
-
 	};
+	
 	private OnClickListener btnFinanceListener = new OnClickListener() {
-
-		
 		public void onClick(View V) {
-
-			jobs_Finance = new RssReaderCopy();
-			position_hold = 0;
-			// TODO Auto-generated method stub
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
-					getActivity().findViewById(R.id.txtReadArticle),
-					getActivity().findViewById(R.id.txtReadTitle), 4);
-			rssReaderTask.setCallback(NewspaperFragment.this);
-			rssReaderTask.execute();
-			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext)
-					.setVisibility(View.VISIBLE);
-			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
-					View.VISIBLE);
-			getActivity().findViewById(R.id.btnPrevious).setVisibility(
-					View.VISIBLE);
+			changeToCategory(3);
 		}
-
 	};
+	
 	private OnClickListener btnHealthListener = new OnClickListener() {
-
 		public void onClick(View V) {
-
-			// TODO Auto-generated method stub
-			jobs_Health = new RssReaderCopy();
-			getActivity().findViewById(R.id.scrlReadArticle).scrollTo(0, 0);//moves to top of view
-			position_hold = 0;
-			rssReaderTask = new RssReaderTask(NewspaperFragment.this.rssReader,
-					getActivity().findViewById(R.id.txtReadArticle),
-					getActivity().findViewById(R.id.txtReadTitle), 5);
-			rssReaderTask.setCallback(NewspaperFragment.this);
-			rssReaderTask.execute();
-			// getActivity().findViewById(R.id.newsFrag_listview).setVisibility(View.GONE);
-			getActivity().findViewById(R.id.btnNext)
-					.setVisibility(View.VISIBLE);
-			getActivity().findViewById(R.id.scrlReadArticle).setVisibility(
-					View.VISIBLE);
-			getActivity().findViewById(R.id.btnPrevious).setVisibility(
-					View.VISIBLE);
+			changeToCategory(4);
 		}
-
 	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			final Bundle savedInstanceState) {
 
-		final View V = inflater.inflate(R.layout.newspaper_fragment, container,
+		V = inflater.inflate(R.layout.newspaper_fragment, container,
 				false);
 		
 
@@ -300,10 +196,20 @@ public class NewspaperFragment extends Fragment implements RssReaderTaskCallback
 		V.findViewById(R.id.btnHealth).setOnClickListener(btnHealthListener);
 		this.rssReader = new RssReader(getActivity());
 		
+		for (int i = 0; i < 5; i++)
+			copies[i] = new RssReaderCopy();
 		
-
 		return V;
 
+	}
+	
+	@Override
+	public void onActivityCreated (Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		
+		if (selected_category >= 0)
+			changeToCategory(selected_category);
 	}
 
 }

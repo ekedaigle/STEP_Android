@@ -5,14 +5,17 @@ import org.json.JSONObject;
 public class RssReaderCopy {
 	
 		
-	private ArrayList<JSONObject> jobs;
+	private ArrayList<JSONObject> jobs = null;
+	
 	public ArrayList<JSONObject> getJobs(){
 		return jobs;
 	}
+	
 	public void setJobs(ArrayList<JSONObject> job){
 		jobs = job;
 	}
+	
 	RssReaderCopy(){
-		jobs = new ArrayList<JSONObject>();
+		jobs = null;
 	}
 }

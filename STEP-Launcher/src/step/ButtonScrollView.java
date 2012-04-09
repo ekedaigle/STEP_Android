@@ -51,6 +51,7 @@ public class ButtonScrollView extends FrameLayout implements OnTouchListener {
 		
 		frameLayout = (ScrollView)v.findViewById(R.id.buttonScrollViewFrameLayout);
 		linLayout = (LinearLayout)v.findViewById(R.id.buttonScrollViewLinearLayout);
+		frameLayout.setVerticalFadingEdgeEnabled(false);
 		
 		upButton = (Button)v.findViewById(R.id.buttonScrollViewUpButton);
 		upButton.setOnTouchListener(this);
