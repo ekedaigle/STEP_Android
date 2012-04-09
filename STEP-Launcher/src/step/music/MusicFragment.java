@@ -13,6 +13,7 @@ import com.step.launcher.R;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import step.music.MusicAsyncTask;
 public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, View.OnClickListener {
 	
 	private final int baseStationPort = 13330;
+	private final int volumeStep = 5;
 	
 	private TextView title;
 	
@@ -47,6 +49,10 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	private LinearLayout musicStationsLayout;
 	private Genre selected_genre;
 	private View v;
+	private int volume = 70;
+	Button volumeUpButton;
+	Button volumeDownButton;
+	Button stopButton;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -57,6 +63,12 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         musicScrollGroup = (RadioGroup)v.findViewById(R.id.musicScrollGroup);
         title = (TextView)v.findViewById(R.id.music_title);
         musicStationsLayout = (LinearLayout)v.findViewById(R.id.musicStationLayout);
+        volumeUpButton = (Button)v.findViewById(R.id.musicVolumeUp);
+        volumeUpButton.setOnClickListener(this);
+        volumeDownButton = (Button)v.findViewById(R.id.musicVolumeDown);
+        volumeDownButton.setOnClickListener(this);
+        stopButton = (Button)v.findViewById(R.id.musicStopButton);
+        stopButton.setOnClickListener(this);
         adapter = new MusicAdapter(this);
         
         if (genre_buttons == null)
@@ -127,7 +139,21 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	
 	public void onClick(View v)
 	{
-		if (genre_buttons.contains(v))
+		if (v == volumeUpButton)
+		{
+			volume += volumeStep;
+			setVolume(volume);
+		}
+		else if (v == volumeDownButton)
+		{
+			volume -= volumeStep;
+			setVolume(volume);
+		}
+		else if (v == stopButton)
+		{
+			asyncTask.sendMessage("STOP");
+		}
+		else if (genre_buttons.contains(v))
 		{
 			String title = ((Button)v).getText().toString();
 			selected_genre = stations.get(title);
@@ -148,8 +174,9 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 				}
 				
 				Button button = new Button(getActivity());
-				button.setBackgroundDrawable(getResources().getDrawable(R.drawable.generic_button_action));
+				button.setBackgroundDrawable(getResources().getDrawable(R.drawable.address_addcon_action));
 				button.setTextSize(36);
+				button.setTextColor(Color.WHITE);
 				button.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
 				button.setText(s.name);
 				button.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +210,11 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 			this.title.setText("Now Playing: " + selected_station.name);
 			asyncTask.sendMessage("PLAY " + selected_genre.id + " " + selected_station.id);
 		}
+	}
+	
+	public void setVolume(int v)
+	{
+		asyncTask.sendMessage("VOL " + v);
 	}
 	
 	@Override
