@@ -5,6 +5,7 @@ import java.util.zip.Inflater;
 import com.step.launcher.R;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -57,6 +58,16 @@ public class ButtonScrollView extends FrameLayout implements OnTouchListener {
 		upButton.setOnTouchListener(this);
 		downButton = (Button)v.findViewById(R.id.buttonScrollViewDownButton);
 		downButton.setOnTouchListener(this);
+	}
+	
+	public void setUpButtonDrawable(Drawable d)
+	{
+		upButton.setBackgroundDrawable(d);
+	}
+	
+	public void setDownButtonDrawable(Drawable d)
+	{
+		downButton.setBackgroundDrawable(d);
 	}
 	
 	@Override

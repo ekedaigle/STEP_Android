@@ -22,7 +22,7 @@
         
         <Button
             android:id="@+id/musicStopButton"
-            android:layout_width="128dp"
+            android:layout_width="137dp"
             android:layout_height="match_parent"
             android:background="@drawable/stop_button"
             android:textSize="40dp" >

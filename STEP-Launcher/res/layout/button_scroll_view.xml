@@ -20,6 +20,14 @@
 	    android:gravity="right"
 	    android:orientation="vertical" >
 	    
+	    <Button
+	        android:id="@+id/buttonScrollViewUpButton"
+	        android:layout_width="70dp"
+	        android:layout_height="70dp"
+	        android:layout_weight="0"
+	        android:background="@drawable/up_button_selector" >
+	    </Button>
+	    
 	    <View
 	        android:layout_width="70dp"
 	        android:layout_height="match_parent"
@@ -27,18 +35,9 @@
 	    </View>
 
 	    <Button
-	        android:id="@+id/buttonScrollViewUpButton"
-	        android:layout_width="70dp"
-	        android:layout_height="70dp"
-	        android:layout_gravity="bottom"
-	        android:layout_weight="0"
-	        android:background="@drawable/up_button_selector" >
-	    </Button>
-	    <Button
 	        android:id="@+id/buttonScrollViewDownButton"
 	        android:layout_width="70dp"
 	        android:layout_height="70dp"
-	        android:layout_gravity="bottom"
 	        android:layout_weight="0"
 	        android:background="@drawable/down_button_selector" >
 	    </Button>

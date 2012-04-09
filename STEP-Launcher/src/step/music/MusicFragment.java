@@ -47,12 +47,14 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	private LinearLayout scrollLayout;
 	private RadioGroup musicScrollGroup;
 	private LinearLayout musicStationsLayout;
+	private ButtonScrollView buttonScrollView;
 	private Genre selected_genre;
 	private View v;
 	private int volume = 70;
-	Button volumeUpButton;
-	Button volumeDownButton;
-	Button stopButton;
+	private Button volumeUpButton;
+	private Button volumeDownButton;
+	private Button stopButton;
+	private String nowPlaying;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -61,6 +63,9 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         title = (TextView)v.findViewById(R.id.music_title);
         
         musicScrollGroup = (RadioGroup)v.findViewById(R.id.musicScrollGroup);
+        buttonScrollView = (ButtonScrollView)v.findViewById(R.id.musicScrollView);
+        buttonScrollView.setUpButtonDrawable(getResources().getDrawable(R.drawable.button_up_orange_selector));
+        buttonScrollView.setDownButtonDrawable(getResources().getDrawable(R.drawable.button_down_orange_selector));
         title = (TextView)v.findViewById(R.id.music_title);
         musicStationsLayout = (LinearLayout)v.findViewById(R.id.musicStationLayout);
         volumeUpButton = (Button)v.findViewById(R.id.musicVolumeUp);
