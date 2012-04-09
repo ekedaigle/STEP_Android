@@ -23,6 +23,7 @@ import android.view.animation.GridLayoutAnimationController;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -43,7 +44,6 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 	private ArrayList<Button> genre_buttons;
 	private LinearLayout scrollLayout;
 	private RadioGroup musicScrollGroup;
-	private ButtonScrollView musicStationsView;
 	private LinearLayout musicStationsLayout;
 	private Genre selected_genre;
 	private View v;
@@ -55,7 +55,6 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
         title = (TextView)v.findViewById(R.id.music_title);
         
         musicScrollGroup = (RadioGroup)v.findViewById(R.id.musicScrollGroup);
-        musicStationsView = (ButtonScrollView)v.findViewById(R.id.musicGridView);
         title = (TextView)v.findViewById(R.id.music_title);
         musicStationsLayout = (LinearLayout)v.findViewById(R.id.musicStationLayout);
         adapter = new MusicAdapter(this);
@@ -119,7 +118,7 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 			b.setText(genre);
 			b.setButtonDrawable(r.getDrawable(R.drawable.null_drawable));
 			b.setBackgroundDrawable(r.getDrawable(R.drawable.generic_radio_button));
-			b.setTextSize(24);
+			b.setTextSize(36);
 			b.setOnClickListener(this);
 			genre_buttons.add(b);
 			musicScrollGroup.addView(b);
@@ -133,14 +132,25 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 			String title = ((Button)v).getText().toString();
 			selected_genre = stations.get(title);
 			musicStationsLayout.removeAllViews();
+			int index = 0;
+			LinearLayout curLayout = null;
 			
 			for (Station s : selected_genre.stations)
 			{
+				if (index % 3 == 0)
+				{
+					if (curLayout != null)
+						musicStationsLayout.addView(curLayout);
+					
+					curLayout = new LinearLayout(getActivity());
+					curLayout.setOrientation(LinearLayout.HORIZONTAL);
+					curLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.FILL_PARENT, 0.33f));
+				}
+				
 				Button button = new Button(getActivity());
-				button.setHeight(100);
-				button.setBackgroundDrawable(getResources().getDrawable(R.drawable.generic_button));
-				button.setTextSize(24);
-				button.setLayoutParams(new AbsListView.LayoutParams(200, LayoutParams.WRAP_CONTENT));
+				button.setBackgroundDrawable(getResources().getDrawable(R.drawable.generic_button_action));
+				button.setTextSize(36);
+				button.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
 				button.setText(s.name);
 				button.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -149,8 +159,11 @@ public class MusicFragment extends Fragment implements MusicAsyncTaskCallback, V
 					}
 				});
 				
-				musicStationsLayout.addView(button);
+				curLayout.addView(button);
+				index += 1;
 			}
+			
+			//musicStationsLayout.addView(curLayout);
 		}
 	}
 	
