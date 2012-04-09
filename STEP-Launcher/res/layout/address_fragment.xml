@@ -20,7 +20,7 @@
 			 android:text="Add Contact"
 			 android:textSize="12pt"
 			 android:textColor="#FFF"
-             android:background="@drawable/address_addcon_bkgd"
+             android:background="@drawable/address_addcon_action"
              android:textStyle="bold" />
 		<TextView
 	        android:id="@+id/lblContacts"
@@ -67,6 +67,20 @@
             android:layout_marginLeft="@dimen/button_spacing"
    			android:layout_marginRight="@dimen/button_spacing"
             android:orientation="vertical" >
+            <Button
+                android:id="@+id/btnDelete"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginBottom="@dimen/button_spacing"
+                android:layout_marginTop="@dimen/button_spacing"
+                android:layout_margin="2dip"
+                android:clickable="true"
+                android:text="Delete"
+                android:textSize="12pt"
+			 	android:textColor="#FFF"
+            	android:background="@drawable/address_reversed_action"
+             	android:textStyle="bold"/>
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -228,38 +242,25 @@
                 android:id="@+id/btnAddSave"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_height"
                 android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:clickable="true"
-                android:text="Add"
-                android:textColor="#000"
                 android:textSize="12pt"
-                android:textStyle="bold" />
+				android:textColor="#FFF"
+	            android:background="@drawable/address_addcon_action"
+	            android:textStyle="bold"
+                android:text="Add" />
         	<Button
                 android:id="@+id/btnSave"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_height"
                 android:layout_margin="2dip"
-                android:background="#cdc9c9"
                 android:clickable="true"
                 android:text="Save"
-                android:textColor="#000"
                 android:textSize="12pt"
-                android:textStyle="bold" />
-           	<Button
-                android:id="@+id/btnDelete"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dip"
-                android:background="#cdc9c9"
-                android:clickable="true"
-                android:text="Delete"
-                android:textColor="#000"
-                android:textSize="12pt"
-                android:textStyle="bold" />
+			 	android:textColor="#FFF"
+             	android:background="@drawable/address_addcon_action"
+             	android:textStyle="bold" />
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

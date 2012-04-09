@@ -21,7 +21,7 @@
 			 android:text="New Email"
 			 android:textSize="12pt"
 			 android:textColor="#FFF"
-             android:background="@drawable/address_addcon_bkgd"
+             android:background="@drawable/address_addcon_action"
              android:textStyle="bold" />
 		<TextView
 	        android:id="@+id/lblInbox"
@@ -72,104 +72,112 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:orientation="vertical">
-
-			<LinearLayout 
-			    android:id="@+id/readEmailFrom_LinLay"
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content">
-		        <TextView
-		            android:id="@+id/lblReadEmailFrom"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:text="FROM: "
-		            android:textColor="#000"
-		            android:textStyle="bold"
-		            android:textSize="12pt"/>
-		        <TextView
-		            android:id="@+id/txtReadEmailFrom"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:text=""
-		            android:textColor="#000"
-		            android:textSize="12pt"/>
-	        </LinearLayout>
-   			<LinearLayout 
-			    android:id="@+id/readEmailSubject_LinLay"
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content">
-		        <TextView
-		            android:id="@+id/lblReadEmailSubject"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:text="Subject: "
-		            android:textStyle="bold"
-		            android:textColor="#000"
-		            android:textSize="12pt"/>
-		        <TextView
-		            android:id="@+id/txtReadEmailSubject"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:text=""
-		            android:textColor="#000"
-		            android:textSize="12pt"/>
-	        </LinearLayout>
-   			<LinearLayout 
-			    android:id="@+id/readEmailAttachment_LinLay"
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:visibility="gone"
-			    android:layout_height="wrap_content">
-		        <ImageView
-		            android:id="@+id/attachmentImg"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:visibility="gone"/>
-		        <Button
-		            android:id="@+id/btnGetAttachment"
-		            android:text="Get Attachment"
-		            android:background="@drawable/address_addcon_bkgd"
-					android:layout_width="fill_parent"
-	           		android:layout_height="@dimen/button_height"
-		            android:textColor="#FFF"
-		            android:visibility="gone"
-		            android:textSize="12pt"/>
-	        </LinearLayout>
-			<LinearLayout 
-			    android:id="@+id/readEmailBody_LinLay"
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content">
-		        <TextView
-		            android:id="@+id/txtReadEmailBody"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:text=""
-		            android:textColor="#000"
-		            android:textSize="12pt"/>
+	        <Button
+		        android:id="@+id/btnDeleteMsg"
+		        android:layout_width="match_parent"
+		        android:layout_margin="2dip"
+		        android:layout_marginBottom="@dimen/button_spacing"
+                android:layout_marginTop="@dimen/button_spacing"
+		        android:background="@drawable/address_reversed_action"
+	         	android:layout_height="@dimen/button_height"
+		        android:clickable="true"
+		        android:visibility="gone"
+		        android:text="Delete"
+		        android:textColor="#FFF"
+		        android:textSize="12pt"
+		        android:textStyle="bold" />
+			<LinearLayout
+			    android:id="@+id/emailLayout_LinLay"
+			    android:orientation="vertical"
+			    android:layout_height="wrap_content"
+			    android:layout_width="fill_parent">
+				<LinearLayout 
+				    android:id="@+id/readEmailFrom_LinLay"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content">
+			        <TextView
+			            android:id="@+id/lblReadEmailFrom"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:text="FROM: "
+			            android:textColor="#000"
+			            android:textStyle="bold"
+			            android:textSize="12pt"/>
+			        <TextView
+			            android:id="@+id/txtReadEmailFrom"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:text=""
+			            android:textColor="#000"
+			            android:textSize="12pt"/>
+		        </LinearLayout>
+	   			<LinearLayout 
+				    android:id="@+id/readEmailSubject_LinLay"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content">
+			        <TextView
+			            android:id="@+id/lblReadEmailSubject"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:text="Subject: "
+			            android:textStyle="bold"
+			            android:textColor="#000"
+			            android:textSize="12pt"/>
+			        <TextView
+			            android:id="@+id/txtReadEmailSubject"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:text=""
+			            android:textColor="#000"
+			            android:textSize="12pt"/>
+		        </LinearLayout>
+	   			<LinearLayout 
+				    android:id="@+id/readEmailAttachment_LinLay"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:visibility="gone"
+				    android:layout_height="wrap_content">
+			        <ImageView
+			            android:id="@+id/attachmentImg"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:visibility="gone"/>
+			        <Button
+			            android:id="@+id/btnGetAttachment"
+			            android:text="Get Attachment"
+			            android:background="@drawable/address_addcon_action"
+						android:layout_width="fill_parent"
+		           		android:layout_height="@dimen/button_height"
+			            android:textColor="#FFF"
+			            android:textStyle="bold"
+			            android:visibility="gone"
+			            android:textSize="12pt"/>
+		        </LinearLayout>
+				<LinearLayout 
+				    android:id="@+id/readEmailBody_LinLay"
+				    android:orientation="horizontal"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content">
+			        <TextView
+			            android:id="@+id/txtReadEmailBody"
+			            android:layout_width="wrap_content"
+			            android:layout_height="fill_parent"
+			            android:text=""
+			            android:textColor="#000"
+			            android:textSize="12pt"/>
+		        </LinearLayout>
 	        </LinearLayout>
 	        <Button
 		        android:id="@+id/btnReplyMsg"
 		        android:layout_width="match_parent"
 		        android:layout_margin="2dip"
-		        android:background="@drawable/address_addcon_bkgd"
+		        android:background="@drawable/address_addcon_action"
 	         	android:layout_height="@dimen/button_height"
 		        android:clickable="true"
 		        android:visibility="gone"
 		        android:text="Reply"
-		        android:textColor="#FFF"
-		        android:textSize="12pt"
-		        android:textStyle="bold" />
-	        <Button
-		        android:id="@+id/btnDeleteMsg"
-		        android:layout_width="match_parent"
-		        android:layout_margin="2dip"
-		        android:background="@drawable/address_addcon_bkgd"
-	         	android:layout_height="@dimen/button_height"
-		        android:clickable="true"
-		        android:visibility="gone"
-		        android:text="Delete"
 		        android:textColor="#FFF"
 		        android:textSize="12pt"
 		        android:textStyle="bold" />
@@ -236,7 +244,7 @@
 			 			android:textColor="#FFF"
 			 			android:textStyle="bold"
 			 			android:layout_toRightOf="@id/recipientLinLay" 
-	            		android:background="@drawable/address_addcon_bkgd"
+	            		android:background="@drawable/address_addcon_action"
 						android:layout_width="fill_parent"
 	           			android:layout_height="@dimen/button_height"
 						android:visibility="visible"/>
@@ -299,7 +307,7 @@
 		        android:id="@+id/btnSend"
 		        android:layout_width="match_parent"
 		        android:layout_margin="2dip"
-		        android:background="@drawable/address_addcon_bkgd"
+		        android:background="@drawable/address_addcon_action"
 	         	android:layout_height="@dimen/button_height"
 		        android:clickable="true"
 		        android:text="Send"
