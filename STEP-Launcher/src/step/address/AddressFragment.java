@@ -36,7 +36,7 @@ public class AddressFragment extends Fragment {
 	{
         View V = inflater.inflate(R.layout.address_fragment, container, false);
         this.mContactAccessor = new ContactAccessor(getActivity());
-        mContactListView = (ListView) V.findViewById(R.id.addressFrag_listview);
+        mContactListView = (ListView) V.findViewById(R.id.addressFrag_listview).findViewById(R.id.buttonListViewFrameLayout);
         mContactListView.setOnItemClickListener(listItemSelectListener);
         V.findViewById(R.id.btnSave).setOnClickListener(btnSaveListener);
         V.findViewById(R.id.btnDelete).setOnClickListener(btnDeleteListener);

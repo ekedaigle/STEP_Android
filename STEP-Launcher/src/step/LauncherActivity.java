@@ -77,7 +77,7 @@ public class LauncherActivity extends Activity
         fragments[ADDRESS] = new AddressFragment();
         
         this.mail = new Mail(this);
-        mail.setUserPass("capstone.group6.2012", "capstone2012");
+        mail.setUserPass("STEPTesting", "vt11TE1NmB");
         ((EmailFragment)fragments[EMAIL]).setMail(mail);
         ConnectToEmailTask task = new ConnectToEmailTask(mail);
     	task.execute();

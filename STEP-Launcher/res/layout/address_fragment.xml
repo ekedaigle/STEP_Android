@@ -32,7 +32,8 @@
    			android:textStyle="bold"
    			android:gravity="center_vertical|center_horizontal"
 			android:layout_alignParentTop="true"/>
-		<ListView 
+		<view
+		    class="step.ButtonListView"
 			android:id="@+id/addressFrag_listview"
 			android:layout_width="fill_parent"
 			android:background="@drawable/side_bar"
@@ -41,6 +42,15 @@
 			android:layout_height="wrap_content"
 			android:visibility="visible"
 			android:scrollbars="vertical" />
+<!-- 		<ListView  -->
+<!-- 			android:id="@+id/addressFrag_listview" -->
+<!-- 			android:layout_width="fill_parent" -->
+<!-- 			android:background="@drawable/side_bar" -->
+<!-- 			android:layout_above="@id/btnAddContact" -->
+<!-- 			android:layout_below="@id/lblContacts" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:visibility="visible" -->
+<!-- 			android:scrollbars="vertical" /> -->
 
      </RelativeLayout>
 	<TextView

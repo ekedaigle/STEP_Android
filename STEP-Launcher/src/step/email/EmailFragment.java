@@ -100,7 +100,7 @@ public class EmailFragment extends Fragment {
     		btnEnterEmail.setEnabled(true);
     		
     		ArrayList<ContactInfo> cli = EmailFragment.this.mail.get_cli_w_email();
-        	ListView lv = new ListView(getActivity());
+        	ListView lv = new ListView(getActivity(), null);
         	lv.addHeaderView(header);
     		DialogListAdapter adapter = new DialogListAdapter(getActivity(), R.layout.email_dialog_list_element, cli);
     		lv.setAdapter(adapter);
