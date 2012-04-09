@@ -79,20 +79,39 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:orientation="vertical">
-	        <Button
-		        android:id="@+id/btnDeleteMsg"
+		    <LinearLayout
+		        android:id="@+id/buttonLayLinLay"
 		        android:layout_width="match_parent"
+		        android:layout_height="@dimen/button_height"
 		        android:layout_margin="2dip"
 		        android:layout_marginBottom="@dimen/button_spacing"
                 android:layout_marginTop="@dimen/button_spacing"
-		        android:background="@drawable/address_reversed_action"
-	         	android:layout_height="@dimen/button_height"
-		        android:clickable="true"
-		        android:visibility="gone"
-		        android:text="Delete"
-		        android:textColor="#FFF"
-		        android:textSize="12pt"
-		        android:textStyle="bold" />
+		        android:orientation="horizontal">
+		        <Button
+			        android:id="@+id/btnDeleteMsg"
+			        android:layout_width="0dp"
+			        android:layout_weight="1"
+			        android:background="@drawable/address_reversed_action"
+		         	android:layout_height="fill_parent"
+			        android:clickable="true"
+			        android:visibility="gone"
+			        android:text="Delete"
+			        android:textColor="#FFF"
+			        android:textSize="12pt"
+			        android:textStyle="bold" />
+		        <Button
+			        android:id="@+id/btnReplyMsg"
+			        android:layout_width="0dp"
+			        android:layout_weight="1"
+			        android:background="@drawable/address_addcon_action"
+		         	android:layout_height="fill_parent"
+			        android:clickable="true"
+			        android:visibility="gone"
+			        android:text="Reply"
+			        android:textColor="#FFF"
+			        android:textSize="12pt"
+			        android:textStyle="bold" />
+	        </LinearLayout>
 			<LinearLayout
 			    android:id="@+id/emailLayout_LinLay"
 			    android:orientation="vertical"
@@ -176,18 +195,6 @@
 			            android:textSize="12pt"/>
 		        </LinearLayout>
 	        </LinearLayout>
-	        <Button
-		        android:id="@+id/btnReplyMsg"
-		        android:layout_width="match_parent"
-		        android:layout_margin="2dip"
-		        android:background="@drawable/address_addcon_action"
-	         	android:layout_height="@dimen/button_height"
-		        android:clickable="true"
-		        android:visibility="gone"
-		        android:text="Reply"
-		        android:textColor="#FFF"
-		        android:textSize="12pt"
-		        android:textStyle="bold" />
 		</LinearLayout>
 
 	</view>

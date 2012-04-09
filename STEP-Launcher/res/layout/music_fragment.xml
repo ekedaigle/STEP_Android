@@ -29,6 +29,7 @@
 		<view
 		    class="step.ButtonScrollView"
 		    android:id="@+id/musicScrollView"
+		    android:background="@drawable/side_bar"
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:layout_weight="0.5" >

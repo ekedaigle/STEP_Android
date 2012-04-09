@@ -100,10 +100,12 @@
 
 		<view
 		    class="step.ButtonScrollView"
+		    android:fadingEdge="none"
 		    android:fillViewport="true"
 		    android:id="@+id/scrlReadArticle"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
+			android:background="@drawable/news_body"
 			android:visibility="visible">
 			
 			<LinearLayout
@@ -114,7 +116,6 @@
 				<TextView android:id="@+id/txtReadArticle"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:background="@drawable/news_body"
 					android:text=""
 					android:textColor="#000"
 					android:textSize="15pt"
