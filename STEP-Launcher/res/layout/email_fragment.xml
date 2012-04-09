@@ -56,14 +56,21 @@
 	    android:gravity="center"
 	    android:textColor="#FFF"
 	    android:textSize ="24pt"/>
-
-	<ScrollView
+	<view
+	    class="step.ButtonScrollView"
 	    android:id="@+id/scrlReadEmail"
+	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_width="0dp"
 	    android:layout_weight="7"
-	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_height="fill_parent"
-	    android:visibility="gone" >
+	    android:visibility="gone">
+<!-- 	<ScrollView -->
+<!-- 	    android:id="@+id/scrlReadEmail" -->
+<!-- 	    android:layout_width="0dp" -->
+<!-- 	    android:layout_weight="7" -->
+<!-- 	    android:background="@drawable/address_contact_bkgd" -->
+<!-- 	    android:layout_height="fill_parent" -->
+<!-- 	    android:visibility="gone" > -->
 		<LinearLayout 
 		    android:id="@+id/readEmailLinLay"
 	    	android:layout_marginLeft="@dimen/button_spacing"
@@ -183,19 +190,28 @@
 		        android:textStyle="bold" />
 		</LinearLayout>
 
-	</ScrollView>
+	</view>
 
 <!-- 	-->
 <!-- 	This is the scrollView for the compose view -->
 <!-- 	-->
-	
-	<ScrollView
+	        
+	<view
+	    class="step.ButtonScrollView"
 	    android:id="@+id/scrlCompose"
+	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_width="0dp"
 	    android:layout_weight="7"
-	    android:background="@drawable/address_contact_bkgd"
 	    android:layout_height="fill_parent"
 	    android:visibility="gone">
+
+<!-- 	<ScrollView -->
+<!-- 	    android:id="@+id/scrlCompose" -->
+<!-- 	    android:layout_width="0dp" -->
+<!-- 	    android:layout_weight="7" -->
+<!-- 	    android:background="@drawable/address_contact_bkgd" -->
+<!-- 	    android:layout_height="fill_parent" -->
+<!-- 	    android:visibility="gone"> -->
         <LinearLayout
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
@@ -315,6 +331,6 @@
 		        android:textSize="12pt"
 		        android:textStyle="bold" />
 		</LinearLayout>
-	</ScrollView>
+	</view>
 </LinearLayout>
 	        
